@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
@@ -34,7 +35,7 @@
 	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
 		return ITEM_INTERACT_BLOCKING
 	stored_research = used_multitool.buffer
-	computer.balloon_alert(user, "buffer linked!")
+	computer.balloon_alert(user, LANG("datum.0624d1959b8eaa2d", null))
 	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/science/ui_assets(mob/user)
@@ -100,18 +101,18 @@
 	. = ..()
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
-		computer.say("Console is locked, cannot perform further actions.")
+		computer.say(LANG("datum.647b971b5edcbdc9", null))
 		return TRUE
 
 	switch (action)
 		if ("toggleLock")
 			if(computer.obj_flags & EMAGGED)
-				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
+				to_chat(usr, span_boldwarning(LANG("datum.45bb9000b7c94bb6", null)))
 				return TRUE
 			if(lock_access in computer?.stored_id?.access)
 				locked = !locked
 			else
-				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
+				to_chat(usr, span_boldwarning(LANG("datum.819506be3e7684ae", null)))
 			return TRUE
 
 		if ("researchNode")
@@ -222,48 +223,48 @@
 
 /datum/computer_file/program/science/proc/enqueue_node(node_path, mob/user)
 	if(!stored_research || !stored_research.available_nodes[node_path] || stored_research.researched_nodes[node_path])
-		computer.say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		computer.say(LANG("datum.d0d6c45f12db34e9", null))
 		return FALSE
 	stored_research.enqueue_node(node_path, user)
 	return TRUE
 
 /datum/computer_file/program/science/proc/dequeue_node(node_path, mob/user)
 	if(!stored_research || !stored_research.available_nodes[node_path] || stored_research.researched_nodes[node_path])
-		computer.say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		computer.say(LANG("datum.a58ea08a5e2c7b84", null))
 		return FALSE
 	stored_research.dequeue_node(node_path, user)
 	return TRUE
 
 /datum/computer_file/program/science/proc/research_node(node_path, mob/user)
 	if(!stored_research)
-		computer.say("Node unlock failed: No techweb found!")
+		computer.say(LANG("datum.acb34cefa09ea5cc", null))
 		return FALSE
 	if(!stored_research.available_nodes[node_path])
-		computer.say("Node unlock failed: Node is not available!")
+		computer.say(LANG("datum.77ef8c4fcd09d13b", null))
 		return FALSE
 	if(stored_research.researched_nodes[node_path])
-		computer.say("Node unlock failed: Node is already researched!")
+		computer.say(LANG("datum.b06096aa9d347da9", null))
 		return FALSE
 
 	var/datum/techweb_node/unlocked_node = SSresearch.techweb_nodes[node_path]
 	if(!istype(unlocked_node))
-		computer.say("Node unlock failed: Unknown error.")
+		computer.say(LANG("datum.82fe29cde43ce4b9", null))
 		return FALSE
 
 	var/list/price = unlocked_node.get_price(stored_research)
 	if(!stored_research.can_afford(price))
-		computer.say("Not enough research points...")
+		computer.say(LANG("datum.8a4d3febf4c65c82", null))
 		return FALSE
 
 	if(!stored_research.research_node(unlocked_node, research_source = computer))
-		computer.say("Failed to research node: Internal database error!")
+		computer.say(LANG("datum.4e8cca8a706a86f7", null))
 		return FALSE
 
 	user.investigate_log("researched [unlocked_node.display_name]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 	if(istype(stored_research, /datum/techweb/science))
 		SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("path" = "[node_path]", "name" = unlocked_node.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
 
-	computer.say("Successfully researched [unlocked_node.display_name].")
+	computer.say(LANG("datum.9d1c2f30413f1470", list(unlocked_node.display_name)))
 
 	var/logname = "Unknown"
 	if(HAS_AI_ACCESS(user))

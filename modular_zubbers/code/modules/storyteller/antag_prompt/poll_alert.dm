@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Whether the alert shows a running count of how many people have signed up so far.
 /datum/candidate_poll/var/show_candidate_amount = TRUE
 
@@ -17,8 +18,8 @@
 	var/mob/asked = owner
 	var/choice = tgui_alert(
 		asked,
-		"This hides every antagonist prompt for the rest of the round, not just this one. You can turn them back on with the Clear Poll Ignores verb in the OOC tab.",
-		"Disable antagonist prompts?",
+		LANG("atom.a769b9a2a7467e33", null),
+		LANG("atom.4166d8078aa2dd2e", null),
 		list("Yes", "No"),
 	)
 	if(choice != "Yes" || isnull(poll) || owner != asked)

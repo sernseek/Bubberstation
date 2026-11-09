@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Makes an item a heretic focus, allowing heretics to cast forbidden school spells while it's worn
 /datum/element/heretic_focus
 
@@ -28,7 +29,7 @@
 	if(!IS_HERETIC(user))
 		return
 
-	examine_list += span_notice("Allows you to cast advanced acolyte spells when worn.")
+	examine_list += span_notice(LANG("datum.c6aee232af052573", null))
 
 /datum/element/heretic_focus/proc/on_equip(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
@@ -63,7 +64,7 @@
 	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING) || ascended)
 		return NONE
 
-	source.balloon_alert(source, "you need a focus!")
+	source.balloon_alert(source, LANG("datum.37e1335fff457a7e", null))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/amber_focus
@@ -126,8 +127,8 @@
 
 	uncloak_mob(source, show_message = FALSE)
 	source.visible_message(
-		span_warning("[source] suddenly appears from the shadows!"),
-		span_userdanger("As you lose your focus, you are pulled out of the shadows!"),
+		span_warning(LANG("datum.8313ec9c9953e9fd", list(source))),
+		span_userdanger(LANG("datum.1faf45a85395b865", null)),
 	)
 	StartCooldown(uncloak_time / 3)
 
@@ -143,5 +144,5 @@
 /datum/status_effect/caretaker_refuge/proc/on_focus_lost()
 	SIGNAL_HANDLER
 
-	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
+	to_chat(owner, span_danger(LANG("datum.d1b58e1c0d140ac4", null)))
 	qdel(src)

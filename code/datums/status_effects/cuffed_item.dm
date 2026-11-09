@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /**
  * The status effect given by the cuffable_item.
  * It basically binds an item to your arm, basically making it undroppable until the cuffs or item are removed, usually done by one of:
@@ -211,19 +212,19 @@
 	if(!leash_to_mob.dropItemToGround(cuffed))
 		qdel(src)
 		return
-	to_chat(leash_to_mob, span_warning("[cuffs] binding [cuffed] to [owner] tugs it out of your grasp!"))
+	to_chat(leash_to_mob, span_warning(LANG("datum.1d71ec19e1a38ed6", list(cuffs, cuffed, owner))))
 
 /// Stops it from being stored anywhere
 /datum/status_effect/cuffed_item/proc/block_storage_insert(obj/item/source, atom/target_storage, mob/user, force, messages)
 	SIGNAL_HANDLER
 	if(messages)
-		target_storage.balloon_alert(user, "can't store [source.name] while cuffed!")
+		target_storage.balloon_alert(user, LANG("datum.3913c79e2f6fad58", list(source.name)))
 	return BLOCK_STORAGE_INSERT
 
 /// Stops double cuff
 /datum/status_effect/cuffed_item/proc/block_item_cuff(obj/item/source, mob/cuffer, obj/item/cuffs)
 	SIGNAL_HANDLER
-	source.balloon_alert(cuffer, "cuffed to someone else!")
+	source.balloon_alert(cuffer, LANG("datum.364697445a5053cb", null))
 	return BLOCK_ITEM_CUFF
 
 ///What happens if one of the items is moved away from the mob
@@ -270,39 +271,39 @@
 		return FALSE
 
 	if(!(user.mobility_flags & MOBILITY_USE))
-		owner.balloon_alert(user, "can't do it right now!")
+		owner.balloon_alert(user, LANG("datum.ce24dac8913e1594", null))
 		return FALSE
 
 	if(!cuffed.IsReachableBy(user))
-		owner.balloon_alert(user, "can't reach [cuffed]!")
+		owner.balloon_alert(user, LANG("datum.29a0a4260f1ae697", list(cuffed)))
 		return FALSE
 
 	if(user == owner)
 		owner.visible_message(
-			span_notice("[user] tries to remove [cuffs] binding [cuffed] to [owner.p_themselves()]"),
-			span_notice("You try to remove [cuffs] binding [cuffed] to yourself..."),
+			span_notice(LANG("datum.f534000c635ee619", list(user, cuffs, cuffed, owner.p_themselves()))),
+			span_notice(LANG("datum.7b9745c3a3cbdea2", list(cuffs, cuffed))),
 		)
 	else
 		owner.visible_message(
-			span_notice("[user] tries to remove [cuffs] binding [cuffed] to [owner]..."),
-			span_warning("[user] tries to remove [cuffs] binding [cuffed] to you..."),
+			span_notice(LANG("datum.ebaffcc0491b0d71", list(user, cuffs, cuffed, owner))),
+			span_warning(LANG("datum.5fc10388c723d249", list(user, cuffs, cuffed))),
 		)
 
-	owner.balloon_alert(user, "removing cuffs...")
+	owner.balloon_alert(user, LANG("datum.547b3cb319d42f21", null))
 	playsound(owner, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user) * 1.5 * (owner == user ? 1 : 2), owner, interaction_key = interaction_key) || QDELETED(src))
-		owner.balloon_alert(user, "interrupted!")
+		owner.balloon_alert(user, LANG("datum.c67b5d274d6e724b", null))
 		return FALSE
 
 	if(user == owner)
 		owner.visible_message(
-			span_notice("[user] removes [cuffs] binding [cuffed] to [owner.p_themselves()]."),
-			span_notice("You remove [cuffs] binding [cuffed] to yourself."),
+			span_notice(LANG("datum.f7efcdf6322db402", list(user, cuffs, cuffed, owner.p_themselves()))),
+			span_notice(LANG("datum.ed1187a6cd5e3cdd", list(cuffs, cuffed))),
 		)
 	else
 		owner.visible_message(
-			span_notice("[user] removes [cuffs] binding [cuffed] to [owner]."),
-			span_warning("[user] removes [cuffs] binding [cuffed] to you."),
+			span_notice(LANG("datum.f7efcdf6322db402", list(user, cuffs, cuffed, owner))),
+			span_warning(LANG("datum.1ffa2e556ffbf8ae", list(user, cuffs, cuffed))),
 		)
 
 	log_combat(user, owner, "removed restraints binding [cuffed] to")
@@ -311,7 +312,7 @@
 	var/mob/living/ref_owner = owner
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
-	ref_owner.balloon_alert(user, "cuffs removed from item")
+	ref_owner.balloon_alert(user, LANG("datum.656a238cd939f378", null))
 
 	return TRUE
 

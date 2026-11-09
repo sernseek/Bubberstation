@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define REVENANT_DEFILE_MIN_DAMAGE 30
 #define REVENANT_DEFILE_MAX_DAMAGE 50
 
@@ -38,7 +39,7 @@
 	var/obj/structure/mirror/mirror = astype(clicker.loc)
 	if(!mirror)
 		return FALSE
-	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(clicker, LANG("datum.d91360fb3b5b92f8", null), LANG("datum.610f3fdd8cc01759", null), max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(clicker) || !IsAvailable())
 		return FALSE
 	clicker.log_message("\"[message]\"", LOG_SAY)
@@ -108,7 +109,7 @@
 		if(!light.on)
 			continue
 
-		light.visible_message(span_boldwarning("[light] suddenly flares brightly and begins to spark!"))
+		light.visible_message(span_boldwarning(LANG("datum.dbc3d32dd9b3bbc1", list(light))))
 		do_sparks(4, FALSE, light)
 		new /obj/effect/temp_visual/revenant(get_turf(light))
 		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 2 SECONDS)
@@ -326,7 +327,7 @@
 			continue
 		if(human.can_block_magic(antimagic_flags))
 			continue
-		to_chat(human, span_revenwarning("You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")]."))
+		to_chat(human, span_revenwarning(LANG("datum.20f1ebe8a80b36d9", list(pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")))))
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in victim)
@@ -360,7 +361,7 @@
 		if(mob == caster)
 			continue
 		if(mob.can_block_magic(antimagic_flags))
-			to_chat(caster, span_warning("The spell had no effect on [mob]!"))
+			to_chat(caster, span_warning(LANG("datum.2dea54be076e3e45", list(mob))))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
@@ -375,7 +376,7 @@
 						blight.stage++
 				if(!blightfound)
 					H.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
-					to_chat(H, span_revenminor("You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")]."))
+					to_chat(H, span_revenminor(LANG("datum.20f1ebe8a80b36d9", list(pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")))))
 			else
 				if(mob.reagents)
 					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)

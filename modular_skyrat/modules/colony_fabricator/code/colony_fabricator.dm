@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Energy multiplier when printing off the cell
 #define RCF_CELL_ENERGY_MULTIPLIER 10
 
@@ -63,11 +64,11 @@
 
 /obj/machinery/rnd/production/colony_lathe/screwdriver_act(mob/living/user, obj/item/tool)
 	if(busy)
-		balloon_alert(user, "busy printing!")
+		balloon_alert(user, LANG("obj.11d293408dbeafd5", null))
 		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src, 50)
 	panel_open = !panel_open
-	balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
+	balloon_alert(user, LANG("obj.a741c12ee0655743", list(panel_open ? "opened" : "closed")))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -77,14 +78,14 @@
 		return ITEM_INTERACT_SUCCESS
 	if(panel_open && istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(!isnull(cell))
-			balloon_alert(user, "already has a cell!")
+			balloon_alert(user, LANG("obj.62f73cd529e01ae3", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		cell = tool
 		power_change()
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		balloon_alert(user, "cell installed")
+		balloon_alert(user, LANG("obj.0e9b65ee8bac5441", null))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
@@ -95,16 +96,16 @@
 
 /obj/machinery/rnd/production/colony_lathe/examine(mob/user)
 	. = ..()
-	. += span_notice("It runs off station power where it can, and off its own cell where it cannot.")
+	. += span_notice(LANG("obj.a376a2096cd9e76d", null))
 	if(isnull(cell))
-		. += span_warning("Its cell housing is <b>empty</b>.")
+		. += span_warning(LANG("obj.5a5e6632e5ee9d94", null))
 	else
-		. += span_notice("Its [cell.name] is charged to <b>[round(cell.percent())]%</b>.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_notice(LANG("obj.df402a4931d7123c", list(cell.name, round(cell.percent()))))
+	. += span_notice(LANG("obj.f3fabb12d30acb3c", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(!panel_open)
 		return
-	. += span_notice("The wires inside can be worked with a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")].")
-	. += span_notice("The cell can be levered out with a [EXAMINE_HINT("crowbar")].")
+	. += span_notice(LANG("obj.0c28635396dfbf0a", list(EXAMINE_HINT("multitool"), EXAMINE_HINT("wirecutters"))))
+	. += span_notice(LANG("obj.8129785cfc8b3537", list(EXAMINE_HINT("crowbar"))))
 
 /// Rebuilds the design list when the hack wire changes
 /obj/machinery/rnd/production/colony_lathe/proc/refresh_hacked_designs()
@@ -153,14 +154,14 @@
 	if(!panel_open)
 		return NONE
 	if(isnull(cell))
-		balloon_alert(user, "no cell!")
+		balloon_alert(user, LANG("obj.0210855e097c27b8", null))
 		return ITEM_INTERACT_BLOCKING
 	if(busy)
-		balloon_alert(user, "busy printing!")
+		balloon_alert(user, LANG("obj.11d293408dbeafd5", null))
 		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src, 50)
 	user.put_in_hands(cell)
-	balloon_alert(user, "cell removed")
+	balloon_alert(user, LANG("obj.0dfdca6e675f39e2", null))
 	cell = null
 	power_change()
 	return ITEM_INTERACT_SUCCESS
@@ -176,18 +177,18 @@
 		return ..()
 
 	if(disabled)
-		say("Fabrication systems are offline.")
+		say(LANG("obj.cb2714e96c0344a2", null))
 		return FALSE
 
 	// contraband designs are autolathe designs
 	var/datum/design/design = SSresearch.techweb_designs[text2path(params["design_path"])]
 	if(istype(design) && !station_has_researched(design.type))
-		say("This design has not been researched by the station yet.")
+		say(LANG("obj.db45927cf7de6c08", null))
 		return FALSE
 	var/borrowing_autolathe_systems = istype(design) && !(design.build_type & allowed_buildtypes)
 	if(borrowing_autolathe_systems)
 		if(!hacked || !(design in cached_designs))
-			say("This fabricator does not have the necessary keys to decrypt this design.")
+			say(LANG("obj.ea5ed026c6c21f35", null))
 			return FALSE
 		allowed_buildtypes |= AUTOLATHE
 
@@ -233,7 +234,7 @@
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
-		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		say(LANG("obj.b800343897a0eb02", list(design_delta, design_delta == 1 ? "" : "s")))
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
@@ -333,9 +334,9 @@
 /datum/component/flatpack_cell/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(isnull(cell))
-		examine_list += span_warning("Its cell housing is <b>empty</b>.")
+		examine_list += span_warning(LANG("datum.5a5e6632e5ee9d94", null))
 		return
-	examine_list += span_notice("It is packed with a [cell.name] at <b>[round(cell.percent())]%</b>, which can be swapped by <b>clicking</b> it with another cell.")
+	examine_list += span_notice(LANG("datum.20d2b10405da319c", list(cell.name, round(cell.percent()))))
 
 /datum/component/flatpack_cell/proc/on_item_interaction(datum/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
@@ -348,10 +349,10 @@
 	var/obj/item/stock_parts/power_store/cell/old_cell = cell
 	cell = tool
 	if(isnull(old_cell))
-		flatpack.balloon_alert(user, "cell installed")
+		flatpack.balloon_alert(user, LANG("datum.0e9b65ee8bac5441", null))
 		return ITEM_INTERACT_SUCCESS
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), old_cell)
-	flatpack.balloon_alert(user, "cell swapped")
+	flatpack.balloon_alert(user, LANG("datum.2837ba8547727a33", null))
 	return ITEM_INTERACT_SUCCESS
 
 /datum/component/flatpack_cell/proc/on_exited(datum/source, atom/movable/gone, direction)

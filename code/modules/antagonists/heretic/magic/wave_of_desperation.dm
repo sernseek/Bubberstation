@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/action/cooldown/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
@@ -27,7 +28,7 @@
 		return
 
 	for(var/obj/item/restraint in cast_on.get_all_attached_restraints())
-		cast_on.visible_message(span_danger("[restraint] on [cast_on] shatter!"))
+		cast_on.visible_message(span_danger(LANG("datum.2eaa1a833db06e62", list(restraint, cast_on))))
 		qdel(restraint)
 
 	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)

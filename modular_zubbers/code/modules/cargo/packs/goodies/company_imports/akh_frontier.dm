@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/supply_pack/company_import/akh_frontier
 	subcategory = "Akh Frontier"
 
@@ -31,7 +32,7 @@
 /datum/supply_pack/company_import/akh_frontier/deployables_fab/rapid_construction_fabricator/New()
 	. = ..()
 	name = "Rapid Construction Fabricator (RCF)"
-	desc = "Contains one flat-packed rapid construction fabricator, with a charged cell to get it running anywhere."
+	desc = LANG("datum.b9b2895c7372615b", null)
 
 /datum/supply_pack/company_import/akh_frontier/deployables_fab/foodricator
 	item_type = /obj/item/flatpacked_machine/organics_ration_printer

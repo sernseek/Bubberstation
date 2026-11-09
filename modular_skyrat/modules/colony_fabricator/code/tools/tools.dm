@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Default colony tool colours
 #define COLONY_TOOL_COLORS "#D15B1B#7C8287"
 /// The same, plus a green screen
@@ -93,8 +94,8 @@
 
 /obj/item/screwdriver/omni_drill/examine(mob/user)
 	. = ..()
-	. += span_notice("Use <b>in hand</b> to switch configuration.\n")
-	. += span_notice("It functions as a <b>[tool_behaviour]</b> tool.")
+	. += span_notice(LANG("obj.da5a08bc3e5a2cd0", null))
+	. += span_notice(LANG("obj.0e8d333e46ded842", list(tool_behaviour)))
 
 /obj/item/screwdriver/omni_drill/update_icon_state()
 	. = ..()
@@ -142,7 +143,7 @@
 
 /obj/item/screwdriver/omni_drill/tool_use_check(mob/living/user, amount, heat_required)
 	if(!(item_use_power(power_use_amount, user, TRUE) & COMPONENT_POWER_SUCCESS))
-		balloon_alert(user, "no charge!")
+		balloon_alert(user, LANG("obj.c0d39a143f2b1626", null))
 		return FALSE
 	return ..()
 

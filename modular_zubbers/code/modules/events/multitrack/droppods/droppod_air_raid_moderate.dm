@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/round_event_control/drop_troopers_syndicate_lesser
 	name = "Drop Troopers: Syndicate (Lesser)"
 	description = "The Syndicate sends small numbers of drop pod soldiers to fight the station."
@@ -19,7 +20,7 @@
 	time_to_next_wave_droppod_factor = 50
 
 /datum/round_event/droppod_airraid/syndicate/lesser/announce(fake)
-	priority_announce("Alert! The Syndicate is sending a skirmishing party to [GLOB.station_name]. Please brace for impact.", "Incoming Enemy Scouts", sound = 'sound/announcer/notice/notice1.ogg', color_override = "orange")
+	priority_announce(LANG("datum.dd46bf42c87e22d5", list(GLOB.station_name)), "Incoming Enemy Scouts", sound = 'sound/announcer/notice/notice1.ogg', color_override = "orange")
 
 
 //////////////////////////////////////
@@ -58,7 +59,7 @@
 	min_droppod_dropdelay = 30
 
 /datum/round_event/droppod_airraid/hivebots/announce(fake)
-	priority_announce("Alert! Unidentified pod signatures have been detected en-route to [GLOB.station_name]. Please brace for impact.", "Unidentified Drop Pods", sound = 'sound/announcer/notice/notice1.ogg', color_override = "orange")
+	priority_announce(LANG("datum.7730555a598aebba", list(GLOB.station_name)), "Unidentified Drop Pods", sound = 'sound/announcer/notice/notice1.ogg', color_override = "orange")
 
 /datum/round_event/droppod_airraid/hivebots/announce_end()
-	priority_announce("The pod fleet colliding into [GLOB.station_name] has ceased. Please calmly return to your work tasks.")
+	priority_announce(LANG("datum.a01502957a5f1ab6", list(GLOB.station_name)))

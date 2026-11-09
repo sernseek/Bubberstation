@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /obj/item/clothing/shoes/boots/diver //Donor item for patriot210
 	icon = 'modular_zubbers/icons/obj/clothing/feet/feet.dmi'
 	worn_icon = 'modular_zubbers/icons/mob/clothing/feet/feet.dmi'
@@ -250,20 +251,20 @@
 			var/obj/item/hit_human_shoes = hit_human.shoes
 			// check if the item has NODROP
 			if(HAS_TRAIT(hit_human_shoes, TRAIT_NODROP))
-				hit_human.visible_message(span_warning("[src] bounces off [hit_human]'s [hit_human_shoes.name]!"), span_warning("[src] bounces off your [hit_human_shoes.name], falling to the floor."))
+				hit_human.visible_message(span_warning(LANG("obj.dbede380cfd8d419", list(src, hit_human, hit_human_shoes.name))), span_warning(LANG("obj.04e9da2aaec30121", list(src, hit_human_shoes.name))))
 				return
 			// check if the item is an actual clothing feet item, since some non-clothing items can be worn
 			if(istype(hit_human_shoes, /obj/item/clothing/shoes))
 				var/obj/item/clothing/head/hit_human_shoes_confirmed = hit_human_shoes
 				// SNUG_FIT shoes are immune to being knocked off
 				if(hit_human_shoes_confirmed.clothing_flags & SNUG_FIT)
-					hit_human.visible_message(span_warning("[src] bounces off [hit_human]'s [hit_human_shoes_confirmed.name]!"), span_warning("[src] bounces off your [hit_human_shoes_confirmed.name], falling to the floor."))
+					hit_human.visible_message(span_warning(LANG("obj.dbede380cfd8d419", list(src, hit_human, hit_human_shoes_confirmed.name))), span_warning(LANG("obj.04e9da2aaec30121", list(src, hit_human_shoes_confirmed.name))))
 					return
 			// if the slippers manages to knock something off
 			if(hit_human.dropItemToGround(hit_human_shoes))
-				hit_human.visible_message(span_warning("[src] slips [hit_human_shoes] off [hit_human]'s feet!"), span_warning("[hit_human_shoes] is suddenly slipped off your feet by [src]!"))
+				hit_human.visible_message(span_warning(LANG("obj.800882e324ca3551", list(src, hit_human_shoes, hit_human))), span_warning(LANG("obj.8e19f8b4afddf9d0", list(hit_human_shoes, src))))
 		if(hit_human.equip_to_slot_if_possible(src, ITEM_SLOT_FEET, 0, 1, 1))
-			hit_human.visible_message(span_notice("[src] lands neatly on [hit_human]'s feet!"), span_notice("[src] lands perfectly onto your feet!"))
+			hit_human.visible_message(span_notice(LANG("obj.f2380751d175ea8d", list(src, hit_human))), span_notice(LANG("obj.06c25ff4a207e174", list(src))))
 			hit_human.update_held_items() //force update hands to prevent ghost sprites appearing when throw mode is on
 		return
 	if(iscyborg(hit_atom))
@@ -471,8 +472,8 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/combat/debug, toggle, usr, "Toggle Bluesp
 	else
 		detach_clothing_traits(active_traits)
 
-	balloon_alert(user, "bluespace magnets [free_move ? "activated" : "deactivated"]")
+	balloon_alert(user, LANG("obj.c4406a2e8d44cbde", list(free_move ? "activated" : "deactivated")))
 
 /obj/item/clothing/shoes/combat/debug/examine(mob/user)
 	. = ..()
-	. += "Its bluespace magnets appear to be [free_move ? "activated" : "deactivated"]."
+	. += LANG("obj.fe95d30538213af5", list(free_move ? "activated" : "deactivated"))

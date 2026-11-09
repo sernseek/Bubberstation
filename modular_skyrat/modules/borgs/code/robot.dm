@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /mob/living/silicon/robot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(robot_resting)
@@ -48,9 +49,9 @@
 	if(model && model.model_features && (TRAIT_R_BIG in model.model_features))
 		maptext_height = 64
 
-GAME_VERB_PROC_DESC(/mob/living/silicon/robot, rest_style, "Switch Rest Style", "Select your resting pose.", "AI Commands")
+GAME_VERB_PROC_DESC(/mob/living/silicon/robot, rest_style, "切换休息姿势", "Select your resting pose.", "AI Commands")
 	if(!can_rest())
-		to_chat(src, span_warning("You can't do that!"))
+		to_chat(src, span_warning(LANG("mob.56e41a3d5d89bd90", null)))
 		return
 	var/list/resting_styles = list(SKIN_RESTING_NORMAL, SKIN_RESTING_SIT, SKIN_RESTING_BELLY)
 	var/resting_skins = model.rest_styles
@@ -59,10 +60,10 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/robot, rest_style, "Switch Rest Style", 
 			CRASH("SKIN_RESTING_STYLES is not a list. Make it a list")
 		resting_styles = resting_skins
 	if(resting_styles.len <= 1)
-		to_chat(src, span_warning("There is no alternative poses."))
+		to_chat(src, span_warning(LANG("mob.7eea91a14011bb30", null)))
 		return
 
-	var/choice = tgui_alert(src, "Select resting pose", "", resting_styles)
+	var/choice = tgui_alert(src, LANG("mob.7284295acbb1c36c", null), "", resting_styles)
 	switch(choice)
 		if(SKIN_RESTING_NORMAL)
 			robot_rest_style = ROBOT_REST_NORMAL
@@ -75,19 +76,19 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/robot, rest_style, "Switch Rest Style", 
 		on_lying_down()
 	update_icons()
 
-GAME_VERB_PROC(/mob/living/silicon/robot, robot_lay_down, "Lay down", "AI Commands")
+GAME_VERB_PROC(/mob/living/silicon/robot, robot_lay_down, "躺下", "AI Commands")
 	if(!can_rest())
-		to_chat(src, span_warning("You can't do that!"))
+		to_chat(src, span_warning(LANG("mob.56e41a3d5d89bd90", null)))
 		return
 	if(IS_UNCONSCIOUS_OR_CRIT(src)) //Make sure we don't enable movement when not concious
 		return
 	if(robot_resting)
-		to_chat(src, span_notice("You are now getting up."))
+		to_chat(src, span_notice(LANG("mob.63c0a69c445758e5", null)))
 		robot_resting = FALSE
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 		on_standing_up()
 	else
-		to_chat(src, span_notice("You are now laying down."))
+		to_chat(src, span_notice(LANG("mob.3f3898b98ff67c99", null)))
 		robot_resting = robot_rest_style
 		on_lying_down()
 	update_icons()

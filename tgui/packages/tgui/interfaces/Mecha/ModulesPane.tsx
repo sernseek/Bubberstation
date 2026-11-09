@@ -513,7 +513,7 @@ const SnowflakeSleeper = (props) => {
                     onClick={() =>
                       act('equip_act', {
                         ref: ref,
-                        gear_action: `inject_reagent_${reagent.name}`,
+                        gear_action: `inject_reagent_${reagent.id}`, // ZH EDIT CHANGE - I18N - ORIGINAL: `inject_reagent_${reagent.name}`
                       })
                     }
                   >
@@ -532,10 +532,14 @@ type Data = {
   analyzed_reagents: KnownReagent[];
 };
 type Reagent = {
+  // ZH EDIT ADDITION START - I18N - 英文标识符（act 回传用），name 只做显示、会被本地化
+  id: string;
+  // ZH EDIT ADDITION END
   name: string;
   volume: number;
 };
 type KnownReagent = {
+  id: string; // ZH EDIT ADDITION - I18N
   name: string;
   enabled: boolean;
 };
@@ -583,7 +587,7 @@ const SnowflakeSyringe = (props) => {
               onClick={() =>
                 act('equip_act', {
                   ref: ref,
-                  gear_action: `toggle_reagent_${reagent.name}`,
+                  gear_action: `toggle_reagent_${reagent.id}`, // ZH EDIT CHANGE - I18N - ORIGINAL: `toggle_reagent_${reagent.name}`
                 })
               }
             />
@@ -609,7 +613,7 @@ const SnowflakeSyringe = (props) => {
               onClick={() =>
                 act('equip_act', {
                   ref: ref,
-                  gear_action: `purge_reagent_${reagent.name}`,
+                  gear_action: `purge_reagent_${reagent.id}`, // ZH EDIT CHANGE - I18N - ORIGINAL: `purge_reagent_${reagent.name}`
                 })
               }
             >

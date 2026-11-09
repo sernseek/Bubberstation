@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /*!
  * Tier 4 knowledge: Combat related knowledge
  */
@@ -138,8 +139,8 @@
 				selected_atoms += container
 				return TRUE
 
-	loc.balloon_alert(user, "ritual failed, no blood!")
-	to_chat(user, span_mansus("You are missing blood in order to complete the ritual \"[name]\"."))
+	loc.balloon_alert(user, LANG("datum.521b5122232c57bd", null))
+	to_chat(user, span_mansus(LANG("datum.e56ede85f71e83ef", list(name))))
 	return FALSE
 
 /datum/heretic_knowledge/crimson_cleave/cleanup_atoms(list/selected_atoms)
@@ -203,7 +204,7 @@
 
 /datum/heretic_knowledge/rifle_ammo/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
 	if(!our_heretic.get_knowledge(/datum/heretic_knowledge/rifle))
-		tgui_alert(user, "You must research the Lionhunter's Rifle knowledge before you can research its ammunition.")
+		tgui_alert(user, LANG("datum.96269547515aa65d", null))
 		return FALSE
 
 	return TRUE

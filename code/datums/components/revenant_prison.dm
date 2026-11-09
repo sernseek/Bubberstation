@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/component/revenant_prison
 	// Whether a revenant should be created upon release
 	var/create_on_release = FALSE
@@ -29,7 +30,7 @@
 
 /datum/component/revenant_prison/proc/on_parent_break(obj/source, damage_flags)
 	SIGNAL_HANDLER
-	source.visible_message(span_revenwarning("The revenant cackles as it escapes from [source]!"))
+	source.visible_message(span_revenwarning(LANG("datum.dd62bcf1f14b3616", list(source))))
 	playsound(source.loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
 	release_revenant(source, cause = "[parent] breaking")
 
@@ -40,7 +41,7 @@
 			continue
 		REMOVE_TRAIT(new_home, TRAIT_COZY_REVENANT_HOME, INNATE_TRAIT)
 		new_home.TakeComponent(src)
-		new_home.visible_message(span_revenwarning("A dismal moan echoes as particles of [parent] fall onto [new_home]!"))
+		new_home.visible_message(span_revenwarning(LANG("datum.ff5c4cbb388dec83", list(parent, new_home))))
 		log_game("A revenant was trapped inside [new_home]")
 		message_admins("A revenant was trapped inside [new_home] [ADMIN_JMP(new_home)]")
 		return
@@ -74,7 +75,7 @@
 /datum/component/revenant_prison/proc/on_parent_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(istype(parent, /obj/structure/mirror))
-		examine_list += span_revenwarning("The reflection is shifting and distorted.")
+		examine_list += span_revenwarning(LANG("datum.5b74bb15c80921d7", null))
 
 /datum/component/revenant_prison/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_parent_examine))

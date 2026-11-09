@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/filter_editor
 	var/atom/target
 
@@ -71,7 +72,7 @@
 				target.transition_filter(params["name"], list("color" = new_color), 4)
 				. = TRUE
 		if("modify_icon_value")
-			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
+			var/icon/new_icon = input(LANG("datum.f5b090a6032e2061", null), LANG("datum.ef7ff63888bef350", null)) as null|icon
 			if(new_icon)
 				target.modify_filter(params["name"], list("icon" = new_icon))
 				. = TRUE
@@ -87,7 +88,7 @@
 			. = TRUE
 		if("mass_apply")
 			if(!check_rights_for(usr.client, R_FUN))
-				to_chat(usr, span_userdanger("Stay in your lane, jannie."))
+				to_chat(usr, span_userdanger(LANG("datum.6a1b0ba9f419dcc2", null)))
 				return
 			var/target_path = text2path(params["path"])
 			if(!target_path)

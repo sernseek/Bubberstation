@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /mob/living/carbon/human
 	var/arousal = 0
 	var/pleasure = 0
@@ -240,7 +241,7 @@
 		dna.features["body_model"] = ngender
 		if(!silent)
 			var/adj = ngender == MALE ? "masculine" : "feminine"
-			visible_message(span_boldnotice("[src] suddenly looks more [adj]!"), span_boldwarning("You suddenly feel more [adj]!"))
+			visible_message(span_boldnotice(LANG("mob.de807a03940d2799", list(src, adj))), span_boldwarning(LANG("mob.7d0331fd3aacc9d5", list(adj))))
 	else if(ngender == NEUTER)
 		dna.features["body_model"] = MALE
 	gender = ngender

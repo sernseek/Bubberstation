@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /obj/item/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It has some sort of wiring near the front."
@@ -33,7 +34,7 @@
 
 /obj/item/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user && user.get_item_by_slot(ITEM_SLOT_NECK))
-		to_chat(user, span_warning("The collar is fastened tight! You'll need help if you want to take it off!"))
+		to_chat(user, span_warning(LANG("obj.af72e6ece0ed5fa5", null)))
 		return
 	return ..()
 
@@ -51,7 +52,7 @@
 		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 10 SECONDS)
 		step(affected_mob, pick(GLOB.cardinals))
 
-		to_chat(affected_mob, span_danger("You feel a sharp shock from the collar!"))
+		to_chat(affected_mob, span_danger(LANG("obj.2c2ccf817720c115", null)))
 		do_sparks(3, TRUE, affected_mob)
 
 		affected_mob.Paralyze(30)

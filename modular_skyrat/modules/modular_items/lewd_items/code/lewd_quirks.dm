@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /*
 *	BIMBO
 */
@@ -113,20 +114,20 @@
 	if(!in_company())
 		//since you aren't within company, you won't be satisfied
 		satisfaction = clamp(satisfaction - 1, 0, 1000)
-		to_chat(human_owner, span_purple("You feel so alone without someone..."))
+		to_chat(human_owner, span_purple(LANG("datum.3b6c0c27c48e3fd2", null)))
 		return
 
 	switch(satisfaction)
 		if(0 to 100)
-			to_chat(human_owner, span_purple("You can't STAND it, you need a partner NOW!"))
+			to_chat(human_owner, span_purple(LANG("datum.92568c12ed6a1905", null)))
 		if(101 to 150)
-			to_chat(human_owner, span_purple("You'd hit that. Yeah. That's at least a six."))
+			to_chat(human_owner, span_purple(LANG("datum.53a4021d22d7b886", null)))
 		if(151 to 200)
-			to_chat(human_owner, span_purple("Your clothes are feeling tight."))
+			to_chat(human_owner, span_purple(LANG("datum.ea96daa1a47b8760", null)))
 		if(201 to 250)
-			to_chat(human_owner, span_purple("Desire fogs your decisions."))
+			to_chat(human_owner, span_purple(LANG("datum.6aed1717b57c6cf3", null)))
 		if(251 to 1000)
-			to_chat(human_owner, span_purple("Jeez, it's hot in here.."))
+			to_chat(human_owner, span_purple(LANG("datum.14df1836674c9c1b", null)))
 
 /**
  * If we have another human in view, return true

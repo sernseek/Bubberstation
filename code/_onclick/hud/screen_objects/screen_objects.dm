@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /*
 	Screen objects
@@ -160,7 +161,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
-		to_chat(usr, span_warning("There is already a defined structure here."))
+		to_chat(usr, span_warning(LANG("atom.3c2f6fc68e7198dd", null)))
 		return TRUE
 	create_area(usr)
 
@@ -628,7 +629,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		flick("[base_icon_state]_flick", src)
 		return
 
-	var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
+	var/tgui_answer = tgui_alert(usr, LANG("atom.a08c61e6c3682a73", null), LANG("atom.de5aa820260de8e3", null), list("Yes", "No"))
 	if(tgui_answer == "Yes" && !IS_UNCONSCIOUS(usr))
 		var/mob/living/L = usr
 		L.Sleeping(400)
@@ -1366,7 +1367,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/slime_power/Click(location, control, params)
 	. = ..()
-	to_chat(usr, span_notice("Shows you how much electricity they are generating. The higher this is, the higher chance you will strike with overwhelming electrical force."))
+	to_chat(usr, span_notice(LANG("atom.b440328c039d5c4d", null)))
 
 /atom/movable/screen/slime_power/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()

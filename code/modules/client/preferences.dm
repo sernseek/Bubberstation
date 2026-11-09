@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences
@@ -242,7 +243,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	if(SSlag_switch.measures[DISABLE_CREATOR] && action != "change_slot")
-		to_chat(usr, "The creator has been disabled. Please do not ahelp.")
+		to_chat(usr, LANG("datum.cb24e133b58064a7", null))
 		return
 
 	log_creator("[key_name(usr)] ACTED [action] | PREFERENCE: [params["preference"]] | VALUE: [params["value"]]")
@@ -269,12 +270,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/list/slot_choices = list()
 			for(var/i = 1, i <= character_list.len, i++)
 				slot_choices += "Slot [i]: [character_list[i]]"
-			var/target_slot = tgui_input_list(ui.user, "Pick a slot to copy to.", "Duplicate Character", slot_choices, null)
+			var/target_slot = tgui_input_list(ui.user, LANG("datum.72b9dbdb85e4a073", null), LANG("datum.a1c87e3043c34f9d", null), slot_choices, null)
 			if(!isnull(target_slot))
 				duplicate_current_slot(slot_choices.Find(target_slot))
 				tainted_character_profiles = TRUE
 			else
-				tgui_alert(ui.user, "Cancelled Duplication", "Duplicate Character")
+				tgui_alert(ui.user, LANG("datum.950feabad187e870", null), LANG("datum.a1c87e3043c34f9d", null))
 			return TRUE //BUBBER ADDITION END - Character duplication
 		if ("rotate")
 			/* SKYRAT EDIT - Bi-directional prefs menu rotation - ORIGINAL:
@@ -759,7 +760,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			log_game("BYOND membership lookup for [parent.ckey] failed due to a connection error but succeeded after retry.")
 
 	if(isnull(byond_member))
-		to_chat(parent, span_warning("There's been a connection failure while trying to check the status of your BYOND membership. Reconnecting may fix the issue, or BYOND could be experiencing downtime."))
+		to_chat(parent, span_warning(LANG("datum.50a3c65280ab5b32", null)))
 
 	unlock_content = !!byond_member
 	if(unlock_content)

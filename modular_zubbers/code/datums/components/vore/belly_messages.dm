@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // This is it's own file because each of these needs a helper proc
 /obj/vore_belly
 	// Text
@@ -44,10 +45,10 @@
 	for(var/i in 1 to LAZYLEN(raw_list))
 		if(length(raw_list[i]) > MAX_VORE_MESSAGE_LENGTH)
 			// Ignore over-length messages
-			to_chat(usr, span_warning("Warning: Message [i] (\"[STRIP_HTML_SIMPLE(raw_list[i], 20)]...\") deleted due to being too long (must be < [MAX_VORE_MESSAGE_LENGTH])"))
+			to_chat(usr, span_warning(LANG("obj.70679d6fb18cc2b6", list(i, STRIP_HTML_SIMPLE(raw_list[i], 20), MAX_VORE_MESSAGE_LENGTH))))
 		else if(length(raw_list[i]) < MIN_VORE_MESSAGE_LENGTH)
 			// Ignore under-length messages
-			to_chat(usr, span_warning("Warning: Message [i] (\"[STRIP_HTML_SIMPLE(raw_list[i], 20)]...\") deleted due to being too short (must be > [MIN_VORE_MESSAGE_LENGTH])"))
+			to_chat(usr, span_warning(LANG("obj.60482e1175e256f3", list(i, STRIP_HTML_SIMPLE(raw_list[i], 20), MIN_VORE_MESSAGE_LENGTH))))
 		else
 			LAZYADD(sanitized_list, STRIP_HTML_SIMPLE(raw_list[i], MAX_VORE_MESSAGE_LENGTH))
 

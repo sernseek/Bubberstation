@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 //reforming
 /obj/item/ectoplasm/revenant
 	name = "glimmering residue"
@@ -22,8 +23,8 @@
 	if(inert)
 		return ..()
 	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area."),
+		span_notice(LANG("obj.e9f6fbdf45aeb349", list(user, src))),
+		span_notice(LANG("obj.1da11af3f8a12741", list(src))),
 	)
 	user.dropItemToGround(src)
 	SEND_SIGNAL(src, COMSIG_RESIDUE_DISPERSE)
@@ -33,19 +34,19 @@
 	. = ..()
 	if(inert)
 		return
-	visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+	visible_message(span_notice(LANG("obj.7b8abbca912ff196", list(src))))
 	SEND_SIGNAL(src, COMSIG_RESIDUE_DISPERSE)
 	qdel(src)
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
 	. = ..()
 	if(inert)
-		. += span_revennotice("It seems inert.")
+		. += span_revennotice(LANG("obj.2e85428ab0825bb4", null))
 	else
-		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
+		. += span_revenwarning(LANG("obj.d2af643f6133c14c", null))
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
+	user.visible_message(span_suicide(LANG("obj.85ae4475dce343ee", list(user, src, user.p_theyre()))))
 	qdel(src)
 	return OXYLOSS
 
@@ -57,5 +58,5 @@
 		inert = TRUE
 		return
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
+	visible_message(span_revenboldnotice(LANG("obj.b6ecdf19bb4847d8", list(src))))
 	qdel(src)

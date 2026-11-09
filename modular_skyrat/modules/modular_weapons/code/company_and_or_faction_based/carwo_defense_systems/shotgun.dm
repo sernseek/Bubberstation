@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // TerraGov shotgun (this was gonna be in a proprietary shotgun shell type outside of 12ga at some point, wild right?)
 
 /obj/item/gun/ballistic/shotgun/riot/sol
@@ -39,21 +40,12 @@
 
 /obj/item/gun/ballistic/shotgun/riot/sol/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+	. += span_notice(LANG("obj.b663717df67087e6", null))
 
 /obj/item/gun/ballistic/shotgun/riot/sol/examine_more(mob/user)
 	. = ..()
 
-	. += "The Renoster was designed at its core as a police shotgun. \
-		As consequence, it holds all the qualities a police force would want \
-		in one. Large shell capacity, sturdy frame, while holding enough \
-		capacity for modification to satiate even the most overfunded of \
-		peacekeeper forces. Inevitably, the weapon made its way into civilian \
-		markets alongside its sale to several military branches that also \
-		saw value in having a heavy shotgun. \n\n A recent development are \
-		renegotiated trade deals with the production company, leading Nanotrasen to \
-		desire a return to their in-house built 'woodstock' pattern \
-		shotguns."
+	. += LANG("obj.75421675fc253b1f", null)
 
 	return .
 

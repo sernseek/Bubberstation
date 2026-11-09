@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // Any proc that communicates text to/from a blood worm goes here.
 // These procs are usually pretty big and there are quite a few of them.
 
@@ -68,9 +69,9 @@
 
 /mob/living/basic/blood_worm/proc/get_info_desc()
 	. = "Blood Consumed<br/>"
-	. += "- Normal: [ceil(consumed_normal_blood)]u<br/>"
-	. += "- Synthetic: [ceil(consumed_synth_blood)]u (MAX: [maximum_synth_blood]u)<br/>"
-	. += "- Total: [ceil(consumed_normal_blood + consumed_synth_blood)]u<br/>"
+	. += LANG("mob.9dee6fbbf52571e4", list(ceil(consumed_normal_blood)))
+	. += LANG("mob.07271c6c5c0ad8e8", list(ceil(consumed_synth_blood), maximum_synth_blood))
+	. += LANG("mob.b3954dcdab610da0", list(ceil(consumed_normal_blood + consumed_synth_blood)))
 
 /// Sends text to the blood worm, whether they are possessing a host or not.
 /mob/living/basic/blood_worm/proc/to_chat_self(text)

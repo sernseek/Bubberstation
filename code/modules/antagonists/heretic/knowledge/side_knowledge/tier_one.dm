@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /*!
  * Tier 1 knowledge: Stealth and general utility
  */
@@ -188,7 +189,7 @@
 		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
 	playsound(body, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	body.do_jitter_animation()
-	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
+	body.visible_message(span_danger(LANG("datum.30f3191500d3a1b9", list(ripped_thing, exterior_text, le_book || "the book"))))
 	return ..()
 
 /**
@@ -304,7 +305,7 @@
 		return ..()
 
 	if(feedback)
-		to_chat(the_spell.owner, span_mansus("You need a Living Heart to cast [the_spell]!"))
+		to_chat(the_spell.owner, span_mansus(LANG("datum.4794c0a3efe571e2", list(the_spell))))
 	return SPELL_CANCEL_CAST
 
 /datum/heretic_knowledge/lodestone
@@ -331,7 +332,7 @@
 		selected_atoms += whatever
 
 	if(!length(selected_atoms))
-		loc.balloon_alert(user, "no items to imbue!")
+		loc.balloon_alert(user, LANG("datum.7541a96726805d72", null))
 		return FALSE
 	return TRUE
 
@@ -361,7 +362,7 @@
 	for(var/obj/item/new_trackable as anything in valuable_pool | equipment_pool | weapon_pool | item_pool | leftover_pool)
 		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 		LAZYADD(heretic_datum.tracked_items, new_trackable)
-		to_chat(user, span_mansus("You feel the new lodestone in [new_trackable] start to beat in rhythm with your heart."))
+		to_chat(user, span_mansus(LANG("datum.564ddbf82728e68f", list(new_trackable))))
 		lodestones_created += 1
 		if(lodestones_created >= 3)
 			break

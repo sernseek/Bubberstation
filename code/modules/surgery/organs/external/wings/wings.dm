@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define DEFAULT_WING_FORCE 2.25 NEWTONS
 
 ///Wing base type. can do things :>
@@ -154,7 +155,7 @@
 		return FALSE
 	var/datum/bodypart_overlay/mutant/wings/wing_overlay = bodypart_overlay
 	if(!cant_hide && wing_overlay && (human.obscured_slots & wing_overlay.slot_blocker))
-		to_chat(human, span_warning("Your clothing blocks your wings from extending!"))
+		to_chat(human, span_warning(LANG("obj.f12358a3d813369a", null)))
 		return FALSE
 	var/turf/location = get_turf(human)
 	if(!location)
@@ -162,7 +163,7 @@
 	if(flight_level < WINGS_MAGIC)
 		var/datum/gas_mixture/environment = location.return_air()
 		if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
-			to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
+			to_chat(human, span_warning(LANG("obj.89ea74df1740c935", null)))
 			return FALSE
 	return TRUE
 
@@ -186,7 +187,7 @@
 	if(human.buckled)
 		buckled_obj = human.buckled
 
-	to_chat(human, span_notice("Your wings spazz out and launch you!"))
+	to_chat(human, span_notice(LANG("obj.1bdad194f9d7d253", null)))
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
@@ -212,7 +213,7 @@
 		human.AddElement(/datum/element/forced_gravity, 0)
 		ADD_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
 		open_wings()
-		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
+		to_chat(human, span_notice(LANG("obj.55ff3011aa342533", null)))
 		human.set_resting(FALSE, TRUE)
 		human.refresh_gravity()
 		RegisterSignal(human, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
@@ -223,7 +224,7 @@
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
 	REMOVE_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
-	to_chat(human, span_notice("You settle gently back onto the ground..."))
+	to_chat(human, span_notice(LANG("obj.4b278ac847840f33", null)))
 	close_wings()
 	human.refresh_gravity()
 	UnregisterSignal(human, COMSIG_HUMAN_SPEC_STUN)

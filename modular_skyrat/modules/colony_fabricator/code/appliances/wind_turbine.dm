@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /obj/machinery/power/colony_wind_turbine
 	name = "miniature wind turbine"
 	desc = "A post with two special-designed vertical turbine blades attached to its sides. \
@@ -34,9 +35,9 @@
 	. = ..()
 	var/area/turbine_area = get_area(src)
 	if(!turbine_area.outdoors)
-		. += span_notice("It must be constructed <b>outdoors</b> to function.")
+		. += span_notice(LANG("obj.0b19bd56cafc043f", null))
 	if(pressure_too_low)
-		. += span_notice("There must be enough atmospheric <b>pressure</b> for the turbine to spin.")
+		. += span_notice(LANG("obj.760bf17f8ef92c21", null))
 
 
 /obj/machinery/power/colony_wind_turbine/process()

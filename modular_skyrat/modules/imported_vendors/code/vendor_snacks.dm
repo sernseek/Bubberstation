@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // Snacks and drinks for the 'snacks' tab of vendors
 
 /obj/item/food/vendor_snacks
@@ -75,7 +76,7 @@
 
 /obj/item/food/vendor_snacks/mochi_ice_cream/matcha/examine_more(mob/user)
 	. = ..()
-	. += span_notice("A small label on the container specifies that this icecream is made using only culinary grade matcha grown outside of the Sol system.")
+	. += span_notice(LANG("obj.f11a52b57eec9d1f", null))
 	return .
 
 /obj/item/trash/vendor_trash/mochi_ice_cream

@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /obj/item/clothing/head/soft
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteful brown colour."
@@ -20,7 +21,7 @@
 	flipped = FALSE
 	..()
 
-GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "翻转盖子", null)
 
 	flip(usr)
 
@@ -35,16 +36,16 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type][soft_suffix]_flipped"
-			to_chat(user, span_notice("You flip the hat backwards."))
+			to_chat(user, span_notice(LANG("obj.58789018409879ee", null)))
 		else
 			icon_state = "[soft_type][soft_suffix]"
-			to_chat(user, span_notice("You flip the hat back in normal position."))
+			to_chat(user, span_notice(LANG("obj.68c3bc8119f6983e", null)))
 		update_icon()
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].")
+	. += span_notice(LANG("obj.dcf8730107cb1468", list(flipped ? "forwards" : "backwards")))
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
@@ -162,7 +163,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
+	AddComponent(/datum/component/speechmod, replacements = lang_speech_replacements("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
@@ -214,8 +215,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 /obj/item/clothing/head/soft/propeller_hat/suicide_act(mob/living/user)
 	if(!isturf(user.loc))
-		user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
-			It looks like [user.p_theyre()] trying to fly off into the sunset... yet the sky is out of reach for [user.p_them()]..."))
+		user.visible_message(span_suicide(LANG("obj.6ec4ca40b07921bf", list(user, src, user.p_theyre(), user.p_them()))))
 		return SHAME
 
 	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
@@ -223,8 +223,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 	user.move_resist = INFINITY
 	user.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	user.set_suicide(TRUE)
-	user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
-		It looks like [user.p_theyre()] trying to fly off into the sunset!"))
+	user.visible_message(span_suicide(LANG("obj.fd494313753be48d", list(user, src, user.p_theyre()))))
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	animate(user, PROPHAT_SUICIDE_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(user, PROPHAT_SUICIDE_TIME)

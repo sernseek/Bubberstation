@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // Solar panels
 
 /obj/machinery/power/solar/deployable
@@ -12,7 +13,7 @@
 
 /obj/machinery/power/solar/deployable/examine(mob/user)
 	. = ..()
-	. += span_notice("Its glass can be upgraded with <b>two sheets</b> of titanium, plasma, or plastitanium glass.")
+	. += span_notice(LANG("obj.7561df9ace929bb4", null))
 
 /obj/machinery/power/solar/deployable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/static/list/glass_tiers = list(
@@ -28,10 +29,10 @@
 	if(!new_tier)
 		return NONE
 	if(new_tier <= power_tier)
-		balloon_alert(user, "already as good!")
+		balloon_alert(user, LANG("obj.468c249828e2331e", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!glass_sheets.use(2))
-		balloon_alert(user, "need two sheets!")
+		balloon_alert(user, LANG("obj.27237661eb5c52df", null))
 		return ITEM_INTERACT_BLOCKING
 	drop_upgrade_glass()
 	// wiggle the solars so the console's capacity counts the new tier
@@ -42,7 +43,7 @@
 	if(our_control)
 		set_control(our_control)
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	balloon_alert(user, "glass upgraded")
+	balloon_alert(user, LANG("obj.d77514fd2b8da928", null))
 	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 

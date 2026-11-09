@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Very durable, and reverses the usual leash dynamic. Can slow down to become extremely durable.
 /mob/living/basic/guardian/protector
 	guardian_type = GUARDIAN_PROTECTOR
@@ -88,7 +89,7 @@
 	MODIFY_PHYSIOLOGY(owner, TOX, 0.125)
 	MODIFY_PHYSIOLOGY(owner, OXY, 0.125)
 
-	to_chat(owner, span_bolddanger("You enter protection mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.215a77027d5710ad", null)))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(owner, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_health_changed))
 	owner.update_appearance(UPDATE_ICON)
@@ -104,7 +105,7 @@
 	MODIFY_PHYSIOLOGY(owner, TOX, 8)
 	MODIFY_PHYSIOLOGY(owner, OXY, 8)
 
-	to_chat(owner, span_bolddanger("You return to your normal mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.8e6cee42f4940d44", null)))
 	UnregisterSignal(owner, list(COMSIG_ATOM_UPDATE_OVERLAYS) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 	owner.update_appearance(UPDATE_ICON)
 

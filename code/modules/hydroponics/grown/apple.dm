@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // Apple
 /obj/item/seeds/apple
 	name = "apple seed pack"
@@ -48,21 +49,21 @@
 /obj/item/food/grown/apple/examine(mob/user)
 	. = ..()
 	if(!found_worm && !isobserver(user) && appleworm)
-		balloon_alert(user, "there is a hole in this [src.name]!")
+		balloon_alert(user, LANG("obj.6a5ccb9f1afeb508", list(src.name)))
 		found_worm = TRUE
-		desc = "It's a little piece of Eden. Serpent not included, contains a worm as a replacement."
+		desc = LANG("obj.069fd2b4d78c1a8e", null)
 
 /obj/item/food/grown/apple/attack_self(mob/user)
 	if(!appleworm)
 		return
-	balloon_alert(user, "pulling out [appleworm.name]...")
+	balloon_alert(user, LANG("obj.13a877bb53f350c2", list(appleworm.name)))
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
 	appleworm.forceMove(drop_location())
 	appleworm = null
 	tastes = list("apple" = 1)
 	var/datum/component/edible/ediblecomponent = IS_EDIBLE(src)
-	desc = "It's a little piece of Eden. The [pick("serpent", "worm", "extra protein", "friendly neighbor")] is gone."
+	desc = LANG("obj.9a539b047dd48cd0", list(pick("serpent", "worm", "extra protein", "friendly neighbor")))
 	if(!ediblecomponent)
 		return
 	ediblecomponent.foodtypes &= ~(GROSS | MEAT | BUGS)
@@ -70,7 +71,7 @@
 /obj/item/food/grown/apple/proc/on_consume(mob/living/eater)
 	if(!ishuman(eater) && !appleworm)
 		return
-	to_chat(eater, span_alert("That apple was wormy!"))
+	to_chat(eater, span_alert(LANG("obj.550e2b534fdbac3f", null)))
 
 /obj/item/food/grown/apple/juice_typepath()
 	return /datum/reagent/consumable/applejuice

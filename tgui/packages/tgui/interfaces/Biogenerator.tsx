@@ -138,7 +138,7 @@ function Controls() {
                 textShadow: '1px 1px 0 black',
               }}
             >
-              {`${parseFloat(biomass.toFixed(2))} units`}
+              <span>{parseFloat(biomass.toFixed(2))}</span> units
             </Box>
           </ProgressBar>
         </LabeledList.Item>
@@ -170,7 +170,8 @@ function Controls() {
                   textShadow: '1px 1px 0 black',
                 }}
               >
-                {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
+                <span>{beakerCurrentVolume}</span> of{' '}
+                <span>{beakerMaxVolume}</span> units
               </Box>
             </ProgressBar>
           </LabeledList.Item>

@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define CLIMAX_VAGINA "Vagina"
 #define CLIMAX_PENIS "Penis"
 #define CLIMAX_BOTH "Both"
@@ -34,8 +35,8 @@
 	#endif
 
 	if(HAS_TRAIT(src, TRAIT_NEVERBONER) || has_status_effect(/datum/status_effect/climax_cooldown) || (!has_vagina() && !has_penis()))
-		visible_message(span_purple("[src] twitches, trying to cum, but with no result."), \
-			span_purple("You can't have an orgasm!"))
+		visible_message(span_purple(LANG("mob.65eb8f7ff62cbbf1", list(src))), \
+			span_purple(LANG("mob.59077c060edb0956", null)))
 		return TRUE
 
 	// Reduce pop-ups and make it slightly more frictionless (lewd).
@@ -50,7 +51,7 @@
 				genitals.Add(CLIMAX_BOTH)
 		else if(has_penis())
 			genitals.Add(CLIMAX_PENIS)
-		climax_choice = tgui_alert(src, "You are climaxing, choose which genitalia to climax with.", "Genitalia Preference!", genitals)
+		climax_choice = tgui_alert(src, LANG("mob.d2fdc32c9c731af9", null), LANG("mob.6136bced200ef277", null), genitals)
 
 	switch(gender)
 		if(MALE)
@@ -71,19 +72,19 @@
 	if(climax_choice == CLIMAX_PENIS || climax_choice == CLIMAX_BOTH)
 		var/obj/item/organ/genital/penis/penis = get_organ_slot(ORGAN_SLOT_PENIS)
 		if(!testicles || testicles.reagents.total_volume < MIN_CUM_THRESHOLD) //If we have no god damn balls, we can't cum anywhere... GET BALLS! , OR theres so little in your balls that nothing comes out...
-			visible_message(span_userlove("[src] orgasms, but nothing comes out of [self_their] penis!"), \
-				span_userlove("You orgasm, it feels great, but nothing comes out of your penis!"))
+			visible_message(span_userlove(LANG("mob.6e0187edc6da1516", list(src, self_their))), \
+				span_userlove(LANG("mob.f8c5d54c781159d4", null)))
 
 		else if(is_wearing_condom())
 			var/obj/item/clothing/sextoy/condom/condom = src.penis // bruh 💀⚰️💀⚰️💀⚰️💀⚰️💀
 			condom.condom_use() // condoms probably should become reagent containers at some point
-			visible_message(span_userlove("[src] shoots [self_their] load into the [condom], filling it up!"), \
-				span_userlove("You shoot your thick load into the [condom] and it catches it all!"))
+			visible_message(span_userlove(LANG("mob.a1e08d66ff49d273", list(src, self_their, condom))), \
+				span_userlove(LANG("mob.02a031057c854063", list(condom))))
 			testicles.reagents.remove_all(testicles.cumshot_size)
 
 		else if(!is_bottomless() && penis.visibility_preference != GENITAL_ALWAYS_SHOW)
-			visible_message(span_userlove("[src] cums inside [self_their] clothes!"), \
-				span_userlove("You shoot your load, but you weren't naked, so you mess up your clothes!"))
+			visible_message(span_userlove(LANG("mob.64e23146aa57ab55", list(src, self_their))), \
+				span_userlove(LANG("mob.d44b5efa0dc52cf0", null)))
 			self_orgasm = TRUE
 			testicles.reagents.remove_all(testicles.cumshot_size)
 
@@ -112,22 +113,22 @@
 			if(istype(portal, /obj/structure/lewd_portal))
 				buttons += CLIMAX_PORTAL
 
-			var/penis_climax_choice = tgui_alert(src, "Choose where to shoot your load.", "Load preference!", buttons)
+			var/penis_climax_choice = tgui_alert(src, LANG("mob.7cd3302cd4ec9632", null), LANG("mob.328dbd2f47a0bbd0", null), buttons)
 
 			var/create_cum_decal = FALSE
 
 			if(!penis_climax_choice || penis_climax_choice == CLIMAX_ON_FLOOR)
 				create_cum_decal = TRUE
-				visible_message(span_userlove("[src] shoots [self_their] sticky load onto the floor!"), \
-					span_userlove("You shoot string after string of hot cum, hitting the floor!"))
+				visible_message(span_userlove(LANG("mob.47e60ad7a8ba60c4", list(src, self_their))), \
+					span_userlove(LANG("mob.28062261be0abaec", null)))
 				testicles.reagents.remove_all(testicles.cumshot_size)
 
 			else if(penis_climax_choice == CLIMAX_OPEN_CONTAINER)
-				var/target_choice = tgui_input_list(src, "Choose a container to cum into.", "Choose target!", interactable_inrange_open_containers)
+				var/target_choice = tgui_input_list(src, LANG("mob.78e89e0e585daf53", null), LANG("mob.93ab300d3b4b2851", null), interactable_inrange_open_containers)
 				if(!target_choice)
 					create_cum_decal = TRUE
-					visible_message(span_userlove("[src] shoots [self_their] sticky load onto the floor!"), \
-						span_userlove("You shoot string after string of hot cum, hitting the floor!"))
+					visible_message(span_userlove(LANG("mob.47e60ad7a8ba60c4", list(src, self_their))), \
+						span_userlove(LANG("mob.28062261be0abaec", null)))
 					testicles.reagents.remove_all(testicles.cumshot_size)
 				else
 					var/obj/item/reagent_containers/cup/target_open_container = interactable_inrange_open_containers[target_choice]
@@ -139,36 +140,36 @@
 						if(target_open_container.reagents.holder_full())
 							// its full already
 							add_cum_splatter_floor(get_turf(target_open_container))
-							visible_message(span_userlove("[src] tries to cum into the [target_open_container], but it's already full, spilling their hot load onto the floor!"), \
-								span_userlove("You try to cum into the [target_open_container], but it's already full, so it all hits the floor instead!"))
+							visible_message(span_userlove(LANG("mob.b19e3b70701833b5", list(src, target_open_container))), \
+								span_userlove(LANG("mob.30345c748f32c46b", list(target_open_container))))
 						else
 							testicles.reagents.trans_to(target_open_container, testicles.cumshot_size, transferred_by = src)
 							if(total_volume_w_cum > target_open_container.volume)
 								// overflow, make the decal
 								add_cum_splatter_floor(get_turf(target_open_container))
-								visible_message(span_userlove("[src] shoots [self_their] sticky load into the [target_open_container], it's so full that it overflows!"), \
-									span_userlove("You shoot string after string of hot cum into the [target_open_container], making it overflow!"))
+								visible_message(span_userlove(LANG("mob.6c963fa1f443d537", list(src, self_their, target_open_container))), \
+									span_userlove(LANG("mob.de263d6cb4af9abc", list(target_open_container))))
 							else
-								visible_message(span_userlove("[src] shoots [self_their] sticky load into the [target_open_container]!"), \
-									span_userlove("You shoot string after string of hot cum into the [target_open_container]!"))
+								visible_message(span_userlove(LANG("mob.a9928d9e3c4424d8", list(src, self_their, target_open_container))), \
+									span_userlove(LANG("mob.00685b844c8fea1f", list(target_open_container))))
 					else
 						// cum fail
 						create_cum_decal = TRUE
-						visible_message(span_userlove("[src] shoots [self_their] sticky load onto the floor!"), \
-							span_userlove("You shoot string after string of hot cum, hitting the floor!"))
+						visible_message(span_userlove(LANG("mob.47e60ad7a8ba60c4", list(src, self_their))), \
+							span_userlove(LANG("mob.28062261be0abaec", null)))
 						testicles.reagents.remove_all(testicles.cumshot_size)
 
 			else if(penis_climax_choice == CLIMAX_PORTAL)
-				to_chat(src, "You shoot string after string of hot cum, hitting whatever is on the other side!")
-				portal.relayed_body.visible_message("[portal.relayed_body] shoots its sticky load onto the floor!")
+				to_chat(src, LANG("mob.1628f71d700da119", null))
+				portal.relayed_body.visible_message(LANG("mob.ee477d961cef112d", list(portal.relayed_body)))
 				add_cum_splatter_floor(get_turf(portal.relayed_body))
 
 			else
-				var/target_choice = tgui_input_list(src, "Choose a person to cum in or on.", "Choose target!", interactable_inrange_humans)
+				var/target_choice = tgui_input_list(src, LANG("mob.4beec21eb8965590", null), LANG("mob.93ab300d3b4b2851", null), interactable_inrange_humans)
 				if(!target_choice)
 					create_cum_decal = TRUE
-					visible_message(span_userlove("[src] shoots [self_their] sticky load onto the floor!"), \
-						span_userlove("You shoot string after string of hot cum, hitting the floor!"))
+					visible_message(span_userlove(LANG("mob.47e60ad7a8ba60c4", list(src, self_their))), \
+						span_userlove(LANG("mob.28062261be0abaec", null)))
 				else
 					var/mob/living/carbon/human/target_human = interactable_inrange_humans[target_choice]
 					var/target_human_them = target_human.p_them()
@@ -187,21 +188,21 @@
 							target_buttons += "sheath"
 					target_buttons += "On [target_human_them]"
 
-					var/climax_into_choice = tgui_input_list(src, "Where on or in [target_human] do you wish to cum?", "Final frontier!", target_buttons)
+					var/climax_into_choice = tgui_input_list(src, LANG("mob.a90ce281117696da", list(target_human)), LANG("mob.57ec68b8384177b5", null), target_buttons)
 
 					if(!climax_into_choice)
 						create_cum_decal = TRUE
-						visible_message(span_userlove("[src] shoots their sticky load onto the floor!"), \
-							span_userlove("You shoot string after string of hot cum, hitting the floor!"))
+						visible_message(span_userlove(LANG("mob.c112e520b16cc327", list(src))), \
+							span_userlove(LANG("mob.28062261be0abaec", null)))
 					else if(climax_into_choice == "On [target_human_them]")
 						create_cum_decal = TRUE
-						visible_message(span_userlove("[src] shoots their sticky load onto [target_human]!"), \
-							span_userlove("You shoot string after string of hot cum onto [target_human]!"))
+						visible_message(span_userlove(LANG("mob.82a775d2165fb8ab", list(src, target_human))), \
+							span_userlove(LANG("mob.967166cec24ac1cb", list(target_human))))
 					else
 						visible_message(
-							span_userlove("[src] hilts [self_their] cock into [target_human]'s [climax_into_choice], shooting cum into [target_human_them]!"),
-							span_userlove("You hilt your cock into [target_human]'s [climax_into_choice], shooting cum into [target_human_them]!"))
-						to_chat(target_human, span_userlove("Your [climax_into_choice] fills with warm cum as [src] shoots [self_their] load into it."))
+							span_userlove(LANG("mob.98f8dc62fa355055", list(src, self_their, target_human, climax_into_choice, target_human_them))),
+							span_userlove(LANG("mob.8cccffb856944bd9", list(target_human, climax_into_choice, target_human_them))))
+						to_chat(target_human, span_userlove(LANG("mob.a85881eb6949869a", list(climax_into_choice, src, self_their))))
 
 						if(climax_into_choice == "mouth")
 							testicles.reagents.trans_to(target_human, testicles.cumshot_size, transferred_by = src, methods = INGEST)
@@ -225,20 +226,20 @@
 		var/obj/item/organ/genital/vagina/vagina = get_organ_slot(ORGAN_SLOT_VAGINA)
 		if(is_bottomless() || vagina.visibility_preference == GENITAL_ALWAYS_SHOW)
 			visible_message(
-				span_userlove("[src] twitches and moans as [p_they()] climax from their vagina!"),
-				span_userlove("You twitch and moan as you climax from your vagina!"))
+				span_userlove(LANG("mob.7afb4b0792818f02", list(src, p_they()))),
+				span_userlove(LANG("mob.e21fd6a2b21e0f0f", null)))
 			if(vagina.reagents.total_volume >= MIN_VAGINA_WETNESS_THRESHOLD)
 				add_cum_splatter_floor(get_turf(src), female = TRUE)
 		else
 			if(vagina.reagents.total_volume >= MIN_VAGINA_WETNESS_THRESHOLD)
 				visible_message(
-					span_userlove("[src] cums in [self_their] underwear from [self_their] vagina!"),
-					span_userlove("You cum in your underwear from your vagina! Eww."))
+					span_userlove(LANG("mob.945b0574d3346a04", list(src, self_their, self_their))),
+					span_userlove(LANG("mob.e799c6ce774a1f4a", null)))
 				self_orgasm = TRUE
 			else
 				visible_message(
-					span_userlove("[src] cums in [self_their] underwear from [self_their] vagina!"),
-					span_userlove("You cum in your underwear from your vagina, but you aren't wet enough to mess it up."))
+					span_userlove(LANG("mob.945b0574d3346a04", list(src, self_their, self_their))),
+					span_userlove(LANG("mob.839da9a6979ceff4", null)))
 
 	apply_status_effect(/datum/status_effect/climax)
 	apply_status_effect(/datum/status_effect/climax_cooldown)

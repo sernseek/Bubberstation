@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // RAPID LIGHTING DEVICE
 
 //modes of operation
@@ -65,10 +66,10 @@
 	switch(choice)
 		if("Light Fixture")
 			mode = LIGHT_MODE
-			to_chat(user, span_notice("You change RLD's mode to 'Permanent Light Construction'."))
+			to_chat(user, span_notice(LANG("obj.d75c47774783334f", null)))
 		if("Glow Stick")
 			mode = GLOW_MODE
-			to_chat(user, span_notice("You change RLD's mode to 'Light Launcher'."))
+			to_chat(user, span_notice(LANG("obj.bdef06f3c36fda82", null)))
 		if("Color Pick")
 			var/new_choice = tgui_color_picker(user, "", "Choose Color", color_choice)
 			if(new_choice == null)
@@ -85,7 +86,7 @@
 			color_choice = new_choice
 		if("Deconstruct")
 			mode = REMOVE_MODE
-			to_chat(user, span_notice("You change RLD's mode to 'Deconstruct'."))
+			to_chat(user, span_notice(LANG("obj.2503bc6bbbae5ee4", null)))
 		else
 			toggle_silo(user)
 
@@ -170,7 +171,7 @@
 						winner = C
 						winning_dist = contender
 				if(!winner)
-					balloon_alert(user, "no valid target!")
+					balloon_alert(user, LANG("obj.f6ed9d98e9f66df3", null))
 					return ITEM_INTERACT_BLOCKING
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
 				L.setDir(get_dir(winner, interacting_with))
@@ -249,11 +250,11 @@
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			balloon_alert(user, "no cell found!")
+			balloon_alert(user, LANG("obj.ba8f2f7d51fc8b56", null))
 		return 0
 	. = borgy.cell.use(amount * energyfactor)
 	if(!. && user)
-		balloon_alert(user, "insufficient charge!")
+		balloon_alert(user, LANG("obj.206fba9f64179ead", null))
 	return .
 
 

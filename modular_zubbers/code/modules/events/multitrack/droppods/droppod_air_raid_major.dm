@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 //////////////////////////////////////
 /////////////// SYNDIE ///////////////
 //////////////////////////////////////
@@ -42,7 +43,7 @@
 	min_droppod_dropdelay = 30
 
 /datum/round_event/droppod_airraid/syndicate/announce(fake)
-	priority_announce("Alert! The Syndicate is sending orbital drop shock troopers to [GLOB.station_name]. Please brace for impact.", "Incoming Enemy Signatures", 'sound/announcer/alarm/airraid.ogg',color_override = "red")
+	priority_announce(LANG("datum.b4b8805888fddce9", list(GLOB.station_name)), "Incoming Enemy Signatures", 'sound/announcer/alarm/airraid.ogg',color_override = "red")
 
 /datum/round_event/droppod_airraid/syndicate/new_boss_spawn()
 	. = ..()
@@ -53,4 +54,4 @@
 		grievous.add_faction(ROLE_SYNDICATE)
 
 /datum/round_event/droppod_airraid/syndicate/announce_end()
-	priority_announce("The Syndicate attack on [GLOB.station_name] has ceased. Please calmly return to your work tasks.")
+	priority_announce(LANG("datum.8547036433550edc", list(GLOB.station_name)))

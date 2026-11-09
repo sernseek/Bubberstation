@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/preference_middleware/loadout
 	action_delegations = list(
 		"clear_all_items" = PROC_REF(action_clear_all),
@@ -74,11 +75,11 @@
 			return
 	// SKYRAT EDIT ADDITION
 	if(!isnull(selected_item.ckeywhitelist) && !(preferences?.parent?.ckey in selected_item.ckeywhitelist))
-		to_chat(preferences.parent, span_warning("You cannot select this item!"))
+		to_chat(preferences.parent, span_warning(LANG("datum.af8c30c411bd1326", null)))
 		return
 
 	if(selected_item.donator_only && !SSplayer_ranks.is_donator(preferences.parent))
-		to_chat(preferences.parent, span_warning("This item is for donators only."))
+		to_chat(preferences.parent, span_warning(LANG("datum.b673d67f5c09d517", null)))
 		return
 	// SKYRAT EDIT END
 

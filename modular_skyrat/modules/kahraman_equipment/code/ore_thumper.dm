@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define SLAM_JAM_DELAY (15 SECONDS)
 /// Power grace period
 #define THUMPER_POWER_GRACE (10 SECONDS)
@@ -174,27 +175,27 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 	. = ..()
 	var/area/thumper_area = get_area(src)
 	if(!thumper_area.outdoors)
-		. += span_notice("It must be constructed <b>outdoors</b> to function.")
+		. += span_notice(LANG("obj.0b19bd56cafc043f", null))
 	if(!ismiscturf(get_turf(src)))
-		. += span_notice("It must be constructed on <b>suitable terrain</b>, like ash, snow, or sand.")
-	. += span_notice("It must have a powered, <b>wired connection</b> running beneath it with <b>[active_power_usage / BASE_MACHINE_ACTIVE_CONSUMPTION] kW</b> of excess power to function.")
-	. += span_notice("It will produce a box of materials after it has slammed [slam_jams_needed] times.")
+		. += span_notice(LANG("obj.170ee88511a4da57", null))
+	. += span_notice(LANG("obj.60dcf2aaa49bda97", list(active_power_usage / BASE_MACHINE_ACTIVE_CONSUMPTION)))
+	. += span_notice(LANG("obj.d89ddb3ac7c81bb7", list(slam_jams_needed)))
 	var/cadence_note = ""
 	if(switched_on && !stall_reason && sync_multiplier > 1 + THUMPER_SYNC_DEADZONE)
 		cadence_note = "; it is operating at an <i>accelerated</i> rate to synchronize with other thumpers"
 	else if(switched_on && !stall_reason && sync_multiplier < 1 - THUMPER_SYNC_DEADZONE)
 		cadence_note = "; it is operating at a <i>reduced</i> rate to synchronize with other thumpers"
-	. += span_notice("Currently, it has slammed [slam_jams] / [slam_jams_needed] times needed[cadence_note].")
-	. += span_notice("It will pause operation if there are <b>too many piles of ore</b> near it, and resume once they are cleared.")
-	. += span_notice("The thumper cannot operate <b>too close to another thumper</b>; it requires at least <b>[minimum_thumper_clearance] spaces</b> of clearance.")
-	. += span_notice("It will adjust its cadence to <b>synchronize</b> with nearby ore thumpers.")
+	. += span_notice(LANG("obj.4e7211ffd354cb41", list(slam_jams, slam_jams_needed, cadence_note)))
+	. += span_notice(LANG("obj.0dd4b1d05d084b1c", null))
+	. += span_notice(LANG("obj.34bb2bf334aeef01", list(minimum_thumper_clearance)))
+	. += span_notice(LANG("obj.05022055f12162df", null))
 	if(obj_flags & EMAGGED)
-		. += span_warning("Its safety interlocks have been burned out. It is driving far deeper than it should.")
-	. += span_notice("Its status lamp glows <b>green</b> when operating normally, flashes <b>yellow</b> when ready to operate but prevented by external conditions, flashes <b>red</b> when it cannot work where it stands, and glows <b>red</b> when switched off.")
+		. += span_warning(LANG("obj.05e5561580648b61", null))
+	. += span_notice(LANG("obj.87ed76d491aac719", null))
 	if(switched_on && stall_reason == THUMPER_STALL_LOCATION)
-		. += span_warning("It has stopped: <b>it cannot operate on this terrain and must be redeployed</b>.")
+		. += span_warning(LANG("obj.1d199b10d06df25c", null))
 	else if(switched_on && stall_reason)
-		. += span_warning("It has stopped due to <b>[GLOB.thumper_stall_descriptions[stall_reason] || stall_reason]</b>. It will resume operation if the issue is resolved.")
+		. += span_warning(LANG("obj.d08546bfbf97568c", list(GLOB.thumper_stall_descriptions[stall_reason] || stall_reason)))
 
 /obj/machinery/power/colony_ore_thumper/update_overlays()
 	. = ..()
@@ -363,7 +364,7 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 	else
 		GLOB.working_ore_thumpers |= src
 		soundloop.start()
-		balloon_alert_to_viewers("resuming")
+		balloon_alert_to_viewers(LANG("obj.135b8b504b56fd58", null))
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/colony_ore_thumper/attack_hand(mob/user, list/modifiers)
@@ -396,7 +397,7 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 		GLOB.working_ore_thumpers |= src
 		soundloop.start()
 		if(user)
-			balloon_alert(user, "thumper started")
+			balloon_alert(user, LANG("obj.53aad50362057a4f", null))
 	update_appearance(UPDATE_OVERLAYS)
 
 
@@ -408,7 +409,7 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 	GLOB.working_ore_thumpers -= src
 	soundloop.stop()
 	if(user)
-		balloon_alert(user, "thumper stopped")
+		balloon_alert(user, LANG("obj.8517f0919711df38", null))
 	update_appearance(UPDATE_OVERLAYS)
 
 
@@ -447,7 +448,7 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 	obj_flags |= EMAGGED
 	boxes_until_clown = rand(THUMPER_CLOWN_BOXES_MIN, THUMPER_CLOWN_BOXES_MAX)
 	do_sparks(3, FALSE, src)
-	balloon_alert(user, "safety interlocks fried")
+	balloon_alert(user, LANG("obj.4ed6e25eec6aa6e1", null))
 	return TRUE
 
 /// Quake roll per box
@@ -538,7 +539,7 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 			for(var/clown in 1 to (mob_type == /mob/living/basic/clown ? rand(2, 3) : 1))
 				new mob_type(pick(nearby_valid_turfs))
 			playsound(src, 'sound/items/bikehorn.ogg', 75, TRUE)
-			visible_message(span_danger("Something horrible scurries out of [src]'s wellbore!"))
+			visible_message(span_danger(LANG("obj.4d560c7f4a767818", list(src))))
 
 	for(var/iteration in 1 to rand(2, 4))
 		var/obj/item/stack/ore/ore_type = pick_weight(ore_weights)
@@ -564,9 +565,9 @@ GLOBAL_VAR_INIT(next_thumper_quake, 0)
 
 /obj/item/flatpacked_machine/ore_thumper/examine(mob/user)
 	. = ..()
-	. += span_notice("It must be constructed <b>outdoors</b> to function.")
-	. += span_notice("It must be constructed on <b>suitable terrain</b>, like ash, snow, or sand.")
-	. += span_notice("It must have a powered, <b>wired connection</b> running beneath it to function.")
+	. += span_notice(LANG("obj.0b19bd56cafc043f", null))
+	. += span_notice(LANG("obj.170ee88511a4da57", null))
+	. += span_notice(LANG("obj.01763e431924b32d", null))
 
 /obj/item/flatpacked_machine/ore_thumper/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)

@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/buildmode_mode/offercontrol
 	key = "offercontrol"
 	button_icon = 'modular_skyrat/master_files/icons/misc/buildmode.dmi' // if you are making a modular build mode, use this icon path.
@@ -14,7 +15,7 @@
 	var/mob/living/mob_to_offer = object
 
 	if(mob_to_offer.key)
-		var/response = tgui_alert(target_client, "This mob already has a ckey attached, continue?", "Mob already posessed!", list("Continue", "Cancel"))
+		var/response = tgui_alert(target_client, LANG("datum.0375aae9a9a97bb6", null), LANG("datum.5a31f6e659a968d9", null), list("Continue", "Cancel"))
 		if(response != "Continue")
 			return
 

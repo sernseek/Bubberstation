@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 //Strikes the target with a lightning bolt, killing them instantly.
 /datum/smite/lightning_instant_death
 	name = "Lightning Bolt (Instant Death)"
@@ -5,7 +6,7 @@
 
 /datum/smite/lightning_instant_death/effect(client/user, mob/living/target)
 	. = ..()
-	to_chat(target, span_userdanger("The gods have punished you for your sins!"), confidential = TRUE)
+	to_chat(target, span_userdanger(LANG("datum.ff2c8df0cc6e3daf", null)), confidential = TRUE)
 
 	var/turf/lightning_source = get_step(get_step(target, NORTH), NORTH)
 	lightning_source.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)

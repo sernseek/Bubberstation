@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/phystool_mode/color_mode
 	name = "Color mode"
 	desc = "Use LMB to color an object. Use RMB to set default color. Use in hands to choose color."
@@ -13,7 +14,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.client)
-			user.balloon_alert(user, "can't color!")
+			user.balloon_alert(user, LANG("datum.4d5468a0d8b9ed8c", null))
 			return FALSE
 	if(!selected_color)
 		selected_color = COLOR_WHITE

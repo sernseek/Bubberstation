@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define US_EAST_RELAY_ADDR "byond://useast.bubberstation.org:3000"
 #define US_WEST_RELAY_ADDR "byond://uswest.bubberstation.org:3000"
 #define SYDNEY_RELAY_ADDR "byond://sydney.bubberstation.org:3000"
@@ -20,7 +21,7 @@
 		EU_RELAY,
 		NO_RELAY,
 	)
-	var/choice = tgui_input_list(usr, "Which relay do you wish to use?", "Relay Select", relays)
+	var/choice = tgui_input_list(usr, LANG("client.ad08a62ae8a1c599", null), LANG("client.d4b38d34aede49c1", null), relays)
 	var/destination
 	switch(choice)
 		if(US_EAST_RELAY)

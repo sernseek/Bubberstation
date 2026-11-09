@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Gives PASSGRILLE so long as all of the bodyparts are slime (and some other conditions)
 /datum/status_effect/grouped/bodypart_effect/slime_passgrille
 	id = "slime_passgrille"
@@ -53,7 +54,7 @@
 	if(owner.pass_flags & PASSGRILLE)
 		clear_passgrille()
 	if(try_spit_out())
-		to_chat(owner, span_warning("You get squeezed out of the crevice you were within!"))
+		to_chat(owner, span_warning(LANG("datum.9dd147ef6c90aa2e", null)))
 
 /datum/status_effect/grouped/bodypart_effect/slime_passgrille/proc/try_spit_out()
 	var/turf/start_loc = get_turf(owner)
@@ -97,8 +98,8 @@
 			break
 
 	owner.visible_message(
-		span_warning("[owner] starts squeezing through the crevices within [bumped]..."),
-		span_notice("You start squeezing through the crevices within [bumped]...[warning_message]"),
+		span_warning(LANG("datum.b0d6ed835420841c", list(owner, bumped))),
+		span_notice(LANG("datum.5d08a0e0ad7000c9", list(bumped, warning_message))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 
@@ -106,8 +107,8 @@
 		return
 
 	owner.visible_message(
-		span_warning("[owner] squeezes into the crevices within [bumped]!"),
-		span_notice("You squeeze into the crevices within [bumped]."),
+		span_warning(LANG("datum.64e999615a818c49", list(owner, bumped))),
+		span_notice(LANG("datum.42368eb7eba58392", list(bumped))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 

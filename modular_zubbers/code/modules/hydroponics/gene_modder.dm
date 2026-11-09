@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /obj/machinery/plantgenes
 	name = "plant DNA manipulator"
 	desc = "An advanced device designed to manipulate plant genetic makeup."
@@ -88,23 +89,23 @@
 
 	if(istype(I, /obj/item/seeds))
 		if (operation)
-			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
+			to_chat(user, LANG("obj.5ab66d5fbbebfa00", null))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		eject_seed()
 		insert_seed(I)
-		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
+		to_chat(user, LANG("obj.f1c7f27e3b6e9cc9", list(I)))
 		interact(user)
 	else if(istype(I, /obj/item/disk/computer/plantgene))
 		if (operation)
-			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
+			to_chat(user, LANG("obj.5ab66d5fbbebfa00", null))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		eject_disk()
 		disk = I
-		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
+		to_chat(user, LANG("obj.f1c7f27e3b6e9cc9", list(I)))
 		interact(user)
 	else
 		..()
@@ -273,7 +274,7 @@
 				return
 			eject_seed()
 			insert_seed(I)
-			to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
+			to_chat(usr, LANG("obj.f1c7f27e3b6e9cc9", list(I)))
 		else
 			eject_seed()
 	else if(href_list["eject_disk"] && !operation)
@@ -283,7 +284,7 @@
 				return
 			eject_disk()
 			disk = I
-			to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
+			to_chat(usr, LANG("obj.f1c7f27e3b6e9cc9", list(I)))
 		else
 			eject_disk()
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
@@ -337,7 +338,7 @@
 							else if(istype(G, /datum/plant_gene/core/weed_chance))
 								gene.value = max(gene.value, min_wchance)
 						disk.gene = gene
-						to_chat(usr, "<span class='notice'>You add [gene] to the disk.</span>")
+						to_chat(usr, LANG("obj.dcfce4aea817ca35", list(gene)))
 						disk.update_disk_name()
 						qdel(seed)
 						seed = null
@@ -461,10 +462,10 @@
 
 /obj/item/disk/computer/plantgene/attack_self(mob/user)
 	read_only = !read_only
-	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
+	to_chat(user, LANG("obj.eab97949e6aa1c4e", list(src.read_only ? "protected" : "unprotected")))
 
 /obj/item/disk/computer/plantgene/examine(mob/user)
 	. = ..()
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
-		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
-	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+		. += LANG("obj.13cee2beefc4364b", null)
+	. += LANG("obj.4add0e25760d40db", list(src.read_only ? "protected" : "unprotected"))

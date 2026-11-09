@@ -1,6 +1,7 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 ADMIN_VERB(debug_maintenance_loot, R_DEBUG, "Debug Maintenance Loot", "List all items in the game that are not in maintenance loot", ADMIN_CATEGORY_DEBUG)
 
-	var/confirm = input(user,"Are you sure you wish to debug maintenance loot? This process takes up a lot of the server's resources.","Debug Maintenance Loot","Cancel") as null|anything in list("Yes","No","Cancel")
+	var/confirm = input(user,LANG("datum.28edebbe5e63dc9c", null),LANG("datum.7c22d9b837e71dd8", null),"Cancel") as null|anything in list("Yes","No","Cancel")
 	if(confirm != "Yes")
 		return
 
@@ -24,7 +25,7 @@ ADMIN_VERB(debug_maintenance_loot, R_DEBUG, "Debug Maintenance Loot", "List all 
 
 ADMIN_VERB(simulate_maintenance_loot, R_DEBUG, "Simulate Maintenance Loot", "Simulate 100 maintenance loot spawns. Special trait modifiers NOT applied.", ADMIN_CATEGORY_DEBUG)
 
-	var/confirm = input(user,"Are you sure you wish to simulate maintenance loot? This process takes up a lot of the server's resources.","Simulate Maintenance Loot","Cancel") as null|anything in list("Yes","No","Cancel")
+	var/confirm = input(user,LANG("datum.b4aa256b9586045d", null),LANG("datum.78291b4f3103a4b9", null),"Cancel") as null|anything in list("Yes","No","Cancel")
 	if(confirm != "Yes")
 		return
 

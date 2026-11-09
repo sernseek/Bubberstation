@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// A small twinkling shining light that imbues people and things
 /// with magical effects upon walking through.
 /obj/effect/magical_light
@@ -65,16 +66,16 @@
 				if(i != 1 && i != effect_types.len)
 					magic_desc += ","
 				else if (i == effect_types.len && effect_types.len > 1)
-					magic_desc += ", and" // Oxford comma :)
+					magic_desc += LANG("obj.1333394cb882a88f", null) // Oxford comma :)
 				magic_desc += " [light_eff::special_description]"
 				if (i == effect_types.len)
 					magic_desc += "."
 
-			. += span_notice("The lights are charged with magic that has[magic_desc]")
+			. += span_notice(LANG("obj.3205b418a6419827", list(magic_desc)))
 		else
-			. += span_notice("The lights are charged with magic that has no effect in this plane.")
+			. += span_notice(LANG("obj.9d48857826887912", null))
 	else
-		. += span_notice("Feels like the chaplain might know more about these.")
+		. += span_notice(LANG("obj.53d2057c7ae56fd0", null))
 
 
 /obj/effect/magical_light/proc/on_enter(datum/source, atom/movable/entered)
@@ -87,7 +88,7 @@
 
 /obj/effect/magical_light/proc/on_bless(datum/source)
 	SIGNAL_HANDLER
-	src.visible_message(span_notice("The sparkling lights fizzle out of existence."))
+	src.visible_message(span_notice(LANG("obj.7adf7d43dd3f7205", null)))
 	qdel(src)
 
 /obj/effect/magical_light/proc/handle_new_entry(atom/movable/entered)

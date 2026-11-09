@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/component/shrink
 	var/olddens
 	var/oldopac
@@ -23,8 +24,8 @@
 		if(iscarbon(living))
 			var/mob/living/carbon/carbon = living
 			carbon.unequip_everything()
-			carbon.visible_message(span_warning("[carbon]'s belongings fall off of [carbon.p_them()] as [carbon.p_they()] shrink down!"),
-			span_userdanger("Your belongings fall away as everything grows bigger!"))
+			carbon.visible_message(span_warning(LANG("datum.7af3614128602547", list(carbon, carbon.p_them(), carbon.p_they()))),
+			span_userdanger(LANG("datum.efd9255f6a1f1de2", null)))
 		if(!living.GetComponent(/datum/component/squashable))
 			newsquash = living.AddComponent( \
 				/datum/component/squashable, \
@@ -34,8 +35,8 @@
 			)
 	else
 		parent_atom.set_density(FALSE) // this is handled by the UNDENSE trait on mobs
-	parent_atom.visible_message(span_warning("[parent_atom] shrinks down to a tiny size!"),
-	span_userdanger("Everything grows bigger!"))
+	parent_atom.visible_message(span_warning(LANG("datum.e1493c235c12a1f1", list(parent_atom))),
+	span_userdanger(LANG("datum.27262b5b7d42d182", null)))
 	if(shrink_time >= 0) // negative shrink time is permanent
 		QDEL_IN(src, shrink_time)
 

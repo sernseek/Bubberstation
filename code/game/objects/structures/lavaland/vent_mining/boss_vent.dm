@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 
 /obj/structure/ore_vent/boss
 	name = "menacing ore vent"
@@ -49,7 +50,7 @@
 			boss_string = "A bloody drillmark"
 		if(/mob/living/simple_animal/hostile/megafauna/wendigo/noportal)
 			boss_string = "A chilling skull"
-	. += span_notice("[boss_string] is etched onto the side of the vent.")
+	. += span_notice(LANG("obj.3984b488f1f13178", list(boss_string)))
 
 /obj/structure/ore_vent/boss/start_wave_defense()
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
@@ -90,23 +91,23 @@
 
 /obj/structure/ore_vent/debug/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/datum/material/choice = tgui_input_list(user, "Choose a material to add/remove.", "New material", subtypesof(/datum/material))
+	var/datum/material/choice = tgui_input_list(user, LANG("obj.cefe22c275848732", null), LANG("obj.faf8cd1e9457f0c5", null), subtypesof(/datum/material))
 	if(!choice)
 		return
 	if(mineral_breakdown[choice])
 		mineral_breakdown -= choice
-		balloon_alert_to_viewers("removed [choice::name]")
+		balloon_alert_to_viewers(LANG("obj.c6b4aa687c2eb2c1", list(choice::name)))
 		return
 	mineral_breakdown += choice
-	balloon_alert_to_viewers("added [choice::name]")
-	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
+	balloon_alert_to_viewers(LANG("obj.84f4a0c34b731bbc", list(choice::name)))
+	var/value = tgui_input_number(user, LANG("obj.1e9ff5601132b28d", null), LANG("obj.db0a4d77e59a2133", null), 1, 100, 1)
 	mineral_breakdown[choice] = value
-	balloon_alert_to_viewers("weighting of [value] added")
+	balloon_alert_to_viewers(LANG("obj.15a6cbba14f2e3f6", list(value)))
 	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	var/choice = tgui_input_list(user, "Choose a vent size.", "New size", list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
+	var/choice = tgui_input_list(user, LANG("obj.abcee23aab35f427", null), LANG("obj.1ca125c40013c1cb", null), list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
 	if(!choice)
 		return
 	vent_size_setup(random = FALSE, force_size = choice, map_loading = FALSE)

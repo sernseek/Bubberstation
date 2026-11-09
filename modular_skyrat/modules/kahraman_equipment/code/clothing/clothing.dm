@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // Jumpsuit
 
 /obj/item/clothing/under/frontier_colonist
@@ -193,36 +194,36 @@
 /obj/item/radio/headset/headset_frontier_colonist/examine(mob/user)
 	. = ..()
 	if(isnull(cell))
-		. += span_warning("Its battery compartment is <b>empty</b>.")
+		. += span_warning(LANG("obj.e5bcd18d588f5a9a", null))
 	else
-		. += span_notice("Its [cell.name] is charged to <b>[round(cell.percent())]%</b>. Talking with no relay in range drains it.")
-	. += span_notice("The battery and key can be removed with a <b>screwdriver</b>.")
+		. += span_notice(LANG("obj.64f83a05d565e23c", list(cell.name, round(cell.percent()))))
+	. += span_notice(LANG("obj.96acc301afabd0f7", null))
 
 // one key, ignoring the frequency lock
 /obj/item/radio/headset/headset_frontier_colonist/install_key(mob/living/user, obj/item/encryptionkey/key)
 	if(keyslot)
-		loc.balloon_alert(user, "only fits one key!")
+		loc.balloon_alert(user, LANG("obj.00ff68a181783fb4", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(key, src))
-		loc.balloon_alert(user, "cannot install!")
+		loc.balloon_alert(user, LANG("obj.b3c67530261e2e10", null))
 		return ITEM_INTERACT_BLOCKING
 	keyslot = key
 	recalculateChannels()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	loc.balloon_alert(user, "encryption key installed")
+	loc.balloon_alert(user, LANG("obj.40711314e0f6385a", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/headset_frontier_colonist/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!isnull(cell))
-		loc.balloon_alert(user, "already has a battery!")
+		loc.balloon_alert(user, LANG("obj.8d55adc6b83630ff", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	cell = tool
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	loc.balloon_alert(user, "battery installed")
+	loc.balloon_alert(user, LANG("obj.f5a5d99208a3dfcb", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/headset_frontier_colonist/screwdriver_act(mob/living/user, obj/item/tool)
@@ -231,10 +232,10 @@
 		user.put_in_hands(cell)
 		removed_anything = TRUE
 	if(!removed_anything)
-		loc.balloon_alert(user, "nothing to remove!")
+		loc.balloon_alert(user, LANG("obj.44a5e7e006c9bd4d", null))
 		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src, 10)
-	loc.balloon_alert(user, "battery and key removed")
+	loc.balloon_alert(user, LANG("obj.8fe3da7428b6bfd9", null))
 	return ITEM_INTERACT_SUCCESS
 
 // only runs when no relay carried the message
@@ -244,7 +245,7 @@
 		return
 	if(isnull(cell) || !cell.use(FRONTIER_RADIO_TRANSMIT_COST))
 		if(ismob(loc))
-			to_chat(loc, span_warning("[src] crackles. There is no relay in range and not enough charge to reach anyone."))
+			to_chat(loc, span_warning(LANG("obj.bda31395f88b911f", list(src))))
 		return
 	return ..()
 

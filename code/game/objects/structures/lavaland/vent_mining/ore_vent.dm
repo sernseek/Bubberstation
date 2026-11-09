@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define ARTIFACT_ROLL_CHANCE 7
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
@@ -116,7 +117,7 @@
 		return NONE
 
 	if(tapped)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a5b5155d7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	scan_and_confirm(user)
@@ -129,15 +130,15 @@
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		return
 	if(!discovered)
-		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
+		to_chat(user, span_notice(LANG("obj.dab21379e460efde", list(src))))
 		return
-	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
+	to_chat(user, span_notice(LANG("obj.531862feeec6dc3e", list(src))))
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
 			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder(TRUE)
-	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+	visible_message(span_notice(LANG("obj.24a0e5036ea1f799", null)))
 
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
@@ -157,15 +158,15 @@
 	if(discovered)
 		switch(boulder_size)
 			if(BOULDER_SIZE_SMALL)
-				. += span_notice("This vent produces [span_bold("small")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2d457c7cd", list(span_bold("small"), ore_string)))
 			if(BOULDER_SIZE_MEDIUM)
-				. += span_notice("This vent produces [span_bold("medium")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2d457c7cd", list(span_bold("medium"), ore_string)))
 			if(BOULDER_SIZE_LARGE)
-				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2d457c7cd", list(span_bold("large"), ore_string)))
 	else
-		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+		. += span_notice(LANG("obj.93755b0fbf412934", list(span_bold("Mining Scanner"))))
 	if(artifact_chance)
-		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
+		. += span_notice(LANG("obj.986e8ed5f6b5d6a5", list(span_bold("artifact boulder."))))
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
@@ -234,7 +235,7 @@
  * This confirms that the user wants to start the wave defense event, and that they can start it.
  */
 /obj/structure/ore_vent/proc/pre_wave_defense(mob/user, spawn_drone = TRUE, mech_scan = FALSE)
-	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, excavation_warning, LANG("obj.b7a016b4c4bf7ac4", null), list("Yes", "No")) != "Yes")
 		return FALSE
 	if(!can_interact(user) && !mech_scan)
 		return FALSE
@@ -350,7 +351,7 @@
 	if(!forced)
 		log_game("Ore vent [key_name_and_tag(src)] was tapped")
 		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a5b5155d7", null))
 	playsound(node, 'sound/effects/node_victory.ogg', 40, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
 	add_tapped_visual()
@@ -370,7 +371,7 @@
 		var/point_reward_val = (MINER_POINT_MULTIPLIER * (boulder_size + 2)) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
-			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+			user_id_card.registered_account.bank_card_talk(LANG("obj.a6dd1fb075564cf1", list(point_reward_val)))
 
 /obj/structure/ore_vent/proc/add_tapped_visual()
 	if (vent_visual)
@@ -479,22 +480,22 @@
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/living/user, mech_scan = FALSE)
 	if(tapped)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a5b5155d7", null))
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown) || node) //We're already defending the vent, so don't scan it again.
-		balloon_alert_to_viewers("protect the node drone!")
+		balloon_alert_to_viewers(LANG("obj.2b34c514fe465b75", null))
 		return
 	if(!discovered)
 		if(DOING_INTERACTION_WITH_TARGET(user, src))
-			balloon_alert(user, "already scanning!")
+			balloon_alert(user, LANG("obj.ca13ca70bce035e4", null))
 			return
-		balloon_alert(user, "scanning...")
+		balloon_alert(user, LANG("obj.9ef11a33f0292426", null))
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 		if(!do_after(user, 4 SECONDS, src))
 			return
 
 		discovered = TRUE
-		balloon_alert(user, "vent scanned!")
+		balloon_alert(user, LANG("obj.eec90e8d28eaaa9a", null))
 		generate_description(user)
 		AddComponent(/datum/component/gps, name)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
@@ -502,7 +503,7 @@
 			return
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-			user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			user_id_card.registered_account.bank_card_talk(LANG("obj.c8ab03dffce32cd1", list(MINER_POINT_MULTIPLIER)))
 		return
 
 	if(!pre_wave_defense(user, spawn_drone_on_tap, mech_scan))

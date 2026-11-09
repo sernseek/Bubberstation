@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/round_event_control/blob
 	name = "Blob"
 	typepath = /datum/round_event/ghost_role/blob
@@ -24,7 +25,7 @@
 	if(!fake)
 		return //the mob itself handles this.
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(lose_some_weight_lardass)), rand(60 SECONDS,180 SECONDS))
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+	priority_announce(LANG("datum.4bada0d03b828da2", list(station_name())), "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(lose_some_weight_lardass)), rand(60 SECONDS,180 SECONDS))
@@ -75,7 +76,6 @@
 			unlucky_victim_fatty_score = possible_fatty_score
 
 	priority_announce(
-		"It appears that the level 5 biohazard aboard [station_name()] was a false alarm, as our sensors appeared to have mistakenly labeled [unlucky_victim] as a level 5 biohazard. \
-		All crewmembers are reminded to practice healthy eating habbits as part of Nanotrasen's Safe and Healthy Eating program.",
+		LANG("_root.a788b412c6c35f2b", list(station_name(), unlucky_victim)),
 		"Biohazard Alert"
 	)

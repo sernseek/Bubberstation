@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 
 
 /datum/component/spawner
@@ -128,7 +129,7 @@
 				return FALSE
 			completed_waves++
 			var/atom/spawner_atom = parent
-			spawner_atom.balloon_alert_to_viewers("wave [completed_waves]/[max_waves]")
+			spawner_atom.balloon_alert_to_viewers(LANG("datum.049498af8772f77f", list(completed_waves, max_waves)))
 	return TRUE
 
 /// Try to create a new mob
@@ -221,7 +222,7 @@
 	spawn_callback?.Invoke(spawned_mob)
 
 	if(spawn_text)
-		spawner.visible_message(span_danger("A creature [spawn_text] [spawner]."))
+		spawner.visible_message(span_danger(LANG("datum.b3892db7a0a545d4", list(spawn_text, spawner))))
 
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow

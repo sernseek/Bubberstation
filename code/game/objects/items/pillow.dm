@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define FORTIFY_FILTER "ANGRY_GLOW"
 
 //Pillow and pillow related items
@@ -81,34 +82,34 @@
 	if(victim.is_mouth_covered() || !victim.get_bodypart(BODY_ZONE_HEAD))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
+		to_chat(user, span_notice(LANG("obj.45ea45fda37f7b60", list(victim))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(can_smother(victim, user))
-		user.visible_message("[user] starts to smother [victim]!", span_notice("You begin smothering [victim]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		user.visible_message(LANG("obj.eba55494b2352ff3", list(user, victim)), span_notice(LANG("obj.bb5b659ba5732979", list(victim))), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
 		var/obj/item/stack/sheet/mineral/sandstone/brick = tool
-		balloon_alert(user, "inserting brick...")
+		balloon_alert(user, LANG("obj.120da1985d3c5c2b", null))
 		if(!do_after(user, 2 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
 		if(!brick.use(1))
-			balloon_alert(user, "not enough bricks!")
+			balloon_alert(user, LANG("obj.ee0a5208878342e2", null))
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "bricked!")
+		balloon_alert(user, LANG("obj.9c9d0693c2ad5f20", null))
 		become_bricked()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/clothing/neck/pillow_tag))
 		if(pillow_trophy)
-			balloon_alert(user, "tag is intact.")
+			balloon_alert(user, LANG("obj.550f3414a1e1fdbd", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		pillow_trophy = tool
-		balloon_alert(user, "honor reclaimed!")
+		balloon_alert(user, LANG("obj.3733728520faaa1b", null))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -117,24 +118,24 @@
 /obj/item/pillow/examine(mob/user)
 	. = ..()
 	if(bricked)
-		. += span_info("[p_They()] feel[p_s()] unnaturally heavy.")
+		. += span_info(LANG("obj.84981abc5269000d", list(p_They(), p_s())))
 	if(pillow_trophy)
-		. += span_notice("Alt-click to remove the tag!")
+		. += span_notice(LANG("obj.e82414113cc9a030", null))
 
 /obj/item/pillow/click_alt(mob/user)
 	if(!user.can_hold_items(src))
 		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
-		balloon_alert(user, "no tag!")
+		balloon_alert(user, LANG("obj.0b2a43af4ed5fc60", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "removing tag...")
+	balloon_alert(user, LANG("obj.eb107e2299394195", null))
 	if(!do_after(user, 2 SECONDS, src))
 		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
 		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
-	balloon_alert(user, "tag removed")
+	balloon_alert(user, LANG("obj.4000825a0520d0ef", null))
 	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -142,11 +143,11 @@
 /obj/item/pillow/update_appearance(updates)
 	. = ..()
 	if(!pillow_trophy)
-		desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
+		desc = LANG("obj.6d8c9b432529dc8b", list(tag_desc))
 		icon_state = "pillow_[variation]"
 		inhand_icon_state = "pillow_no_t"
 	else
-		desc = "A soft and fluffy pillow. You can smack someone with this!"
+		desc = LANG("obj.ee635fb5af10b0ad", null)
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
@@ -167,7 +168,7 @@
 		if(!do_after(user, 1 SECONDS, victim))
 			break
 		victim.losebreath += 1
-	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	victim.visible_message(LANG("obj.76407c7e0fb6a1a5", list(victim)), span_notice(LANG("obj.9384be6708c56431", null)), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/pillow/random
 
@@ -305,7 +306,7 @@
 		if(current_tile_charge >= min_tile_charge)
 			if(!charging)
 				user.add_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
-				user.balloon_alert(user, "charging!")
+				user.balloon_alert(user, LANG("obj.944c88c7a2ebfa2d", null))
 				charging = TRUE
 			user.adjust_stamina_loss(stamina_per_tile)
 		current_tile_charge++
@@ -315,7 +316,7 @@
 	SIGNAL_HANDLER
 
 	if(current_tile_charge < min_tile_charge)
-		user.balloon_alert(user, "too slow!")
+		user.balloon_alert(user, LANG("obj.fcb5923bdb45175a", null))
 		return
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), src, user)
 	target.adjust_stamina_loss(damage_boost_per_tile * current_tile_charge)
@@ -368,7 +369,7 @@
 	block_chance += 20
 	ADD_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+	user.visible_message(span_alert(LANG("obj.9219216ff44642e0", list(user.name))))
 	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
 	var/filter = user.get_filter(FORTIFY_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
@@ -383,6 +384,6 @@
 	var/filter = user.get_filter(FORTIFY_FILTER)
 	animate(filter)
 	user.remove_filter(FORTIFY_FILTER)
-	user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
+	user.visible_message(span_alert(LANG("obj.07d52eb35fe05833", list(user))))
 
 #undef FORTIFY_FILTER

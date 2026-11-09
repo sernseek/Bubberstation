@@ -1,10 +1,11 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 //Smites to crush someone with an anvil. First one prompts for a damage value. Second has a preset damage value and shouldn't kill if the person is healthy.
 /datum/smite/crush
 	name = "Crush with Anvil"
 	var/hurty = 120
 
 /datum/smite/crush/configure(client/user)
-	hurty = tgui_input_number(user, "How much do you want them to be crushed? 120 will crit, 240 will kill! Anything more than that is extra.", "Crushing time", 120, 600, 0)
+	hurty = tgui_input_number(user, LANG("datum.abafb3655e1a9bfa", null), LANG("datum.bf734d7a92e5d9a8", null), 120, 600, 0)
 
 /datum/smite/crush/effect(client/user, mob/living/target)
 	. = ..()
@@ -23,6 +24,6 @@
 	if(hurty > 110)
 		playsound(target, 'modular_skyrat/modules/gladiator/Clang_cut.ogg', 100, TRUE)
 
-	target.visible_message(span_danger("[crushing_thing] crashes from above onto [target]!"))
+	target.visible_message(span_danger(LANG("datum.a1f607163830989c", list(crushing_thing, target))))
 	if(target.stat == DEAD)
-		target.visible_message(span_danger("[target] is killed instantly!"))
+		target.visible_message(span_danger(LANG("datum.7041aca4ab75b3bf", list(target))))

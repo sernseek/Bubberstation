@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /datum/round_event/droppod_airraid
 	start_when = 50
 	end_when = 999
@@ -198,7 +199,7 @@
 /datum/round_event/droppod_airraid/proc/after_wave()
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	var/turf/ghost_target_turf = pick(get_area_turfs(get_current_wave()))
-	notify_ghosts("A droppod wave is attacking [get_current_wave().name]!", source = ghost_target_turf, header = "Invasion in progress", alert_overlay = target_appearance)
+	notify_ghosts(LANG("datum.65506441fe84cf67", list(get_current_wave().name)), source = ghost_target_turf, header = "Invasion in progress", alert_overlay = target_appearance)
 	set_next_incident_time()
 	current_wave++
 
