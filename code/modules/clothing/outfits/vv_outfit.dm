@@ -135,7 +135,7 @@
 	for(var/obj/item/implant/implant in implants)
 		outfit.implants |= implant.type
 	//Copy to outfit cache
-	var/outfit_name = stripped_input(usr,"Enter the outfit name")
+	var/outfit_name = stripped_input(usr,LANG("mob.7b0f97c0690f0be6", null))
 	outfit.name = outfit_name
 	GLOB.custom_outfits += outfit
 	to_chat(usr,LANG("mob.15fc7b145545d4d4", null))

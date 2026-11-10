@@ -415,7 +415,7 @@
 	add_verb(client, /client/verb/fix_tgui_panel)
 
 ///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
-GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", "OOC")
+GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "重置大厅菜单 HUD", "OOC")
 	var/mob/dead/new_player/new_player = usr
 	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
 		to_chat(new_player, span_warning(LANG("mob.2751ef75cb67de2e", list(DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))))))

@@ -631,7 +631,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "更换全息图
 	if(incapacitated)
 		return
 
-	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	ai_holocolor = tgui_color_picker(usr, LANG("mob.45bcdc874487c63c", null), LANG("mob.70cb0bd740d24984", null))
 	if(ai_holocolor)
 		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
 		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)

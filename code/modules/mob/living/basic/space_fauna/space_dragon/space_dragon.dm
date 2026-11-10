@@ -141,7 +141,7 @@
 
 /// Select scale colour with the colour picker
 /mob/living/basic/space_dragon/proc/select_colour()
-	chosen_colour = tgui_color_picker(src, "What colour would you like to be?" ,"Colour Selection", COLOR_WHITE)
+	chosen_colour = tgui_color_picker(src, LANG("mob.b86a7bdd78ed5bc3", null) ,LANG("mob.4625afd7dde73e53", null), COLOR_WHITE)
 	if(!chosen_colour) // Redo proc until we get a color
 		to_chat(src, span_warning(LANG("mob.4a638bdd7f629d2e", null)))
 		select_colour()

@@ -848,7 +848,7 @@ SUBSYSTEM_DEF(gamemode)
 		event_control = pick_weight(SSgamemode.antag_rerolls)
 	SSgamemode.inject_event(event_control = event_control)
 
-ADMIN_VERB(create_antagonist, R_FUN, "Create Antagonist", "Inject a little more action into the round.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(create_antagonist, R_FUN, "创建反派", "Inject a little more action into the round.", ADMIN_CATEGORY_EVENTS)
 	var/list/available_antags = list()
 	for(var/datum/round_event_control/event_control as anything in SSgamemode.antag_rerolls)
 		LAZYADD(available_antags, event_control)

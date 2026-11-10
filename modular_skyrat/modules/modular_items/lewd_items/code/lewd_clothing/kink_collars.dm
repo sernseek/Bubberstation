@@ -112,7 +112,7 @@
 //rename collar code
 
 /obj/item/clothing/neck/kink_collar/attack_self(mob/user)
-	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
+	tagname = stripped_input(user, LANG("obj.caff9b8cf4adcde9", null), LANG("obj.f428d0a3eb8ed8ce", null), "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
 /*
@@ -302,7 +302,7 @@
 
 //changing name of key in case if we using multiple collars with same color
 /obj/item/key/kink_collar/attack_self(mob/user)
-	keyname = stripped_input(user, "Would you like to change the name on the key?", "Renaming key", "Key", MAX_NAME_LEN)
+	keyname = stripped_input(user, LANG("obj.4e509f0fdf03a5c8", null), LANG("obj.08bfa2621d949d92", null), "Key", MAX_NAME_LEN)
 	name = "[initial(name)] - [keyname]"
 
 //we checking if we can open collar with THAT KEY with SAME ID as the collar.

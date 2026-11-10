@@ -47,13 +47,13 @@
 
 	first.linked_to = second
 	first.seer = owner
-	first.desc += " This one leads to [get_area(second)]."
+	first.desc = "[lang_reverse_text(first.desc)][LANG("datum.149702e05149e29d", list(get_area(second)))]" // ZH EDIT CHANGE - ORIGINAL: first.desc += " This one leads to [get_area(second)]."
 	first.name += " ([get_area(second)])"
 	created_firsts += first
 
 	second.linked_to = first
 	second.seer = owner
-	second.desc += " This one leads to [get_area(first)]."
+	second.desc = "[lang_reverse_text(second.desc)][LANG("datum.149702e05149e29d", list(get_area(first)))]" // ZH EDIT CHANGE - ORIGINAL: second.desc += " This one leads to [get_area(first)]."
 	second.name += " ([get_area(first)])"
 
 	// Delete Next Portal if it's time (it will remove its partner)

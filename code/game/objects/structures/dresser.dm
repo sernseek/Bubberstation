@@ -48,7 +48,7 @@
 			if(new_undies)
 				dressing_human.underwear = new_undies
 		if("Underwear Color")
-			var/new_underwear_color = tgui_color_picker(dressing_human, "Choose your underwear color", "Underwear Color", dressing_human.underwear_color)
+			var/new_underwear_color = tgui_color_picker(dressing_human, LANG("obj.9cb60df215066361", null), LANG("obj.be1e52a67f41595d", null), dressing_human.underwear_color)
 			if(new_underwear_color)
 				dressing_human.underwear_color = sanitize_hexcolor(new_underwear_color)
 		if("Undershirt")
@@ -61,11 +61,11 @@
 				dressing_human.socks = new_socks
 		//SKYRAT EDIT ADDITION BEGIN - Colorable Undershirt/Socks/Bras
 		if("Undershirt Color")
-			var/new_undershirt_color = tgui_color_picker(dressing_human, "Choose your undershirt color", "Undershirt Color", dressing_human.undershirt_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			var/new_undershirt_color = tgui_color_picker(dressing_human, LANG("obj.e125c60a8fcd42d1", null), LANG("obj.b278947bbb9b5d81", null), dressing_human.undershirt_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(new_undershirt_color)
 				dressing_human.undershirt_color = sanitize_hexcolor(new_undershirt_color)
 		if("Socks Color")
-			var/new_socks_color = tgui_color_picker(dressing_human, "Choose your socks color", "Socks Color", dressing_human.socks_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			var/new_socks_color = tgui_color_picker(dressing_human, LANG("obj.6cdfd13ff82783ed", null), LANG("obj.4a63991d4af4d061", null), dressing_human.socks_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(new_socks_color)
 				dressing_human.socks_color = sanitize_hexcolor(new_socks_color)
 
@@ -75,7 +75,7 @@
 				dressing_human.bra = new_bra
 
 		if("Bra Color")
-			var/new_bra_color = tgui_color_picker(dressing_human, "Choose your Bra color", "Bra Color", dressing_human.bra_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			var/new_bra_color = tgui_color_picker(dressing_human, LANG("obj.6faf0ab51fc14c37", null), LANG("obj.dac9888452328a63", null), dressing_human.bra_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(new_bra_color)
 				dressing_human.bra_color = sanitize_hexcolor(new_bra_color)
 

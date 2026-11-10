@@ -122,6 +122,11 @@ cargo run --release --manifest-path tools/i18n/Cargo.toml -- verbs --locale zh-H
 **上游合并后**：resync 会把新 verb 名抽进目录，翻译完再跑一次上面第 3 步、提交即可（`resync.sh`
 结尾有提示）。`verbs` 不放进 `resync.sh`，因为它必须在**翻译之后**跑。
 
+Bubber 移植时已注入、但没有对应运行时译文的命令名保存在
+`tools/i18n/verb-names.zh-Hans.json`，仍使用英文目录的内容哈希 key。该表只供 `verbs`
+和目录审计读取，优先于普通 locale 目录，不进入全局反查表，避免命令名污染机器标识符。
+审计会同时核对源码中的 `set name` 和命名空间，不能仅凭表里存在译文就认定 key 仍在使用。
+
 ⚠️ **不要跑 `verbs --revert`**：它按 zh→en 反查还原，是给「注入-编译-还原」旧流程用的。现在源码本身
 就是中文，revert 会把整仓译名打回英文。需要英文构建就 checkout 一个注入前的提交。
 
@@ -414,6 +419,9 @@ cargo run --release --manifest-path tools/i18n/Cargo.toml -- lint \
 
 # 首次采纳 / 修复碰撞后刷新基线
 … -- lint --update-baseline
+
+# 审核上游迁移时，输出全部带源码位置的裸英文候选（默认只显示前 20 条）
+I18N_LINT_ALL_BARE=1 cargo run --release --manifest-path tools/i18n/Cargo.toml -- lint
 ```
 
 两类检查：
@@ -557,6 +565,21 @@ some_command_that_dumps_ui | node tools/i18n/pseudo-scan.mjs --min 5
 > `lang_initialize_runtime()` 固定 locale、加载唯一 active locale，并一次性预热 domain、exact/normalized
 > reverse、type-var、template 与 AC 索引。BOOTSTRAP 期早调用只返回英文且不缓存空状态；初始化完成后
 > 才进入 `I18N_RUNTIME_READY`。早建的展示型字符串池在同一入口集中重放，匹配/标识符表明确跳过。
+
+## 使用 OMP 翻译
+
+OMP 自行管理认证；模型通过环境变量显式指定。可以先限制批量和调用次数，抽查后再继续：
+
+```sh
+I18N_BACKEND=omp I18N_OMP_MODEL=opencode-go/deepseek-v4.1-flash \
+  I18N_CHUNK=20 I18N_MAX_CODEX_CALLS=4 bun tools/i18n/mt/i18n-mt.ts translate area.json
+```
+
+该后端禁用 OMP 工具和扩展，写入前检查占位符、DM 宏、HTML 和术语；仍需人工复核译文。
+后端目录中与 `identifier-baseline.txt` 冲突的原文默认暂缓；`I18N_OMP_IDENTIFIER_BLOCKLIST` 可指定额外的
+JSON 字符串数组。确认显示与标识符已经分离后，才应使用 `I18N_OMP_ALLOW_IDENTIFIERS=1` 处理这些条目。
+多个进程翻译同一个目录时，可分别设置 `I18N_MT_DST_DIR` 和 `I18N_MT_PENDING_DIR` 到独立目录，
+先复制目标目录中的原始 catalog 并按键拆分 `I18N_ONLY_KEYS`，完成后再核对并合并；不要让进程同时写同一文件。
 
 ## 注意
 

@@ -31,7 +31,13 @@ GLOBAL_VAR(string_filename_current_key)
 		CRASH("strings list not found: [directory]/[filepath], index=[key]")
 
 /proc/strings_subkey_lookup(match, group1)
-	return pick_list(GLOB.string_filename_current_key, group1)
+	// ZH EDIT ADDITION START - I18N: spy substitutions are display text, not phobia/speech lookup keys
+	var/filepath = GLOB.string_filename_current_key
+	var/selected = pick_list(filepath, group1)
+	if(filepath == SPY_OBJECTIVE_FILE)
+		return lang_localize_spy_replacement(selected)
+	return selected
+	// ZH EDIT ADDITION END - ORIGINAL: return pick_list(GLOB.string_filename_current_key, group1)
 
 /proc/load_strings_file(filepath, directory = STRING_DIRECTORY)
 	if(IsAdminAdvancedProcCall())

@@ -203,7 +203,7 @@
 		if(!ammo_band_icon)
 			balloon_alert(user, LANG("obj.a0eb2f5e39e63aea", null))
 			return
-		var/new_color = tgui_color_picker(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color)
+		var/new_color = tgui_color_picker(user, LANG("obj.c39f827fac64a2ff", null), LANG("obj.7ad74c75d9da9325", null), ammo_band_color)
 		ammo_band_color = new_color
 		balloon_alert(user, LANG("obj.403f3c01ce133ba5", null))
 		update_appearance()

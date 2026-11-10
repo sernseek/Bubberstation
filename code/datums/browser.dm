@@ -425,11 +425,11 @@
 					setting["value"] = new_value
 
 			if ("string")
-				setting["value"] = stripped_input(user, "Enter new value for [setting["desc"]]", "Enter new value for [setting["desc"]]", setting["value"])
+				setting["value"] = stripped_input(user, LANG("datum.3ec3cdd5425f6b73", list(setting["desc"])), LANG("datum.3ec3cdd5425f6b73", list(setting["desc"])), setting["value"])
 			if ("number")
 				setting["value"] = input(user, LANG("datum.3ec3cdd5425f6b73", list(setting["desc"])), LANG("datum.3ec3cdd5425f6b73", list(setting["desc"]))) as num
 			if ("color")
-				settings["mainsettings"][setting]["value"] = tgui_color_picker(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])	// BUBBERSTATION EDIT: TGUI COLOR PICKER
+				settings["mainsettings"][setting]["value"] = tgui_color_picker(user, LANG("datum.3ec3cdd5425f6b73", list(settings["mainsettings"][setting]["desc"])), LANG("datum.3ec3cdd5425f6b73", list(settings["mainsettings"][setting]["desc"])), settings["mainsettings"][setting]["value"])	// BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if ("boolean")
 				setting["value"] = (setting["value"] == "Yes") ? "No" : "Yes"
 			if ("ckey")

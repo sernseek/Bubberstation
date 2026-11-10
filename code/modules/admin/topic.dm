@@ -286,7 +286,7 @@
 	else if(href_list["deletemessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = tgui_alert(usr,"Delete message/note?",,list("Yes","No"));
+		var/safety = tgui_alert(usr,LANG("datum.231e6355af5205fb", null),,list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessage"]
 			delete_message(message_id)
@@ -294,7 +294,7 @@
 	else if(href_list["deletemessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = tgui_alert(usr,"Delete message/note?",,list("Yes","No"));
+		var/safety = tgui_alert(usr,LANG("datum.231e6355af5205fb", null),,list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessageempty"]
 			delete_message(message_id, browse = TRUE)

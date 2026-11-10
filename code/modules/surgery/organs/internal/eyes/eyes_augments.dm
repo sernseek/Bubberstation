@@ -225,8 +225,8 @@
 		if("pick_color")
 			var/new_color = tgui_color_picker(
 				usr,
-				"Choose eye color color:",
-				"High Luminosity Eyes Menu",
+				LANG("obj.a0f56336883c6a39", null),
+				LANG("obj.902240663aabfbc8", null),
 				light_color_string
 			)
 			if(new_color)

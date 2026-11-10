@@ -156,7 +156,7 @@
 /mob/living/basic/guardian/proc/guardian_recolour()
 	if (isnull(client))
 		return
-	var/chosen_guardian_colour = tgui_color_picker(src, "What would you like your colour to be?", "Choose Your Colour", COLOR_WHITE)
+	var/chosen_guardian_colour = tgui_color_picker(src, LANG("mob.11376271a1a94ccd", null), LANG("mob.a820ad3cf0a1d601", null), COLOR_WHITE)
 	if (isnull(chosen_guardian_colour)) //redo proc until we get a color
 		to_chat(src, span_warning(LANG("mob.9e0eb39ac6913b5a", null)))
 		return guardian_recolour()

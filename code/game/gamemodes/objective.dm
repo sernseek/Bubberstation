@@ -680,7 +680,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 			return
 		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
 		var/custom_name = initial(custom_target.name)
-		custom_name = stripped_input(admin,"Enter target name:", "Objective target", custom_name)
+		custom_name = stripped_input(admin,LANG("datum.63cd96aa53c9660f", null), LANG("datum.83e3a58e00d79722", null), custom_name)
 		if (!custom_name)
 			return
 		steal_target = custom_target
@@ -1005,7 +1005,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	no_failure = TRUE
 
 /datum/objective/custom/admin_edit(mob/admin)
-	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
+	var/expl = stripped_input(admin, LANG("datum.577672889a34b922", null), LANG("datum.161e201425e206dd", null), explanation_text)
 	if(expl)
 		explanation_text = expl
 

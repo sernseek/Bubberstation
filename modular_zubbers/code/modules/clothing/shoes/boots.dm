@@ -460,7 +460,7 @@
 	var/free_move = FALSE
 	var/list/active_traits = list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_PHASING, TRAIT_MOVE_FLYING, TRAIT_LAVA_IMMUNE, TRAIT_NO_FLOATING_ANIM)
 
-GAME_VERB_SRC(/obj/item/clothing/shoes/combat/debug, toggle, usr, "Toggle Bluespace Magnets", null)
+GAME_VERB_SRC(/obj/item/clothing/shoes/combat/debug, toggle, usr, "切换蓝空间磁铁", null)
 	if(!can_use(usr))
 		return
 	attack_self(usr)

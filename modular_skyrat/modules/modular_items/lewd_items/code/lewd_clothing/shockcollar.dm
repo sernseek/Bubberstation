@@ -68,7 +68,7 @@
 
 /obj/item/electropack/shockcollar/attackby(obj/item/used_item, mob/user, params) // Moves it here because on_click is being bad
 	if(istype(used_item, /obj/item/pen))
-		var/tag_input = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot", MAX_NAME_LEN)
+		var/tag_input = stripped_input(user, LANG("obj.caff9b8cf4adcde9", null), LANG("obj.f428d0a3eb8ed8ce", null), tagname ? tagname : "Spot", MAX_NAME_LEN)
 		if(tag_input)
 			tagname = tag_input
 			name = "[initial(name)] - [tag_input]"

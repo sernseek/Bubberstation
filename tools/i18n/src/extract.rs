@@ -317,6 +317,24 @@ pub struct ProcCtx {
     /// `how_cool_are_your_threads += "[src]'s storage opens when…"` 这种局部名一路漏到
     /// 玩家眼前。按 proc 语义界定比按变量名穷举稳，也不会漏到 examine 之外。
     pub examine: bool,
+    /// Legacy browser interfaces may build display HTML in a local `dat` accumulator.
+    pub browse_ui: bool,
+}
+
+/// A complete interpolated browser sentence with only known presentation tags. Reject links,
+/// arbitrary attributes, and sentence fragments so data/HTML structure cannot become a LANG key.
+pub fn is_safe_browse_template(template: &str) -> bool {
+    if !template.contains("{0}") || !template.contains("<span class='highlight'>") {
+        return false;
+    }
+    let text = template.replace("<br>", "")
+        .replace("<span class='highlight'>", "")
+        .replace("</span>", "");
+    // A leading placeholder can be the tail of a sentence assembled by a previous `dat +=`.
+    // Translating it independently would retain English word order, so require a capitalized start.
+    text.trim_start().chars().next().is_some_and(|c| c.is_ascii_uppercase())
+        && !text.contains(['<', '>'])
+        && is_examine_sentence(&text)
 }
 
 /// examine 家族 proc：输出**一定**是玩家可见的检查文本。
@@ -2108,6 +2126,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<Catalog> {
                     ident: false,
                     examine: false,
                     display_return: false,
+                    browse_ui: false,
                 };
                 visit_expr(expr, &var_scope, &mut catalog, suppress_aggressive, var_ctx);
             }
@@ -2182,6 +2201,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<Catalog> {
                         ident: is_identifier_dot_proc(proc_name),
                         examine: is_examine_proc(proc_name),
                         display_return: is_display_descriptor_proc(proc_name),
+                        browse_ui: proc_name == "ui_interact",
                     };
                     visit_block(block, &proc_scope, &mut catalog, suppress_aggressive, ctx);
                     // **形参默认值**里的玩家可见文案。SINK_VARS 走的是类型变量声明，够不着这一类：
@@ -3606,6 +3626,9 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                                 }
                             }
                             if let Some(template) = build_template(rhs) {
+                                if ctx.browse_ui && id == "dat" && is_safe_browse_template(&template) {
+                                    emit(catalog, ns, &template);
+                                }
                                 // 裸 `.` 与 examine 信号处理器的累加器（examine_list/text/strings）：
                                 // examine 输出，必玩家可见 → 全抽（含插值，供 LANG）。其它具名累加器只抽静态句供 AC。
                                 // ident_proc（update_overlays 等）：bare-`.` 是 icon_state/标识符，不抽。

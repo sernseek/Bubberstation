@@ -779,7 +779,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	balloon_alert(user, LANG("obj.abfba5438ce05c12", null))
 	being_used = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion![potion_reason ? " Reason: [span_boldnotice(potion_reason)]" : ""]",
+		question = LANG("obj.54705d0c0ea2b537", list(span_danger(user.name), span_notice(dumb_mob.name), potion_reason ? " Reason: [span_boldnotice(potion_reason)]" : "")),
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 20 SECONDS,
 		checked_target = dumb_mob,

@@ -12,7 +12,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
-	display_order = JOB_DISPLAY_ORDER_AI
+	display_order = 3 // ZH EDIT CHANGE - JOB_DISPLAY_ORDER: keep human AI distinct from AI and cyborg; ORIGINAL: JOB_DISPLAY_ORDER_AI
 	config_tag = "HUMAN_AI"
 
 	outfit = /datum/outfit/job/human_ai

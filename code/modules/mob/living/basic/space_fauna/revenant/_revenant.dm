@@ -570,7 +570,7 @@
 
 /mob/living/basic/revenant/proc/get_new_user()
 	message_admins("A poll for the reforming revenant was created.")
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to be [span_notice(name)] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "reforming revenant", chat_text_border_icon = src)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("mob.5e33c6bf6552e392", list(span_notice(name))), check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "reforming revenant", chat_text_border_icon = src)
 	if(!chosen_one)
 		message_admins("No candidates were found for the new revenant.")
 		visible_message(span_revenwarning(LANG("mob.8e01a1383507db21", null)))

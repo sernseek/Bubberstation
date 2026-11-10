@@ -418,11 +418,11 @@ Behavior that's still missing from this component that original food items had t
 			return
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
 			if(HAS_TRAIT(eater, TRAIT_VORACIOUS) || HAS_TRAIT(eater, TRAIT_GLUTTON))
-				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat.")
-				message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
+				message_to_nearby_audience = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "[eater] voraciously forces \the [parent] down [eater.p_their()] throat." : LANG("datum.1b18ce0b364e1f2a", list(eater, parent, eater.p_their()))) // ZH EDIT CHANGE - ORIGINAL: message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat.")
+				message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You voraciously force \the [parent] down your throat." : LANG("datum.3ec260172ca79c8b", list(parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
 			else
-				message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
-				message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
+				message_to_nearby_audience = span_warning(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!" : LANG("datum.b0d9350592223f35", list(eater, parent, eater.p_their()))) // ZH EDIT CHANGE - ORIGINAL: message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
+				message_to_consumer = span_warning(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You cannot force any more of \the [parent] to go down your throat!" : LANG("datum.b103b002f33b4afc", list(parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
 				message_to_blind_consumer = message_to_consumer
 				eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
 				eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
@@ -431,19 +431,19 @@ Behavior that's still missing from this component that original food items had t
 		else if(fullness > 500)
 			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
 				message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
-				message_to_consumer = span_notice("You [eatverb] \the [parent].")
+				message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You [eatverb] \the [parent]." : LANG("datum.767bf1806ccd199e", list(eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: span_notice("You [eatverb] \the [parent].")
 			else
-				message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
-				message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
+				message_to_nearby_audience = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "[eater] unwillingly [eatverb]s a bit of \the [parent]." : LANG("datum.6d9f895f7a006022", list(eater, eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
+				message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You unwillingly [eatverb] a bit of \the [parent]." : LANG("datum.d76f02158695b70f", list(eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
 		else if(fullness > 150)
 			message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
-			message_to_consumer = span_notice("You [eatverb] \the [parent].")
+			message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You [eatverb] \the [parent]." : LANG("datum.767bf1806ccd199e", list(eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: span_notice("You [eatverb] \the [parent].")
 		else if(fullness > 50)
-			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent].")
-			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent].")
+			message_to_nearby_audience = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "[eater] hungrily [eatverb]s \the [parent]." : LANG("datum.cf353468e105879b", list(eater, eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent].")
+			message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You hungrily [eatverb] \the [parent]." : LANG("datum.54d72dc917883b85", list(eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_consumer = span_notice("You hungrily [eatverb] \the [parent].")
 		else
-			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!")
-			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent], gobbling it down!")
+			message_to_nearby_audience = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "[eater] hungrily [eatverb]s \the [parent], gobbling it down!" : LANG("datum.38eca4eb914a3f25", list(eater, eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!")
+			message_to_consumer = span_notice(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "You hungrily [eatverb] \the [parent], gobbling it down!" : LANG("datum.01926ba03befaa70", list(eatverb, parent))) // ZH EDIT CHANGE - ORIGINAL: message_to_consumer = span_notice("You hungrily [eatverb] \the [parent], gobbling it down!")
 
 		//if we're blind, we want to feel how hungrily we ate that food
 		message_to_blind_consumer = message_to_consumer

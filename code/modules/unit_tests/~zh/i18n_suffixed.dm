@@ -22,6 +22,7 @@
 	var/base_text = "The lab technicians fried our last one. Mind building one for us?"
 	var/bounty_suffix = "</br>This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!"
 	var/organ_suffix = "This procedure can only be performed once per organ."
+	var/glasses_suffix = "These seem to have prescription lenses inserted in them."
 
 	var/list/test_cache = list()
 	en_cache["unittest.suffix_base"] = base_text
@@ -30,6 +31,8 @@
 	test_cache["unittest.suffix_bounty"] = "</br>此悬赏被标记为高优先级。"
 	en_cache["unittest.suffix_organ"] = organ_suffix
 	test_cache["unittest.suffix_organ"] = "此手术每个器官只能做一次。"
+	en_cache["unittest.suffix_glasses"] = glasses_suffix
+	test_cache["unittest.suffix_glasses"] = "这副眼镜似乎装有矫正视力的镜片。"
 	GLOB.i18n_catalogs[I18N_CATALOG_FORWARD_BUCKET][I18N_SUFFIX_TEST_LOCALE] = test_cache
 	GLOB.i18n_runtime_domains.Remove(I18N_SUFFIX_TEST_LOCALE)
 
@@ -51,6 +54,8 @@
 
 	// ③ 手术形态：前导空格的后缀，拼回时空格保留。
 	TEST_ASSERT_EQUAL(lang_reverse_suffixed("[base_text] [organ_suffix]"), "实验室技师把上一台烧了。介意帮我们造一台吗？ 此手术每个器官只能做一次。", "带前导空格的后缀应被拆开分别反查")
+	var/obj/item/suffix_subject = allocate(/obj/item)
+	TEST_ASSERT_EQUAL(suffix_subject.lang_localize_desc_for_display("[base_text] [glasses_suffix]"), "实验室技师把上一台烧了。介意帮我们造一台吗？ 这副眼镜似乎装有矫正视力的镜片。", "检查面板应翻译动态追加的眼镜描述")
 
 	// ④ 未登记的后缀：整串 miss，原样返回（不乱拆）。
 	TEST_ASSERT_EQUAL(lang_reverse_suffixed("[base_text] And something entirely unregistered."), "[base_text] And something entirely unregistered.", "未登记后缀应原样返回")
@@ -61,6 +66,7 @@
 	en_cache -= "unittest.suffix_base"
 	en_cache -= "unittest.suffix_bounty"
 	en_cache -= "unittest.suffix_organ"
+	en_cache -= "unittest.suffix_glasses"
 	GLOB.i18n_reverse -= I18N_SUFFIX_TEST_LOCALE
 
 #undef I18N_SUFFIX_TEST_LOCALE

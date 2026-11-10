@@ -543,7 +543,7 @@ GAME_VERB_PROC(/mob/living, emote_clap, "> 鼓掌", "Emotes+")
 GAME_VERB_PROC(/mob/living, emote_clap1, "> 拍一下手", "Emotes+")
 	src.emote("clap1", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_slowclap, "> Slow Clap", "Emotes")
+GAME_VERB_PROC(/mob/living, emote_slowclap, "> 缓慢鼓掌", "Emotes")
 	src.emote("slowclap", intentional = TRUE)
 
 GAME_VERB_PROC(/mob/living, emote_headtilt, "~ 侧头", "Emotes+")
@@ -636,19 +636,19 @@ GAME_VERB_PROC(/mob/living, emote_moo, "> 欢快哞叫", "Emotes+")
 GAME_VERB_PROC(/mob/living, emote_honk1, "> 大声鹅叫", "Emotes+")
 	src.emote("honk1", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_neigh, "> Neigh", "Emotes+")
+GAME_VERB_PROC(/mob/living, emote_neigh, "> 嘶鸣", "Emotes+")
 	src.emote("neigh", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_neigh2, "> Neigh2", "Emotes+")
+GAME_VERB_PROC(/mob/living, emote_neigh2, "> 嘶鸣2", "Emotes+")
 	src.emote("neigh2", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_snort, "> Snort", "Emotes+")
+GAME_VERB_PROC(/mob/living, emote_snort, "> 喷鼻息", "Emotes+")
 	src.emote("snort", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_bray, "> Bray", "Emotes+")
+GAME_VERB_PROC(/mob/living, emote_bray, "> 驴叫", "Emotes+")
 	src.emote("bray", intentional = TRUE)
 
-GAME_VERB_PROC(/mob/living, emote_bellow, "> Bellow", "Emotes+")
+GAME_VERB_PROC(/mob/living, emote_bellow, "> 吼叫", "Emotes+")
 	src.emote("bellow", intentional = TRUE)
 
 GAME_VERB_PROC(/mob/living, emote_teshchirp, "> Tesh 啾鸣", "Emotes+")

@@ -147,7 +147,7 @@
 	new_frog.name = frog_name
 
 /obj/item/frog_contract/proc/select_frog_color(mob/user, mob/living/basic/leaper/new_frog)
-	var/frog_color = tgui_color_picker(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN)
+	var/frog_color = tgui_color_picker(user, LANG("obj.efa43b9e17335ca5", null) , LANG("obj.9dbfa07057b4b2ff", null), COLOR_GREEN)
 	if(isnull(frog_color))
 		to_chat(user, span_warning(LANG("obj.7a1f0f3e14eea4a3", null)))
 		select_frog_color(user, new_frog)

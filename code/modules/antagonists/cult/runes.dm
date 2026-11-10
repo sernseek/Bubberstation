@@ -771,7 +771,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger(mob_to_revive.real_name)], an [span_notice("inactive blood cultist")]?", check_jobban = ROLE_CULTIST, role = ROLE_CULTIST, poll_time = 5 SECONDS, checked_target = mob_to_revive, alert_pic = mob_to_revive, role_name_text = "inactive cultist")
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("obj.06518fddcd01ed07", list(span_danger(mob_to_revive.real_name), span_notice("inactive blood cultist"))), check_jobban = ROLE_CULTIST, role = ROLE_CULTIST, poll_time = 5 SECONDS, checked_target = mob_to_revive, alert_pic = mob_to_revive, role_name_text = "inactive cultist")
 		if(chosen_one)
 			to_chat(mob_to_revive.mind, LANG("obj.83f92388ac9077f6", null))
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")

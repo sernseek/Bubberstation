@@ -158,7 +158,7 @@
 	to_chat(src, LANG("mob.c2abb127832954ab", null))
 	ghostize(FALSE)
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("mob.ebfd8ce5c8e4a636", list(span_notice(name))), check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
 	if(chosen_one)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
 		key = chosen_one.key

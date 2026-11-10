@@ -203,7 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 	setup_shuttles(stationary_docking_ports)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
-	if(!arrivals)
+	if(!arrivals && !(locate(/obj/docking_port/mobile/arrivals_skyrat) in mobile_docking_ports)) // ZH EDIT CHANGE - ORIGINAL: if(!arrivals)
 		log_mapping("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
 		log_mapping("No /obj/docking_port/mobile/emergency placed on the map!")
@@ -328,7 +328,8 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
 		if(M.shuttle_id == id)
 			return M
-	WARNING("couldn't find shuttle with id: [id]")
+	if(initialized) // ZH EDIT ADDITION - roundstart consoles can query before shuttles load
+		WARNING("couldn't find shuttle with id: [id]") // ZH EDIT CHANGE - ORIGINAL: WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id)
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
@@ -485,7 +486,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
 		return FALSE
 
-	var/is_admin = !!user.client?.holder
+	var/is_admin = !!user?.client?.holder // ZH EDIT CHANGE - SHUTTLE_NULL_USER: automatic recall checks have no user; ORIGINAL: !!user.client?.holder
 	if(is_admin)
 		return admin_recall(user)
 

@@ -3,9 +3,13 @@
 # CI 只对**不在此表**的新增碰撞失败。修复一个碰撞（让该串不再被翻译，或消费侧
 # 用 lang_unreverse_text）后，从此表删掉对应行。
 (new custom antag)
+:) I'm Done
+<b>But none of its eggs hatched!</b>
 AI
 AI Connection
 AI Law Synchronization
+Absorb
+Accept Defeat.
 Activate
 Active
 Add
@@ -18,14 +22,17 @@ Akula
 Alarm
 Alarm Reset
 Alarm Trigger
+Alert
 Alias
 All Antags!
 Amount
 Android
+Area
 Arrest
 Artificer
 As Plasmaman...
 Asleep
+Assistant
 Atmospheric Technician
 Atoms
 Attack
@@ -37,29 +44,38 @@ Away
 Babydoll
 Bald
 Balding Hair
+Barber
+Bartender
 Base Heat Resistance
 Base Waste Multiplier
 Base Zap Transmission
 Beaker
+Bitrunner
 Blood
 Blood Cult
 Blood Filter
-Bluespace Tech
-Bluespace Tech (MODsuit)
+Blueshield
 Bolts
 Bonesetter
 Boom Wire
+Botanist
+Bouncer
 Bounty Fugitive Hunters
 Bowl
 Bra
+Bra Color
+Brain
 Brass Bow
 Brass Spear
-Bunny
-C
+Cable restraints
 Camera
 Captain
 Cargo
 Cargo Budget
+Cargo Technician
+Cargo Technician / Customs Agent
+Cargo Technician / Customs Agent / Quartermaster
+Cat Paws
 Cautery
 CentCom
 Central Command
@@ -68,10 +84,16 @@ Change Hair
 Change Name
 Changeling
 Chaplain
+Character
 Charge Damage
+Chef
+Chemist
+Chest pack
 Chief Engineer
+Chief Medical Officer
 Cigarettes
 Ckey
+Clean
 Cleaning
 Close
 Clown
@@ -84,17 +106,23 @@ Continue Playing
 Contraband
 Controller
 Cook
+Coroner
+Corrections Officer
 Counterattack
 Crew Manifest
 Crimson Medallion
-Crowbar
+Critical
 Crystallizer
+Cult
 Cultist
+Curator
 Custom
+Custom Range
+Customs Agent
 Cyborg
 DISCO INFERNO
 DONE - Finish selection
-Damages reported by the internal diagnostics system suggest a digital attack by a wireless hacking implant.
+Damage
 Death
 Deceased
 Deconstruct
@@ -107,23 +135,28 @@ Delete
 Delete Shuttle
 Department Backpack
 Description
+Detective
+Digest
 Digitigrade Legs
 Disable
 Disarm
 Discharged
 Disease
-Do
+Double
 Download
 Drone
-Drop
+EMP proof
+EMP resilient
 ERROR
 EVERYTHING
 East
 Eject
 Eject Disk
 Emergency Prize Vend
+Energy
 Engineer
 Engineering
+Engineering Guard
 Environment
 Equipment
 Error
@@ -137,19 +170,21 @@ External Power Gain
 External Power Trickle
 Eyes
 Failsafe
+Feed
 Feedback
 File
-Fill reagent container
 Filter
 Fish
 Fix Engine
 Flip
 Flush
 Fly
-Fox
+Forge
+Frontier Backpack
+Frontier Messenger Bag
+Frontier Satchel
 Full accessories
 Galactic Materials Market
-Galactic Standard Sign Language
 Gas Heat Power Gain
 Gas Heat Resistance
 Gas Power Decay Negation
@@ -157,18 +192,27 @@ Gas Waste Multiplier
 Gas Zap Transmission Modifier
 Gelled Back
 General
+General Color
 Generic
+Geneticist
 Ghost
+Ghost Cafe Visitor
 Gib
 Glass
 Golem
+Green
 Hack
 Hacked
-Hardest Restart (No actions, just reboot)
+Hair Color
+Hallucination
 Harvester
+Head of Personnel
+Head of Security
 Heal
+Health
 Heart
 Heating Damage
+Hemoglobin Iced Tea
 Hemostat
 Heretic
 High
@@ -177,20 +221,21 @@ High Voltage Circuit 1
 High Voltage Circuit 2
 High Voltage Ground
 Honey Frame
-Hypersensitive
+Horizontal
+Host Scan
+Hot Ice
 I need the power!
 ID Scan
 Icon
-Implants
 Incarcerated
-Infinite Transit
 Inflict Damage
 Initiate Crew Transfer
 Insane
+Interact
 Interface
+Internal
 Internal GPS
 Internal Power Decay
-Into The Sunset (delete & greentext 'escape')
 Janitor
 Job
 Juggernaut
@@ -199,13 +244,17 @@ KILL
 Key
 Korta Flour
 Kortara
-L
 LOOC
 Launch
+Lawyer
 Leather Satchel
+Left
+Left Arm
 Light Fixture
+Light replacer
 Lights
 Limiter
+Line
 Link
 Link Account
 Load Check
@@ -218,29 +267,38 @@ Machines
 Main Power 1
 Main Power 2
 Maintenance Drone
+Malkavian Clan
 Man-Machine Interface
+Mark
 Master
 Me
 Medical
+Medical Doctor
 Medical HUD
 Message
 Message Successful
+Middle
 Mime
 Miner
+Miniature Energy Gun
 Mining
 Mobs
 Mode Select
+Moderate
 Modify
 Molar Damage
 Mop
 Motor 1
 Motor 2
-Move job to backpack
 Multi Z layer cable hub
+Multilayer cable hub
+Multiline Text
 Multitool
 N/A
 Naked
 Name
+Nanites
+Nanotrasen Consultant
 Navy Rum
 NetGuardian Prime
 Nightmare
@@ -254,57 +312,74 @@ Not Ready
 Not submitted
 Nothing
 Nude
+Nude Only
+Nuke base
 Number
 OOC
+Obese
 Off
-Old
+On the floor
 Open
 Operative
+Orderly
 Other
 Out of resources!
 Overclock
+Oversized
 PDA
-Pair
+Pair (Alt)
 Panic Siphon
+Paramedic
 Parole
 Pay
 Peacekeeper
-Pen
 Ping
+Pink
 Pirates
 Plate
 Positronic Brain
 Power
 Pray
-Print Transcript
 Prisoner
 Proceed
+Psychologist
 Psychologist Heat Resistance
 Psychologist Power Decay Negation
 Psychologist Waste Multiplier
 Psyker Fugitive Hunters
+Quartermaster
 Queen Bee
+RB-MK2 Reactor
 Radiation
 Radio
 Random
 Reagent
+Reattach or replace surgically.
 Receive
+Relay
 Release
 Remove
 Rename
 Repair Electronics
 Replay mode
 Research
+Research Director
 Reset
 Reset Model
 Reset Owner
 Reskin
+Rest
 Restart
 Restore Hull
 Retractor
+Right
+Right Arm
+Roboticist
 Rotate
+Runner
 Russian Fugitive Hunters
 SDQL2
+Safe
 Safeties
 Safety
 Saltwater
@@ -314,32 +389,34 @@ Scalpel
 Scan Fail
 Scan Success
 Science
+Science Guard
 Scientist
 Screwdriver
 Search Failed
 Security
 Security HUD
+Security Medic
 Security Officer
 Self
-Sensitive
-Server Restart (Kill and restart DD)
 Service
 Set Life
 Set Mana
 Set Mana Slots
 Settler
+Shadow
+Shaft Miner
 Shark
 Shark (No Fin)
 Shaved
+Sheathed Pair
 Shovel
 Shuffle
 Shuttle
 Signal
 Simple
-Skills
 Skin Contact
 Skinhead
-Sleep
+Socks Color
 South
 Space
 Space Exposure Damage
@@ -350,16 +427,22 @@ Spacepol Fugitive Hunters
 Speaker
 Special
 Species
+Specific Marking
 Spell
 Spider Clan
+Spray bottle
+Stake
+Standard
 Start Now
 Stasis
 Station
 Station Engineer
 Station Member
+Station Message
 Stock Part
 Stop
 Sun
+Supermatter Crystal
 Supply
 Supply Pod
 Suspected
@@ -368,35 +451,53 @@ Syndicate Assault Cyborg
 Syndicate Medical Cyborg
 Tamper
 Target
+Telecomms Specialist
 Teleport
 Teleporter
+Teshari
 Test
 Text
+The Law
 The Syndicate
+The Verdict
 The Wizard
+The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.
 Their sprites
+There is a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>
 Throw
 Timing
 Title
 Toggle
 Traitor
+Tramstation
+Transfer
 Transform to initial appearance.
 Transmit
+Trash bag
+Trim
 Type
 Typepath
+Unabsorb
 Unassigned
 Unbolt
+Uncategorized
 Unconscious
+Undershirt Color
+Underwear Color
 Unknown
 Unlink
 Unrestricted Exit
 Update
 Uplink
 Used by antagonists. DO NOT PUT SEXUAL THINGS IN HERE. This is where you put flaws that can be exploited in any way. This will be viewable by antagonists if you modify this string, but only if there's anything at all in this box.
+Vagina
 Vent Direction
 Vent Power
+Vertical
 Vote Available
+Warden
 Weighted Random
+Weird Sound
 Welding Tool
 West
 Whis
@@ -413,9 +514,9 @@ abstract
 achievements
 acid
 acid-proof
+activated
 adamantine
 add
-admin_esp
 advanced
 aggressive
 ahelp
@@ -427,7 +528,7 @@ amber
 anchored
 animal
 announcement
-anti-skub
+antennae
 anus
 appendix
 area-blueprints
@@ -440,15 +541,16 @@ back
 backpack
 bar
 basketball
-beach
 beacon
 beaker
 bee
+belly
 belt
 biomass
 bite
 bland
 blank
+bleed
 blessed
 block_movement
 blood
@@ -475,8 +577,10 @@ busy
 butt
 button
 camera
+candy
 capacitor
 card
+carrier
 cat
 cautery
 charge
@@ -484,17 +588,17 @@ chemicals
 chest
 claw
 clear
+cleave
 climbable
 close
 clothing
-coil
 coin
 cold
 component
 conductive
 config
 connectable
-contractor
+controller
 cook
 core
 crab
@@ -512,7 +616,9 @@ death
 debug
 decal
 deconstruct
+default
 delta
+dent
 design
 dirty
 disabled
@@ -526,6 +632,7 @@ ears
 efficiency
 emagged
 emissive
+emp resistant
 empty
 enabled
 energy
@@ -534,6 +641,8 @@ engineering
 error
 escape
 exotic
+explode
+explosion
 external airlocks
 eyes
 fire
@@ -567,13 +676,14 @@ green
 greenscreen
 hacked
 handle
+hard
 head
+heal
 health
 heart
 heat
 helmet
 hemostat
-hidden
 hide
 high
 hits
@@ -587,7 +697,9 @@ human
 hunger
 hydroponics
 ice
+ice cream
 id
+igniting
 implant
 indestructible
 info
@@ -597,19 +709,23 @@ intelliCard
 interact
 intercom
 invisimin
+invoke
 item
 items
 jacks
 job
 key
 kick
+kill
 knife
+label
 languages
 laser
 lava-proof
 leave
 left
 left hand
+light
 lighting
 limb
 linked
@@ -618,6 +734,7 @@ locked
 look up
 low
 lungs
+lustwish
 machine
 machinery
 mafia
@@ -644,25 +761,31 @@ module
 morbid
 morgue
 motion-sensitive security camera
+move
 multitool
 namecheck
 neck
 neutral
 ninja
+no damage
 none
+nonflammable
 normal
 note
 nothing
 nutrition
 object
+off
 offline
 oil
 opened
 orange
 organ
+owl
 paddle
 paper
 parent
+partially EMP blocking
 partially insulated
 patient
 pen
@@ -672,17 +795,22 @@ photo
 pickup
 pills
 ping
+pink
 plane_masters_colorblind
 plane_masters_game
 plasma
 plating
 polaroid
+polls
+poppy
+preferences
 pressure-proof
-pro-skub
 projectile
 prone
+protean
 prototype
 pulse
+punch
 quick_equip_suit_storage
 radio
 ram
@@ -705,6 +833,7 @@ right
 right hand
 rolling pin
 rope bunny
+rules
 sad
 safe
 sales tagger
@@ -716,7 +845,6 @@ screwdriver
 screwed
 secure
 security
-seeds
 selected
 server
 set
@@ -726,7 +854,9 @@ shoes
 shovel
 shred
 shuttle
+sight
 sign
+silence
 silver
 skin
 skrell_hair
@@ -735,14 +865,18 @@ slash
 sleep
 slime
 small
+smash
+smell
 smoke
+snail
+snap
 snout
-snow
 sound-proof
 space
 space dust
 species
 spinning
+staked
 stamina
 stamps
 start
@@ -752,6 +886,7 @@ status
 steps
 sterile
 stomach
+stop
 storage
 string
 subtle
@@ -759,7 +894,6 @@ success
 suicide
 suit
 surgical
-swap_hands_row
 syndicate
 t-ray
 tactile
@@ -773,6 +907,7 @@ tdome1
 tdome2
 tdomeadmin
 tdomeobserve
+teal
 telepathy-proof
 teleport
 testicles
@@ -787,9 +922,7 @@ toggle_safety
 tongue
 tools
 tourniquet
-toxic
 track
-tram_1
 transparent
 tree
 tube
@@ -799,6 +932,7 @@ undeploy
 uniform
 unknown
 unlocked
+unstun
 uplink
 use
 vagina
@@ -806,8 +940,10 @@ vending
 violet
 virology
 virus
-voskhod
+vote
 wait
+walking-aid
+wall
 warded
 water
 weapons
@@ -825,3 +961,4 @@ womb
 wrap
 wrench
 xenobiology
+zap

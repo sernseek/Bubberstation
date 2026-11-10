@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return custom_team
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
-	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
+	var/custom_name = stripped_input(admin, LANG("datum.3931398bc80ee200", null), LANG("datum.d51dfc58e0b7e185", null), "Antagonist")
 	if(!custom_name)
 		return
 	name = custom_name

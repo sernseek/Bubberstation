@@ -759,7 +759,7 @@
 /obj/item/borg/upgrade/modkit/tracer/adjustable/proc/choose_bolt_color(mob/user)
 	set waitfor = FALSE
 
-	var/new_color = tgui_color_picker(user, "", "Choose Color", bolt_color)
+	var/new_color = tgui_color_picker(user, "", LANG("obj.d472a9f2c270f157", null), bolt_color)
 	bolt_color = new_color || bolt_color
 
 #undef PKA_COOLDOWN_INCREMENT

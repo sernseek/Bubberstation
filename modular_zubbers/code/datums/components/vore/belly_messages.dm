@@ -28,6 +28,12 @@
 	message = replacetext(message, "%count", LAZYLEN(contents))
 	return message
 
+// ZH EDIT ADDITION START - I18N: only built-in defaults are translated; custom messages stay untouched.
+/obj/vore_belly/proc/format_default_message(message, mob/prey)
+	var/list/translations = lang_scoped_table("vore_defaults.json")
+	return format_message(translations[message] || message, prey)
+// ZH EDIT ADDITION END
+
 /obj/vore_belly/proc/set_messages(key, value, delim = "\n\n")
 	var/list/raw_list = value
 	if(istext(value))
@@ -94,84 +100,84 @@
 /obj/vore_belly/proc/get_digest_messages_pred(mob/prey)
 	if(LAZYLEN(digest_messages_pred))
 		return format_message(pick(digest_messages_pred), prey)
-	return format_message(pick(GLOB.digest_messages_pred), prey)
+	return format_default_message(pick(GLOB.digest_messages_pred), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_digest_messages_prey(mob/prey)
 	if(LAZYLEN(digest_messages_prey))
 		return format_message(pick(digest_messages_prey), prey)
-	return format_message(pick(GLOB.digest_messages_prey), prey)
+	return format_default_message(pick(GLOB.digest_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_absorb_messages_owner(mob/prey)
 	if(LAZYLEN(absorb_messages_owner))
 		return format_message(pick(absorb_messages_owner), prey)
-	return format_message(pick(GLOB.absorb_messages_owner), prey)
+	return format_default_message(pick(GLOB.absorb_messages_owner), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_absorb_messages_prey(mob/prey)
 	if(LAZYLEN(absorb_messages_prey))
 		return format_message(pick(absorb_messages_prey), prey)
-	return format_message(pick(GLOB.absorb_messages_prey), prey)
+	return format_default_message(pick(GLOB.absorb_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_unabsorb_messages_owner(mob/prey)
 	if(LAZYLEN(unabsorb_messages_owner))
 		return format_message(pick(unabsorb_messages_owner), prey)
-	return format_message(pick(GLOB.unabsorb_messages_owner), prey)
+	return format_default_message(pick(GLOB.unabsorb_messages_owner), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_unabsorb_messages_prey(mob/prey)
 	if(LAZYLEN(unabsorb_messages_prey))
 		return format_message(pick(unabsorb_messages_prey), prey)
-	return format_message(pick(GLOB.unabsorb_messages_prey), prey)
+	return format_default_message(pick(GLOB.unabsorb_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_struggle_messages_outside(mob/prey)
 	if(LAZYLEN(struggle_messages_outside))
 		return format_message(pick(struggle_messages_outside), prey)
-	return format_message(pick(GLOB.struggle_messages_outside), prey)
+	return format_default_message(pick(GLOB.struggle_messages_outside), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_struggle_messages_inside(mob/prey)
 	if(LAZYLEN(struggle_messages_inside))
 		return format_message(pick(struggle_messages_inside), prey)
-	return format_message(pick(GLOB.struggle_messages_inside), prey)
+	return format_default_message(pick(GLOB.struggle_messages_inside), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_absorbed_struggle_messages_outside(mob/prey)
 	if(LAZYLEN(absorbed_struggle_messages_outside))
 		return format_message(pick(absorbed_struggle_messages_outside), prey)
-	return format_message(pick(GLOB.absorbed_struggle_messages_outside), prey)
+	return format_default_message(pick(GLOB.absorbed_struggle_messages_outside), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_absorbed_struggle_messages_inside(mob/prey)
 	if(LAZYLEN(absorbed_struggle_messages_inside))
 		return format_message(pick(absorbed_struggle_messages_inside), prey)
-	return format_message(pick(GLOB.absorbed_struggle_messages_inside), prey)
+	return format_default_message(pick(GLOB.absorbed_struggle_messages_inside), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_attempt_messages_owner(mob/prey)
 	if(LAZYLEN(escape_attempt_messages_owner))
 		return format_message(pick(escape_attempt_messages_owner), prey)
-	return format_message(pick(GLOB.escape_attempt_messages_owner), prey)
+	return format_default_message(pick(GLOB.escape_attempt_messages_owner), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_attempt_messages_prey(mob/prey)
 	if(LAZYLEN(escape_attempt_messages_prey))
 		return format_message(pick(escape_attempt_messages_prey), prey)
-	return format_message(pick(GLOB.escape_attempt_messages_prey), prey)
+	return format_default_message(pick(GLOB.escape_attempt_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_messages_owner(mob/prey)
 	if(LAZYLEN(escape_messages_owner))
 		return format_message(pick(escape_messages_owner), prey)
-	return format_message(pick(GLOB.escape_messages_owner), prey)
+	return format_default_message(pick(GLOB.escape_messages_owner), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_messages_prey(mob/prey)
 	if(LAZYLEN(escape_messages_prey))
 		return format_message(pick(escape_messages_prey), prey)
-	return format_message(pick(GLOB.escape_messages_prey), prey)
+	return format_default_message(pick(GLOB.escape_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_messages_outside(mob/prey)
 	if(LAZYLEN(escape_messages_outside))
 		return format_message(pick(escape_messages_outside), prey)
-	return format_message(pick(GLOB.escape_messages_outside), prey)
+	return format_default_message(pick(GLOB.escape_messages_outside), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_fail_messages_owner(mob/prey)
 	if(LAZYLEN(escape_fail_messages_owner))
 		return format_message(pick(escape_fail_messages_owner), prey)
-	return format_message(pick(GLOB.escape_fail_messages_owner), prey)
+	return format_default_message(pick(GLOB.escape_fail_messages_owner), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)
 
 /obj/vore_belly/proc/get_escape_fail_messages_prey(mob/prey)
 	if(LAZYLEN(escape_fail_messages_prey))
 		return format_message(pick(escape_fail_messages_prey), prey)
-	return format_message(pick(GLOB.escape_fail_messages_prey), prey)
+	return format_default_message(pick(GLOB.escape_fail_messages_prey), prey) // ZH EDIT CHANGE - I18N: ORIGINAL: format_message(...)

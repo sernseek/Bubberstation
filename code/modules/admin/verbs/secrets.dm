@@ -549,11 +549,11 @@ ADMIN_VERB(secrets, R_NONE, "秘密", "Abuse harder than you ever have before wi
 		if("anime")
 			if(!is_funmin)
 				return
-			var/animetype = tgui_alert(usr,"Would you like to have the clothes be changed?",,list("Yes","No","Cancel"))
+			var/animetype = tgui_alert(usr,LANG("datum.ba2369ee412b93c2", null),,list("Yes","No","Cancel"))
 
 			var/droptype
 			if(animetype == "Yes")
-				droptype = tgui_alert(usr,"Make the uniforms Nodrop?",,list("Yes","No","Cancel"))
+				droptype = tgui_alert(usr,LANG("datum.a759b7a13ccd028c", null),,list("Yes","No","Cancel"))
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return

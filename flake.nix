@@ -30,6 +30,7 @@
 
         byond = pkgs.callPackage ./nix/byond.nix { };
         rust-g = pkgs.callPackage ./nix/rust_g.nix { };
+        dreamluau = pkgs.callPackage ./nix/dreamluau.nix { };
         bun_1_3_5 = pkgs.bun.overrideAttrs (_old: {
           version = "1.3.5";
           src = pkgs.fetchurl {
@@ -40,12 +41,12 @@
       in
       {
         packages = {
-          inherit byond rust-g;
+          inherit byond rust-g dreamluau;
           default = byond;
         };
 
         devShells.default = pkgs.callPackage ./nix/devshell.nix {
-          inherit byond rust-g;
+          inherit byond rust-g dreamluau;
           bun = bun_1_3_5;
         };
       }

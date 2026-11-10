@@ -97,7 +97,7 @@
 			bodies += possessable
 
 	var/list/candidates = SSpolling.poll_ghosts_for_targets(
-		question = "Would you like to be [span_notice(group_name)]?",
+		question = LANG("obj.6967dd2040abc777", list(span_notice(group_name))),
 		role = ROLE_SENTIENCE,
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 10 SECONDS,

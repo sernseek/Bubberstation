@@ -282,9 +282,9 @@
 /obj/item/dest_tagger/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.61f8c7ff0a1be29d", list(user, user.p_their(), user.p_theyre()))))
 	if (islizard(user))
-		to_chat(user, span_notice("*HELL*"))//lizard nerf
+		to_chat(user, span_notice(LANG("obj.a23ae7b6ab4bb75d", null)))//lizard nerf
 	else
-		to_chat(user, span_notice("*HEAVEN*"))
+		to_chat(user, span_notice(LANG("obj.f5abfedf2d6054cc", null)))
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 

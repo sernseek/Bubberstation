@@ -64,7 +64,7 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, LANG("obj.5ba716f9cd72e291", null))
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD_MIDROUND, role = ROLE_WIZARD_MIDROUND, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("obj.28aefc239963cbc2", list(span_danger("[teacher]'s"), span_notice("[apprentice_school] apprentice"))), check_jobban = ROLE_WIZARD_MIDROUND, role = ROLE_WIZARD_MIDROUND, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
 	polling = FALSE
 	if(isnull(chosen_one))
 		to_chat(teacher, span_warning(LANG("obj.0196ebbd075b2e0d", null)))

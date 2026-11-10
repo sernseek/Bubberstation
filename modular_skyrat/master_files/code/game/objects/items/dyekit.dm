@@ -30,7 +30,7 @@
 
 	var/dyeing_themselves = target == user
 	if(gradient_or_hair == DYE_OPTION_HAIR_COLOR)
-		var/new_color = tgui_color_picker(user, "Choose a hair color:", "Character Preference", "#" + human_target.hair_color)
+		var/new_color = tgui_color_picker(user, LANG("obj.3ceb91937919bce4", null), LANG("obj.78f80c295b6adf9f", null), "#" + human_target.hair_color)
 
 		if(!new_color || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
@@ -54,7 +54,7 @@
 			return
 
 		var/hair_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
-		var/new_grad_color = tgui_color_picker(user, "Choose a secondary hair color:", "Dye Spray", human_target.get_hair_gradient_color(hair_key))
+		var/new_grad_color = tgui_color_picker(user, LANG("obj.25ca6729805ec1ae", null), LANG("obj.a23f559359e0ffee", null), human_target.get_hair_gradient_color(hair_key))
 		if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 

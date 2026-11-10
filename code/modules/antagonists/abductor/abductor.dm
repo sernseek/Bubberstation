@@ -179,7 +179,7 @@
 			// Keep in mind the darker colors don't look all that great, but it's easier to just reference an existing color list than make a new one
 			var/colorchoice = tgui_input_list(admin, LANG("datum.1d1b0c16b924116f", null), LANG("datum.a04b8be4d204b3b9", null), GLOB.color_list_ethereal + "Custom Color")
 			if(colorchoice == "Custom Color")
-				colorchoice = tgui_color_picker(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE)
+				colorchoice = tgui_color_picker(admin, LANG("datum.d23daf0bdf35b7be", null), LANG("datum.a04b8be4d204b3b9", null), COLOR_WHITE)
 			else
 				colorchoice = GLOB.color_list_ethereal[colorchoice]
 			team.team_skincolor = colorchoice

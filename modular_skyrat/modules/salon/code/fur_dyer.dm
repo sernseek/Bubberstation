@@ -49,7 +49,7 @@
 	// BUBBERSTATION EDIT START: TGUI COLOR PICKER
 	var/selected_color = tgui_color_picker(
 			user,
-			"Select marking color",
+			LANG("obj.f68a733c8343659a", null),
 			null,
 			COLOR_WHITE,
 		)
@@ -105,7 +105,7 @@
 	// BUBBERSTATION EDIT START: TGUI COLOR PICKER
 	var/selected_color = tgui_color_picker(
 			user,
-			"Select marking color",
+			LANG("obj.f68a733c8343659a", null),
 			null,
 			COLOR_WHITE,
 		)

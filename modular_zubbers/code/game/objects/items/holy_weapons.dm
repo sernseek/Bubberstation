@@ -142,7 +142,7 @@ means that you'll be forced to move carefully while it's on. Fits in pockets, an
 		to_chat(user, LANG("obj.34ed4b26dc0a3caa", null))
 		return
 	if(alert(LANG("obj.7b1ef80d6d633ad2", null), LANG("obj.2e300152f316784e", null), "Yes", "No") == "Yes")
-		var/energy_color_input = tgui_color_picker(usr,"","Choose Energy Color",light_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+		var/energy_color_input = tgui_color_picker(usr,"",LANG("obj.45456d5bea84f02f", null),light_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 		if(!energy_color_input || !user.can_perform_action(src, SILENT_ADJACENCY) || hacked)
 			return
 		set_light_color(energy_color_input)

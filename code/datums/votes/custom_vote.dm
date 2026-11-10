@@ -31,7 +31,7 @@
 	var/custom_count_method = tgui_input_list(
 		user = vote_creator,
 		message = LANG("datum.0f60ce16a01ce940", null), // BUBBER EDIT CHANGE - Ranked Choice Voting - Original: LANG("datum.84e9a377ea157578", null)
-		title = "Choice Method",
+		title = LANG("datum.84e9a377ea157578", null),
 		items = list("Single", "Multiple", "Ranked"), // BUBBER EDIT CHANGE - Ranked Choice Voting - Original: ("Single", "Multiple")
 		default = "Single",
 	)

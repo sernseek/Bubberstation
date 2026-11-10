@@ -16,7 +16,7 @@
 /obj/item/lipstick/quantum/display_radial_menu(mob/living/carbon/human/user)
 	lipstick_color = tgui_color_picker(
 		user,
-		"Select lipstick color",
+		LANG("obj.1b13a856df3e15a5", null),
 		null,
 		COLOR_WHITE,
 	)

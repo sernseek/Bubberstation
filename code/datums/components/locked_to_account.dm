@@ -56,12 +56,12 @@
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(isnull(id_card))
 		if(!silent)
-			deny(source, user, "No ID detected!")
+			deny(source, user, LANG("datum.f1378ade3d9e9ab5", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "No ID detected!")
 		return FALSE
 
 	if(!id_card.registered_account)
 		if(!silent)
-			deny(source, user, "No linked bank account detected!")
+			deny(source, user, LANG("datum.4a3a3d6db7d274ca", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "No linked bank account detected!")
 		return FALSE
 
 	if(istype(buyer_account, /datum/bank_account/department))
@@ -72,7 +72,7 @@
 		return TRUE
 
 	if(!silent)
-		deny(source, user, "Bank account does not match with buyer!")
+		deny(source, user, LANG("datum.1a0bc4267714af28", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "Bank account does not match with buyer!")
 	return FALSE
 // BUBBER EDIT ADDITION END
 
@@ -92,11 +92,11 @@
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE) // the ID card the user is holding/wearing, used to check their linked bank account
 	if(isnull(id_card))
-		deny(source, user, LANG("datum.f1378ade3d9e9ab5", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "No ID detected!")
+		deny(source, user, "No ID detected!")
 		return BLOCK_OPEN
 
 	if(!id_card.registered_account)
-		deny(source, user, LANG("datum.4a3a3d6db7d274ca", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "No linked bank account detected!")
+		deny(source, user, "No linked bank account detected!")
 		return BLOCK_OPEN
 
 	var/is_department = istype(buyer_account, /datum/bank_account/department) // department orders check the user's paycheck department instead of a personal account match.  TRUE if this user is allowed to open the crate
@@ -106,7 +106,7 @@
 		: (id_card.registered_account == buyer_account)
 
 	if(!account_matches)
-		deny(source, user, LANG("datum.1a0bc4267714af28", null)) // ZH EDIT CHANGE - I18N - ORIGINAL: deny(source, user, "Bank account does not match with buyer!")
+		deny(source, user, "Bank account does not match with buyer!")
 		return BLOCK_OPEN
 	*/ // BUBBER EDIT REMOVAL END
 	if(!account_matches(user, source, silent = FALSE))

@@ -416,7 +416,7 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title_worn(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]." // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c2671fcc1d4", list(t_He, t_is, held_thing.examine_title_worn(user), t_his, get_held_index_name(get_held_index_of_item(held_thing)))) // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
@@ -496,12 +496,12 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title_worn(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]." // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c2671fcc1d4", list(t_He, t_is, held_thing.examine_title_worn(user), t_his, get_held_index_name(get_held_index_of_item(held_thing)))) // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
 		var/obj/item/corresponding_item = get_item_for_held_index(part.held_index) || part
-		. += "[t_He] [t_has] [corresponding_item.examine_title_worn(user)] in place of [t_his] [initial(part.plaintext_zone)]." // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_has] [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
+		. += LANG("mob.670b31d9ee3baec4", list(t_He, t_has, corresponding_item.examine_title_worn(user), t_his, initial(part.plaintext_zone))) // BUBBER EDIT CHANGE - ORIGINAL: . += "[t_He] [t_has] [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.b09af6724a47da04", list(t_He, t_has, gloves.examine_title(user), t_his))

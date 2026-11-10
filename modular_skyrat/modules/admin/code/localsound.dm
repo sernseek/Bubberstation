@@ -108,7 +108,7 @@
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Internet Sound")
 
-ADMIN_VERB(play_localweb_sound, R_SOUND, "Play Local Internet Sound", "Play a given internet sound players within specified range.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(play_localweb_sound, R_SOUND, "播放本地网络音效", "Play a given internet sound players within specified range.", ADMIN_CATEGORY_FUN)
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
 	if(!ytdl)
 		to_chat(src, span_boldwarning(LANG("datum.bcedd86309a2f9c7", null)), confidential = TRUE) //Check config.txt for the INVOKE_YOUTUBEDL value

@@ -80,6 +80,11 @@
 		"slime_colours.json": { "domain": "scoped:slime_colours", "owner": "manual" },
 		"statpanel_tabs.json": { "domain": "scoped:statpanel_tabs", "owner": "manual" },
 		"voice_of_god.json": { "domain": "scoped:voice_of_god", "owner": "manual" },
+		"fleshmind_speech.json": { "domain": "scoped:fleshmind_speech", "owner": "manual" },
+		"hev_notifications.json": { "domain": "scoped:hev_notifications", "owner": "manual" },
+		"identifier_reverse_exclusions.json": { "domain": "scoped:identifier_reverse_exclusions", "owner": "manual" },
+		"spy_objective_words.json": { "domain": "scoped:spy_objective_words", "owner": "manual" },
+		"vore_defaults.json": { "domain": "scoped:vore_defaults", "owner": "manual" },
 		"wire_colours.json": { "domain": "scoped:wire_colours", "owner": "manual" },
 		"zones.json": { "domain": "scoped:zones", "owner": "manual" }
 	}

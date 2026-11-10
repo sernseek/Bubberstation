@@ -1188,7 +1188,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "拾取", null)
 		set_force_string()
 	// ZH EDIT CHANGE - i18n: 反查 "Force" 标签与力量描述词(very low/robust… 进目录；locale==en 为 no-op）
 	// desc 也在此单独反查：content 是拼接串，openToolTip 那道整串反查对它必然落空。
-	var/localized_desc = lang_reverse_text(desc) // ZH EDIT ADDITION - i18n
+	var/localized_desc = lang_reverse_suffixed(desc) // ZH EDIT ADDITION - i18n: also localize registered runtime description suffixes
 	if(!(item_flags & FORCE_STRING_OVERRIDE))
 		openToolTip(user,src,params,title = name,content = "[localized_desc]<br>[force ? "<b>[lang_reverse_text("Force")]:</b> [lang_reverse_text(force_string)]" : ""]",theme = "")
 	else
@@ -1825,7 +1825,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "拾取", null)
 
 /// Common proc used by painting tools like spraycans and palettes that can access the entire 24 bits color space.
 /obj/item/proc/pick_painting_tool_color(mob/user, default_color)
-	var/chosen_color = tgui_color_picker(user, "Pick new color", "[src]", default_color)
+	var/chosen_color = tgui_color_picker(user, LANG("obj.d23daf0bdf35b7be", null), "[src]", default_color)
 	if(!chosen_color || QDELETED(src) || user.incapacitated || !user.is_holding(src))
 		return
 	set_painting_tool_color(chosen_color)

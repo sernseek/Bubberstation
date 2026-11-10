@@ -155,7 +155,7 @@
 
 /datum/component/mutant_infection/proc/regenerate()
 	if(!host.mind)
-		var/mob/canidate = SSpolling.poll_ghosts_for_target("Do you want to play as a mutant([host.name])?", checked_target = host)
+		var/mob/canidate = SSpolling.poll_ghosts_for_target(LANG("datum.d33f436a3416e9b3", list(host.name)), checked_target = host)
 		if(!istype(canidate))
 			return
 		host.key = canidate.key

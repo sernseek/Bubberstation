@@ -45,7 +45,7 @@
 /// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
+		question = LANG("datum.28aefc239963cbc2", list(span_danger("[owner.real_name]'s"), span_notice(poll_role))),
 		check_jobban = ROLE_PAI,
 		poll_time = poll_time,
 		checked_target = owner,
@@ -226,7 +226,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("datum.68f50812d3975dc1", list(span_danger("[owner.real_name]'s"))), poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
 	if(chosen_one)
 		stranger_backseat.PossessByPlayer(chosen_one.ckey)
 	else

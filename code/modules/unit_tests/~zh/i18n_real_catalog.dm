@@ -37,6 +37,57 @@
 	if(!i18n_zh_catalog_ready())
 		return
 	GLOB.i18n_server_locale = LANGUAGE_LOCALE_ZH_HANS
+	// Bubber objective pool and interpolated objective, as shown to the player.
+	TEST_ASSERT_EQUAL(lang_reverse_text("Perform a grand heist of the vault."), "对金库实施一场大劫案。", "Stored objectives should translate at the display boundary.")
+	TEST_ASSERT_EQUAL(lang_reverse_phrase_tgui("Destroy all monsters on Lavaland."), "消灭熔岩地上的所有怪物。", "Interpolated objectives should translate as a whole, including the captured location.")
+	TEST_ASSERT_EQUAL(lang_reverse_phrase_tgui("Have 2 Ghouls in the Foobar department."), "让2名食尸鬼进入Foobar部门。", "English plural suffixes must not appear in translated objectives.")
+	TEST_ASSERT_EQUAL(lang_reverse_suffixed("Perform a grand heist of the vault. These seem to have prescription lenses inserted in them."), "对金库实施一场大劫案。 这些眼镜似乎装有矫正视力的镜片。", "Real catalog suffixes should localize after runtime concatenation.")
+	TEST_ASSERT_EQUAL(lang_reverse_suffixed("Perform a grand heist of the vault. Whatever use it possibly had in the past, its only use now is either as a museum piece, or being sold off to collectors via the Cargo shuttle."), "对金库实施一场大劫案。 无论它过去有什么用途，如今只能作为博物馆展品，或通过货运穿梭机卖给收藏家。", "Excavated relic descriptions should preserve the base and translate the suffix.")
+	var/saddle_description = "Perform a grand heist of the vault."
+	saddle_description += " This one is painted in peacekeeper livery, and equipped with a mounting slot for cuffs and \
+	a baton. Unfortunately this makes it a tad bulkier."
+	TEST_ASSERT_EQUAL(lang_reverse_suffixed(saddle_description), "对金库实施一场大劫案。 这具鞍涂有维和人员的配色，配备手铐和警棍插槽。不幸的是，这使它稍显笨重。", "Saddle suffixes must match the source continuation's runtime whitespace.")
+	TEST_ASSERT_EQUAL(LANG("datum.149702e05149e29d", list("Foobar")), " 这道裂隙通往Foobar。", "Dynamic portal destinations must retain the substituted location.")
+	TEST_ASSERT_EQUAL(lang_fallback_apply_html("<span class='notice'>You hungrily bite the Zxqv.</span>", LANGUAGE_LOCALE_ZH_HANS), "<span class='notice'>你饥饿地咬了Zxqv。</span>", "Eating messages should localize the verb and remove the English article.")
+	var/list/eating_cases = list(
+		"You unwillingly bite a bit of the Qwrp." = "你不情愿地咬了一点Qwrp。",
+		"You hungrily bite the Qwrp, gobbling it down!" = "你狼吞虎咽地咬了Qwrp，大口吞下！",
+		"You voraciously force the Qwrp down your throat." = "你贪婪地将Qwrp强行吞下喉咙。",
+		"You cannot force any more of the Qwrp to go down your throat!" = "你无法再强行让更多的 Qwrp 咽下你的喉咙！",
+		"Zxqv unwillingly bites a bit of the Qwrp." = "Zxqv不情愿地咬了一点Qwrp。",
+		"Zxqv hungrily bites the Qwrp." = "Zxqv如饥似渴地咬了Qwrp。",
+		"Zxqv hungrily bites the Qwrp, gobbling it down!" = "Zxqv狼吞虎咽地咬了Qwrp，大口吞下！",
+		"Zxqv voraciously forces the Qwrp down their throat." = "Zxqv贪婪地将Qwrp硬塞进他们的喉咙。",
+		"Zxqv cannot force any more of the Qwrp to go down their throat!" = "Zxqv无法再把更多Qwrp咽下他们的喉咙！",
+	)
+	for(var/input in eating_cases)
+		TEST_ASSERT_EQUAL(lang_fallback_apply_html("<span class='notice'>[input]</span>", LANGUAGE_LOCALE_ZH_HANS), "<span class='notice'>[eating_cases[input]]</span>", "Eating message did not localize: [input]")
+	TEST_ASSERT_EQUAL(LANG("datum.767bf1806ccd199e", list("bite", "Qwrp")), "你咬了Qwrp。", "Short eating messages must translate directly rather than relying on a broad reverse template.")
+	TEST_ASSERT_EQUAL(LANG("obj.fa002d297d7581a5", list("HEV MARK IV", "#f88f04", "CALIBRATING FIT ADJUSTMENTS...")), "HEV MARK IV: <span style='color: #f88f04;'>正在校准穿戴调整……</span>", "HEV notifications should translate their message without changing the color or suit identifier.")
+	TEST_ASSERT_EQUAL(lang_localize_hev_notification("ERROR - POWER SYSTEMS FAILURE - NO CELL INSERTED"), "错误——供电系统故障——未安装电池", "HEV status notifications should use their scoped translations.")
+	TEST_ASSERT_EQUAL(lang_localize_hev_notification("ALL SYSTEMS ONLINE, WELCOME THE ZXQV"), "所有系统在线，欢迎 THE ZXQV", "HEV welcomes must preserve the wearer's name.")
+	TEST_ASSERT_NOTEQUAL(LANG("obj.479d19281af6810f", null), "Trim", "Identifier exclusions must not disable keyed display translations.")
+	TEST_ASSERT_EQUAL(lang_reverse_text("Trim"), "Trim", "A newly translated identifier must not enter context-free reverse lookup.")
+	TEST_ASSERT_EQUAL(lang_localize_spy_replacement("genetics"), "遗传学部", "Spy objective replacements should localize without changing other lookup keys.")
+	TEST_ASSERT_EQUAL(lang_reverse_text("genetics"), "genetics", "The same word must remain canonical in global identifier lookup.")
+	var/list/fleshmind_cries = lang_scoped_table("fleshmind_speech.json")
+	TEST_ASSERT_EQUAL(length(fleshmind_cries), 13, "Every fixed fleshmind death cry should have a scoped translation.")
+	TEST_ASSERT_EQUAL(fleshmind_cries["CONNECTION TERMINATED."], "连接已终止。", "Fleshmind death cries should use their scoped translation.")
+	// A legacy browser assembles these two source fragments before wrapping them in a full HTML page.
+	var/gene_limit = LANG("obj.7f81fa09f02405b1", list(42))
+	var/gene_result = LANG("obj.fac0a3f20a5afcab", list(42))
+	TEST_ASSERT_EQUAL(gene_limit, "<br><br>该设备当前的提取效力上限为<span class='highlight'>42</span>。 ", "Browser limits must keep their HTML and substituted value.")
+	TEST_ASSERT_EQUAL(gene_result, "提取时目标基因的效力将降至<span class='highlight'>42</span>。", "Browser result text must retain its highlight.")
+	var/gene_html = "<div>[gene_limit][gene_result]<a href='byond://?src=123;op=extract'>Confirm</a></div>"
+	var/localized_gene_html = lang_fallback_apply_html(gene_html, LANGUAGE_LOCALE_ZH_HANS)
+	TEST_ASSERT(findtext(localized_gene_html, "href='byond://?src=123;op=extract'"), "Browser localization must preserve action links.")
+	GLOB.i18n_server_locale = DEFAULT_UI_LOCALE
+	TEST_ASSERT_EQUAL(lang_localize_spy_replacement("genetics"), "genetics", "Spy objective replacements must stay English in the default locale.")
+	TEST_ASSERT_EQUAL(lang_localize_hev_notification("ALL SYSTEMS ONLINE, WELCOME THE ZXQV"), "ALL SYSTEMS ONLINE, WELCOME THE ZXQV", "HEV notifications must stay English in the default locale.")
+	TEST_ASSERT(!length(lang_scoped_table("fleshmind_speech.json")), "Fleshmind speech must stay English in the default locale.")
+	TEST_ASSERT_EQUAL(LANG("datum.149702e05149e29d", list("Foobar")), " This one leads to Foobar.", "English portal destinations must retain the original sentence.")
+	TEST_ASSERT_EQUAL(LANG("obj.7f81fa09f02405b1", list(42)), "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>42</span> potency. ", "English locale must preserve the original browser fragment.")
+	GLOB.i18n_server_locale = LANGUAGE_LOCALE_ZH_HANS
 
 	// ① 插值句：手术台上每一步都长这样（display_results → visible_message → to_chat 的 AC/模板层）。
 	// 分层断言：目录 → 引擎就绪 → 裸句 → 带 span 的整条。哪一层断的一目了然。
@@ -117,6 +168,9 @@
 	// ③ 逐项翻的状态词列表（鱼的健康警告、材料属性详检）：整句拼完不是目录键，只能逐项过
 	// lang_localize_arg 再用顿号连接。断言的是**这条通道**，不是 AC——拿裸碎片喂 AC 本来就不该命中。
 	TEST_ASSERT_NOTEQUAL(lang_localize_arg("drowning"), "drowning", "鱼的状态词应经 _state_words 翻译")
+	TEST_ASSERT_EQUAL(lang_localize_arg("chunky mitts"), "厚实的连指手套", "手套互动的动态称呼应被翻译")
+	var/mittens_message = lang_fallback_apply_html(span_purple("You awkwardly wedge the Zxqv between your chunky mitts..."))
+	TEST_ASSERT(!findtext(mittens_message, "chunky mitts"), "手套互动的真实消息不应夹带英文称呼：[mittens_message]")
 	TEST_ASSERT_NOTEQUAL(lang_english_list(list("starving", "drowning")), "starving and drowning", "状态词列表应逐项翻并用顿号连接")
 
 	// ②b **落在标签内部的占位符收的是标识符，不能翻**。幻觉心灵感应那条模板是

@@ -208,7 +208,7 @@ ADMIN_VERB(stealth, R_STEALTH, "潜行模式", "Toggle stealth.", ADMIN_CATEGORY
 	BLACKBOX_LOG_ADMIN_VERB("Stealth Mode")
 
 /client/proc/enable_stealth_mode()
-	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+	var/new_key = ckeyEx(stripped_input(usr, LANG("client.0e3249cb20941bdb", null), LANG("client.97ff9c267ff9ae66", null), key, 26))
 	if(!new_key)
 		return
 	holder.fakekey = new_key

@@ -74,7 +74,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	var/new_color = tgui_color_picker(owner, "Choose the lens color:", "Color change",glasses.glasses_color)
+	var/new_color = tgui_color_picker(owner, LANG("datum.f810f9bc549bee6b", null), LANG("datum.03e14fcb521f607a", null),glasses.glasses_color)
 	if(!new_color)
 		return
 	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses.glasses_color, glasses.forced_glass_color)

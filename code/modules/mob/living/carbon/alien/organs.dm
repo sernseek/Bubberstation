@@ -238,7 +238,7 @@
 	var/stomach_text = owner ? "\the [owner]'s stomach" : "\the [src]"
 	if(prob(25))
 		play_from.audible_message(span_warning(LANG("obj.681b4f5b0dc0cbd8", list(stomach_text))), \
-			span_warning("You hear something rumbling."), 4,\
+			span_warning(LANG("obj.2305b96cfbee76ed", null)), 4,\
 			self_message = span_userdanger(LANG("obj.182a31c51c6c5e4f", null)))
 
 	if(user.client)

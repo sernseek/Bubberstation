@@ -207,7 +207,7 @@
 	if(!user.can_write(tool))
 		return NONE
 
-	var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
+	var/cardtext = stripped_input(user, LANG("obj.090f5f11dec83203", null), LANG("obj.915e4b3fb6e6fb9e", null), "", 50)
 	if(!cardtext || !user.can_perform_action(src))
 		return ITEM_INTERACT_BLOCKING
 

@@ -18,6 +18,21 @@ struct CatalogEntry {
     ownership: CatalogOwner,
 }
 
+/// Historical catalog entries for dialog values which are still canonical input identifiers.
+/// Keep the exact key/value pairs for catalog continuity; they must never be rewritten at use sites.
+const RETAINED_DIALOG_HISTORY: &[(&str, &str)] = &[
+    ("client.41ba0ff5611f0b93", "Yes"),
+    ("obj.41ba0ff5611f0b93", "Yes"),
+    ("datum.707d7f85626f91a9", "(new custom antag)"),
+];
+
+fn retained_dialog_history(entries: &[CatalogEntry]) -> BTreeSet<String> {
+    entries.iter().filter(|entry| {
+        entry.ownership == CatalogOwner::Extract
+            && RETAINED_DIALOG_HISTORY.iter().any(|(key, value)| entry.key == *key && entry.value == *value)
+    }).map(|entry| entry.key.clone()).collect()
+}
+
 fn read_catalog(path: &Path) -> Result<BTreeMap<String, String>> {
     let text = std::fs::read_to_string(path)
         .with_context(|| format!("无法读取目录文件：{}", path.display()))?;
@@ -64,6 +79,77 @@ fn collect_entries(en_dir: &Path, domains: &CatalogDomains) -> Result<Vec<Catalo
 
 fn is_stale(entry: &CatalogEntry, live_keys: &BTreeSet<String>) -> bool {
     entry.ownership == CatalogOwner::Extract && !live_keys.contains(&entry.key)
+}
+
+/// Verb names are compiled-in metadata. `verbs` replaces their English literals with translations,
+/// so extraction cannot rediscover their English keys. Match only a translated `set name` in the
+/// same namespace against an existing English key and its paired locale value.
+fn injected_verb_keys(dme: &Path, catalog_root: &Path, entries: &[CatalogEntry]) -> Result<BTreeSet<String>> {
+    let mut candidates: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+    for locale_dir in locale_dirs(catalog_root)? {
+        let Some(locale) = locale_dir.file_name().and_then(|s| s.to_str()) else { continue };
+        if locale == "en" {
+            continue;
+        }
+        let root = dme.parent().unwrap_or_else(|| Path::new("."));
+        let scoped = crate::catalog::load_verb_names(root, locale)?;
+        let mut locale_files = BTreeMap::new();
+        for entry in entries.iter().filter(|entry| {
+            entry.ownership == CatalogOwner::Extract && crate::extract::is_safe_verb_name(&entry.value)
+        }) {
+            let localized = if let Some(catalog) = locale_files.get(&entry.file_name) {
+                catalog
+            } else {
+                let path = locale_dir.join(&entry.file_name);
+                let catalog = if path.exists() { read_catalog(&path)? } else { BTreeMap::new() };
+                locale_files.entry(entry.file_name.clone()).or_insert(catalog)
+            };
+            let Some(translation) = scoped.get(&entry.key).or_else(|| localized.get(&entry.key)) else { continue };
+            if translation.is_empty() || translation == &entry.value {
+                continue;
+            }
+            let Some((namespace, _)) = entry.key.split_once('.') else { continue };
+            candidates.entry((namespace.to_owned(), translation.clone())).or_default().push(entry.key.clone());
+        }
+    }
+    let mut context = dm::Context::default();
+    context.set_print_severity(Some(dm::Severity::Error));
+    let pp = dm::preprocessor::Preprocessor::new(&context, dme.to_path_buf())?;
+    let mut parser = dm::parser::Parser::new(&context, dm::indents::IndentProcessor::new(&context, pp));
+    parser.enable_procs();
+    let (fatal, tree) = parser.parse_object_tree_2();
+    if fatal || context.errors().iter().any(|e| e.severity() == dm::Severity::Error) {
+        anyhow::bail!("DM 解析失败，无法校验已注入的 verb 名称");
+    }
+    let mut keys = BTreeSet::new();
+    for ty in tree.iter_types() {
+        let namespace = crate::keys::namespace_for(&ty.path);
+        // GAME_VERB also generates a /datum/verb_metadata subtype whose `name` is the same
+        // compiled-in verb literal. Extraction historically cataloged that separate datum key.
+        if ty.path.starts_with("/datum/verb_metadata/") {
+            if let Some(name_var) = ty.vars.get("name") {
+                if let Some(text) = name_var.value.expression.as_ref().and_then(crate::extract::plain_string) {
+                    if let Some(found) = candidates.get(&(namespace.clone(), text)) {
+                        keys.extend(found.iter().cloned());
+                    }
+                }
+            }
+        }
+        for (_name, proc) in ty.procs.iter() {
+            for value in proc.value.iter() {
+                let Some(block) = &value.code else { continue };
+                for statement in block.iter() {
+                    let dm::ast::Statement::Setting { name, value, .. } = &statement.elem else { continue };
+                    if name.as_str() != "name" { continue; }
+                    let Some(text) = crate::extract::plain_string(value) else { continue };
+                    if let Some(found) = candidates.get(&(namespace.clone(), text)) {
+                        keys.extend(found.iter().cloned());
+                    }
+                }
+            }
+        }
+    }
+    Ok(keys)
 }
 
 /// Keys a generated sidecar still records although extraction no longer produces them and no
@@ -179,6 +265,9 @@ const AMBIGUITY_ALLOWLIST: &[(&str, &str)] = &[
     ("slice", "动词「切」（攻击动词）与名词「切片」（食物），同形异义"),
     ("slices", "动词「切」（攻击动词）与名词「切片」（食物），同形异义"),
     ("slime", "动词「黏击」（攻击动词）与生物「史莱姆」，同形异义"),
+    ("clean", "攻击动词「擦净」与状态形容词「干净」同形异义"),
+    ("harmbatons", "眷族使用伤害警棍与泡沫警棍的攻击动作不同，不能统一"),
+    ("Subtler Anti-Ghost", "输入框标题可翻译，同名动词的译名仅供命令工具使用，不能加入运行时反查"),
 ];
 
 /// 译文里出现、而原文里没有的 `%VAR` 占位符。
@@ -370,8 +459,14 @@ fn forward_only_ambiguities(
 pub fn run(dme: &Path, catalog_root: &Path, apply: bool) -> Result<()> {
     let en_dir = catalog_root.join("en");
     let domains = CatalogDomains::load(catalog_root)?;
-    let live_keys = crate::extract::live_keys(dme, &en_dir)?;
     let entries = collect_entries(&en_dir, &domains)?;
+    let mut live_keys = crate::extract::live_keys(dme, &en_dir)?;
+    let injected = injected_verb_keys(dme, catalog_root, &entries)?;
+    eprintln!("catalog ownership: {} 个已注入译文的 verb key 保留为 live", injected.len());
+    live_keys.extend(injected);
+    let retained = retained_dialog_history(&entries);
+    eprintln!("catalog ownership: {} 个对话框历史键保留为 canonical 数据", retained.len());
+    live_keys.extend(retained);
 
     let automatic = entries
         .iter()
@@ -583,6 +678,49 @@ pub fn run(dme: &Path, catalog_root: &Path, apply: bool) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn dialog_history_requires_exact_key_value_and_ownership() {
+        let entry = |key: &str, value: &str, ownership| CatalogEntry {
+            file_name: "client.json".to_owned(),
+            key: key.to_owned(),
+            value: value.to_owned(),
+            ownership,
+        };
+        let entries = vec![
+            entry("client.41ba0ff5611f0b93", "Yes", CatalogOwner::Extract),
+            entry("obj.41ba0ff5611f0b93", "No", CatalogOwner::Extract),
+            entry("datum.707d7f85626f91a9", "(new custom antag)", CatalogOwner::Manual),
+        ];
+        assert_eq!(retained_dialog_history(&entries), BTreeSet::from(["client.41ba0ff5611f0b93".to_owned()]));
+    }
+
+    #[test]
+    fn translated_verb_names_keep_only_matching_namespace_keys_alive() {
+        let dir = std::env::temp_dir().join(format!("nova-i18n-verb-audit-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("zh-Hans")).unwrap();
+        std::fs::create_dir_all(dir.join("tools/i18n")).unwrap();
+        let dme = dir.join("test.dme");
+        std::fs::write(&dme, "/client/verb/test()\n\tset name = \"穿梭机面板\"\n\treturn\n/datum/verb_metadata\n\tvar/name\n/datum/verb_metadata/test\n\tname = \"穿梭机面板\"\n").unwrap();
+        std::fs::write(dir.join("zh-Hans/client.json"), r#"{"client.b":"其他面板"}"#).unwrap();
+        std::fs::write(dir.join("zh-Hans/obj.json"), r#"{"obj.a":"穿梭机面板"}"#).unwrap();
+        std::fs::write(dir.join("tools/i18n/verb-names.zh-Hans.json"), r#"{"client.a":"穿梭机面板","datum.a":"穿梭机面板"}"#).unwrap();
+        let entry = |file: &str, key: &str| CatalogEntry {
+            file_name: file.to_owned(),
+            key: key.to_owned(),
+            value: "Shuttle Panel".to_owned(),
+            ownership: CatalogOwner::Extract,
+        };
+        let entries = vec![
+            entry("client.json", "client.a"),
+            entry("client.json", "client.b"),
+            entry("obj.json", "obj.a"),
+            entry("datum.json", "datum.a"),
+        ];
+        let keys = injected_verb_keys(&dme, &dir, &entries).unwrap();
+        assert_eq!(keys, BTreeSet::from(["client.a".to_owned(), "datum.a".to_owned()]));
+        std::fs::remove_dir_all(dir).unwrap();
+    }
 
     #[test]
     fn sidecar_entries_follow_the_same_liveness_rule() {

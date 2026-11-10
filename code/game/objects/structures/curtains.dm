@@ -46,7 +46,7 @@
 /obj/structure/curtain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/toy/crayon))
 		return NONE
-	color = tgui_color_picker(user, "", "Choose Color", color)
+	color = tgui_color_picker(user, "", LANG("obj.d472a9f2c270f157", null), color)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/curtain/wrench_act(mob/living/user, obj/item/tool)

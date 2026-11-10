@@ -102,7 +102,7 @@
 	if(istype(action, /datum/action/item_action/change_tool))
 		return ..()
 	else if(istype(action, /datum/action/item_action/change_ht_color))
-		var/chosen_color = tgui_color_picker(user, "Select Color", "[src]", "#48D1CC")
+		var/chosen_color = tgui_color_picker(user, LANG("obj.42c123ce667bc93c", null), "[src]", "#48D1CC")
 		if(!chosen_color || QDELETED(src) || user.incapacitated || !user.is_holding(src))
 			return
 		current_light_color = chosen_color

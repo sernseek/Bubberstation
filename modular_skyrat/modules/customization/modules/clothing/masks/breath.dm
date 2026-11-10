@@ -46,7 +46,7 @@
 /obj/item/clothing/mask/balaclavaadjust/attack_self(mob/user)
 	adjust_mask(user)
 
-GAME_VERB_SRC(/obj/item/clothing/mask/balaclavaadjust, toggle, usr, "Adjust Balaclava", "Object")
+GAME_VERB_SRC(/obj/item/clothing/mask/balaclavaadjust, toggle, usr, "调整巴拉克拉瓦头套", "Object")
 		adjust_mask(usr)
 
 /obj/item/clothing/mask/balaclava/threehole

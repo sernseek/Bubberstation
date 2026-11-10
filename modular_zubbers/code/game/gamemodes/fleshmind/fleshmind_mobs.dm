@@ -242,7 +242,11 @@
 		"All your scattered minds have is hatred.",
 		"CONNECTION TERMINATED.",
 	)
-	say(pick(death_cry_emotes))
+	// ZH EDIT ADDITION START - I18N: scope garbled and partial cries to this NPC's fixed speech pool
+	var/death_cry = pick(death_cry_emotes)
+	var/list/localized_cries = lang_scoped_table("fleshmind_speech.json")
+	say(localized_cries[death_cry] || death_cry)
+	// ZH EDIT ADDITION END - ORIGINAL: say(pick(death_cry_emotes))
 
 /**
  * Death cry

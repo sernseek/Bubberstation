@@ -132,7 +132,7 @@
 				jobbans |= ROLE_SYNDICATE
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Would you like to play as [revive_title]?",
+		question = LANG("datum.4db997b8b9c98f68", list(revive_title)),
 		check_jobban = jobbans,
 		poll_time = 15 SECONDS,
 		checked_target = reviving,

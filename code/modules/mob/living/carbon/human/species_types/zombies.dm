@@ -214,7 +214,7 @@
 		owner.mob_biotypes &= ~MOB_ORGANIC
 		removed_biotypes = MOB_ORGANIC
 
-/datum/status_effect/zombie/proc/on_spec_stun(list/amount)
+/datum/status_effect/zombie/proc/on_spec_stun(datum/source, list/amount) // ZH EDIT CHANGE - ORIGINAL: on_spec_stun(list/amount)
 	SIGNAL_HANDLER
 	amount[1] = min(amount[1], max_stun_length)
 

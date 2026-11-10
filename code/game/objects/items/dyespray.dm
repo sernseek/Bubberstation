@@ -108,7 +108,7 @@
 			return
 
 	var/default_color = overlay.dye_color || overlay.draw_color
-	var/new_color = tgui_color_picker(user, "Choose a color for [selected]:", "Character Preference", default_color)
+	var/new_color = tgui_color_picker(user, LANG("obj.484957bb62d48032", list(selected)), LANG("obj.78f80c295b6adf9f", null), default_color)
 	if(isnull(new_color) || new_color == default_color || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(QDELETED(selected) || !(selected in target.organs))

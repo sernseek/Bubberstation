@@ -25,7 +25,7 @@
 			to_chat(usr, LANG("client.d99885271fca7066", null), confidential = TRUE)
 			return
 
-		var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
+		var/new_name = stripped_input(usr,LANG("client.c7a321e3abb3a475", null),LANG("client.e767d1fc1c80c9b7", null),M.real_name,MAX_NAME_LEN)
 
 		// If the new name is something that would be restricted by IC chat filters,
 		// give the admin a warning but allow them to do it anyway if they want.

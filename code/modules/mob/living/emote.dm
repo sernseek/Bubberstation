@@ -810,7 +810,7 @@
 	return .|WITH_EMPHASIS_MESSAGE
 
 /datum/emote/living/custom/proc/get_custom_emote_from_user()
-	return stripped_multiline_input(usr, "Choose an emote to display.", "Me" , null, MAX_MESSAGE_LEN) // SKYRAT EDIT CHANGE - ORIGINAL : return copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+	return stripped_multiline_input(usr, LANG("datum.b0c1d36db5b1dee5", null), LANG("datum.c32024a60bd6bd46", null) , null, MAX_MESSAGE_LEN) // SKYRAT EDIT CHANGE - ORIGINAL : return copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 
 /datum/emote/living/custom/proc/get_custom_emote_type_from_user()
 	var/type = input(LANG("datum.84071f4a7b2b1252", null)) as null|anything in list("Visible", "Hearable", "Both")

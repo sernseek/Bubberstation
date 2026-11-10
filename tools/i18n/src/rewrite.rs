@@ -108,6 +108,7 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
         cache: HashMap::new(),
         ident_proc: false,
         examine_proc: false,
+        browse_ui: false,
     };
 
     // pass 1：收集所有「纯函数」proc 名（SpacemanDMM_should_be_pure）。纯度沿继承传播，
@@ -135,6 +136,7 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
                 if let Some(block) = &proc_value.code {
                     rw.ident_proc = crate::extract::is_identifier_dot_proc(proc_name);
                     rw.examine_proc = crate::extract::is_examine_proc(proc_name);
+                    rw.browse_ui = proc_name == "ui_interact";
                     rw.visit_block(block, &ns);
                     // 物种特征(perk) proc：额外把 list 里 SPECIES_PERK_NAME/DESC 的字符串值改写为 LANG，
                     // 让插值描述（[name] livers are…[pct]%）的模板可译（占位符运行时填值；与抽取同名门槛）。
@@ -212,7 +214,9 @@ pub fn run_verbs(dme: &Path, locale: &str, revert: bool, dry_run: bool) -> Resul
         }
         out
     };
-    let translations = load_dir(&strings_root.join(locale));
+    let mut translations = load_dir(&strings_root.join(locale));
+    let project_root = dme.parent().unwrap_or_else(|| Path::new("."));
+    translations.extend(crate::catalog::load_verb_names(project_root, locale)?);
     if translations.is_empty() {
         anyhow::bail!(
             "译文目录为空或不存在: {}（先 extract 抽出 verb 名再翻译）",
@@ -406,6 +410,7 @@ struct Rewriter<'a> {
     /// 当前 proc 是否为 examine 家族（见 extract::is_examine_proc）：体内**任何**具名累加器
     /// 收到的字面量都是 examine 输出，与白名单累加器同等改写为 LANG。
     examine_proc: bool,
+    browse_ui: bool,
 }
 
 impl<'a> Rewriter<'a> {
@@ -616,6 +621,7 @@ impl<'a> Rewriter<'a> {
                                 if (id == "." && !self.ident_proc)
                                     || crate::extract::is_examine_accumulator(id)
                                     || self.examine_proc
+                                    || (self.browse_ui && id == "dat" && build_template(rhs).is_some_and(|t| crate::extract::is_safe_browse_template(&t)))
                                 {
                                     // examine proc 的具名累加器：抽取侧只收整句（见
                                     // extract::is_examine_sentence），改写侧不必再判——
@@ -719,9 +725,9 @@ impl<'a> Rewriter<'a> {
             if is_dialog_button(&template) {
                 continue;
             }
-            // `*` 开头是 emote 调用语法（say("*shrug") 触发表情而非说话）——改写成 LANG 后
-            // locale≠en 返回译文，emote 解析必失败。此类串留给运行时反查翻显示。
-            if template.starts_with('*') {
+            // say("*shrug") 等可能是表情命令，必须保留；to_chat 是直接显示的文本，
+            // 不解析表情命令，不能因此漏掉以星号开头的提示。
+            if template.starts_with('*') && sink != "to_chat" {
                 continue;
             }
             // 多词闸门（is_wordy_sink）：去掉占位符后仍须含空格，挡掉 `speak("unstun")` 这类 switch 键。
@@ -859,11 +865,26 @@ impl<'a> Rewriter<'a> {
         let line_end = logical_line_end(src, dot_start);
 
         // 在标识符之后、line_end 内找顶层字符串字面量；要求恰好一个。
+        // 跳过行尾 // 与 /* */ 注释（避免 // BUBBER EDIT CHANGE - ORIGINAL: "..." 里的引号计入 count）。
         let bytes = src.as_bytes();
         let mut first: Option<(usize, usize, Vec<String>)> = None;
         let mut count = 0usize;
         let mut i = dot_start + anchor.len();
         while i < line_end {
+            if bytes[i] == b'/' && bytes.get(i + 1) == Some(&b'/') {
+                while i < line_end && bytes[i] != b'\n' {
+                    i += 1;
+                }
+                continue;
+            }
+            if bytes[i] == b'/' && bytes.get(i + 1) == Some(&b'*') {
+                i += 2;
+                while i + 1 < line_end && !(bytes[i] == b'*' && bytes[i + 1] == b'/') {
+                    i += 1;
+                }
+                i = (i + 2).min(line_end);
+                continue;
+            }
             if bytes[i] == b'"' {
                 let Some((lstart, end, args)) = scan_dm_string(src, i) else {
                     return; // 畸形字符串 → 跳过
@@ -1221,6 +1242,78 @@ mod cjk_gate {
     fn chinese_literals_are_not_rewritten() {
         assert!(node_template(&Term::String("请先填写音色名称。".to_string())).is_none());
         assert!(node_template(&Term::String("Upload a recording".to_string())).is_some());
+    }
+
+    #[test]
+    fn browser_highlight_sentence_is_extracted_and_rewritten_without_touching_links() {
+        let dir = std::env::temp_dir().join(format!("nova-i18n-browser-sentence-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let dme = dir.join("test.dme");
+        let source = concat!(
+            "/obj/proc/ui_interact(mob/user)\n",
+            "\tvar/dat = \"\"\n",
+            "\tdat += \"<br><br>This device is limited to <span class='highlight'>[limit]</span> potency. \"\n",
+            "\tdat += \"<a href='[href]'>[label]</a>\"\n",
+        );
+        std::fs::write(&dme, source).unwrap();
+        let catalog = crate::extract::run(&dme, &dir.join("en"), true).unwrap();
+        let key = make_key("obj", "<br><br>This device is limited to <span class='highlight'>{0}</span> potency. ");
+        assert!(catalog.keys().any(|candidate| candidate == key), "browser template must be extracted");
+        run(&dme, None, false).unwrap();
+        let output = std::fs::read_to_string(&dme).unwrap();
+        assert!(output.contains(&format!("LANG(\"{key}\", list(limit))")), "{output}");
+        assert!(output.contains("<a href='[href]'>[label]</a>"), "{output}");
+        assert!(!crate::extract::is_safe_browse_template("<span class='highlight'>{0}</span> is <a href='{1}'>here</a>."));
+        assert!(!crate::extract::is_safe_browse_template("<span class='highlight'>{0}</span> potency"));
+        assert!(!crate::extract::is_safe_browse_template("<span class='highlight'>{0}</span> gene from <span class='highlight'>{1}</span>?<br>"));
+        std::fs::remove_dir_all(dir).unwrap();
+    }
+
+    #[test]
+    fn tool_scoped_verb_translation_round_trips_without_a_runtime_catalog_entry() {
+        let dir = std::env::temp_dir().join(format!("nova-i18n-verb-roundtrip-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("strings/i18n/en")).unwrap();
+        std::fs::create_dir_all(dir.join("tools/i18n")).unwrap();
+        let dme = dir.join("test.dme");
+        std::fs::write(&dme, "/client/verb/test()\n\tset name = \"Shuttle Panel\"\n\treturn\n").unwrap();
+        let key = make_key("client", "Shuttle Panel");
+        std::fs::write(dir.join("strings/i18n/en/client.json"), serde_json::json!({(&key): "Shuttle Panel"}).to_string()).unwrap();
+        std::fs::write(dir.join("tools/i18n/verb-names.zh-Hans.json"), serde_json::json!({(&key): "穿梭机面板"}).to_string()).unwrap();
+        run_verbs(&dme, "zh-Hans", false, false).unwrap();
+        assert!(std::fs::read_to_string(&dme).unwrap().contains("set name = \"穿梭机面板\""));
+        run_verbs(&dme, "zh-Hans", true, false).unwrap();
+        assert!(std::fs::read_to_string(&dme).unwrap().contains("set name = \"Shuttle Panel\""));
+        std::fs::remove_dir_all(dir).unwrap();
+    }
+
+    #[test]
+    fn star_prefixed_chat_is_rewritten_but_speech_emotes_are_not() {
+        let dir = std::env::temp_dir().join(format!("nova-i18n-star-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let dme = dir.join("test.dme");
+        std::fs::write(&dme, concat!(
+            "#define LANG(key, args) (lang_format(key, args))\n",
+            "/obj/proc/example(mob/user)\n",
+            "\tto_chat(user, \"* A visible tip!\")\n",
+            "\tuser.say(\"*shrug\")\n",
+            "\tstripped_input(user, \"Choose a label\", \"Name\", \"default_key\")\n",
+            "\tSSpolling.poll_ghosts_for_target(question = \"Join this role?\", role = \"role_key\")\n",
+            "\tinput(LANG(\"obj.1234567890abcdef\", null), LANG(\"obj.1234567890abcdef\", null), \"choice_key\") as null|anything\n",
+            "\ttgui_alert(user, message = LANG(\"obj.1234567890abcdef\", null), // Original: LANG(\"obj.abcdef1234567890\", null)\n",
+            "\t\ttitle = \"A title\")\n",
+        )).unwrap();
+        run(&dme, None, false).unwrap();
+        let output = std::fs::read_to_string(&dme).unwrap();
+        assert!(output.contains("to_chat(user, LANG("), "{output}");
+        assert!(output.contains("user.say(\"*shrug\")"), "{output}");
+        assert!(output.contains("stripped_input(user, LANG("), "{output}");
+        assert!(output.contains("\"default_key\""), "{output}");
+        assert!(output.contains("question = LANG("), "{output}");
+        assert!(output.contains("role = \"role_key\""), "{output}");
+        assert!(output.contains("\"choice_key\""), "{output}");
+        assert!(output.contains("// Original: LANG(\"obj.abcdef1234567890\", null)"), "{output}");
+        assert!(output.contains("title = LANG("), "{output}");
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 }
 

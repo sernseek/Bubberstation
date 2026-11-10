@@ -42,7 +42,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice(LANG("obj.1035c5d6fd03f4fb", null)))
 			return
-		var/new_title = stripped_input(user, "What would you like to label the vape cart?", name, null, 53)
+		var/new_title = stripped_input(user, LANG("obj.e0a84e4143d49614", null), name, null, 53)
 		if(!user.can_perform_action(src))
 			return
 		if(user.get_active_held_item() != attacked_item)

@@ -203,14 +203,14 @@
 		else
 			. += image('modular_skyrat/modules/barricades/icons/barricade.dmi', icon_state = "[barricade_type]_closed_wire")
 
-GAME_VERB_SRC(/obj/structure/deployable_barricade, rotate, oview(1), "Rotate barricade counterclockwise <", "Object")
+GAME_VERB_SRC(/obj/structure/deployable_barricade, rotate, oview(1), "逆时针旋转路障 <", "Object")
 	if(anchored)
 		to_chat(usr, span_warning(LANG("obj.f9fc930f7a07a9e4", null)))
 		return FALSE
 
 	setDir(turn(dir, 90))
 
-GAME_VERB_SRC(/obj/structure/deployable_barricade, revrotate, oview(1), "Rotate barricade clockwise >", "Object")
+GAME_VERB_SRC(/obj/structure/deployable_barricade, revrotate, oview(1), "顺时针旋转路障 >", "Object")
 	if(anchored)
 		to_chat(usr, span_warning(LANG("obj.f9fc930f7a07a9e4", null)))
 		return FALSE

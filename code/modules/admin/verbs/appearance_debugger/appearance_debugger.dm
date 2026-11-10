@@ -1,3 +1,4 @@
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 /// Allows developers to see a breakdown of an atom or a specific target and edit some of the values
 /datum/appearance_debugger
 	var/datum/admins/owner
@@ -187,7 +188,7 @@
 				SET_PLANE_IMPLICIT(proxy_view_selected, selected_appearance.plane)
 
 		if ("pickBackdropColor")
-			backdrop_color = tgui_color_picker(usr, "Choose preview backdrop color:", "Backdrop Color", backdrop_color || COLOR_WHITE)
+			backdrop_color = tgui_color_picker(usr, LANG("datum.7ad68cbe4413e638", null), LANG("datum.cff1d90ab775592a", null), backdrop_color || COLOR_WHITE)
 			if (!isnull(hover_id))
 				set_appearance_proxy(proxy_view_hover, hover_id)
 			if (!isnull(selected_id))

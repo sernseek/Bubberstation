@@ -57,7 +57,7 @@
 /// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		question = LANG("datum.28aefc239963cbc2", list(span_danger("[owner.real_name]'s"), span_notice("imaginary friend"))),
 		check_jobban = ROLE_PAI,
 		poll_time = 20 SECONDS,
 		checked_target = owner,

@@ -14,6 +14,8 @@
 		"unittest.tpl_mid" = list("The {0} is already filled to capacity.", "测试{0}满员。"),
 		"unittest.tpl_lead" = list("{0} slams the vault door shut!", "{0}砰地关上了金库门！"),
 		"unittest.tpl_reorder" = list("You smack {0} around with {1}.", "你用{1}抽打{0}。"),
+		"unittest.tpl_article" = list("You cradle \\the {0}.", "你抱着{0}。"),
+		"unittest.tpl_no_article" = list("You observe {0} closely.", "你仔细观察{0}。"),
 	)
 	var/list/test_cache = list()
 	for(var/key in test_pairs)
@@ -26,7 +28,7 @@
 	// 分段诊断：setup / 记录数 / 锚检测 / 完整 apply。
 	TEST_ASSERT(lang_tpl_setup(I18N_TEST_LOCALE), "lang_tpl_setup 应返回 ready")
 	var/list/recs = GLOB.i18n_tpl_records[I18N_TEST_LOCALE]
-	TEST_ASSERT_EQUAL(length(recs), 3, "应建 3 条逆模板记录")
+	TEST_ASSERT_EQUAL(length(recs), 5, "应建 5 条逆模板记录")
 	var/probe = "<span class='warning'>The Zxqv is already filled to capacity.</span>"
 	var/marked = rustg_acreplace("i18n_tpl_[I18N_TEST_LOCALE]", probe)
 	TEST_ASSERT(findtext(marked, GLOB.i18n_tpl_stx), "锚检测应产出 sentinel（marked=[json_encode(marked)]）")
@@ -39,6 +41,11 @@
 	TEST_ASSERT_EQUAL(lang_template_apply("<b>Zxqv</b> slams the vault door shut!", I18N_TEST_LOCALE), "<b>Zxqv</b>砰地关上了金库门！", "前导占位符应从句界/标签边界捕获实参")
 	// 占位符按 zh 语序重排。
 	TEST_ASSERT_EQUAL(lang_template_apply("You smack Aaqz around with Bbqz.", I18N_TEST_LOCALE), "你用Bbqz抽打Aaqz。", "zh 模板应能重排 {0}/{1}")
+	TEST_ASSERT_EQUAL(lang_template_apply("You cradle the Zxqv.", I18N_TEST_LOCALE), "你抱着Zxqv。", "只去除源模板冠词宏生成的英文冠词")
+	TEST_ASSERT_EQUAL(lang_template_apply("You observe the Zxqv closely.", I18N_TEST_LOCALE), "你仔细观察the Zxqv。", "没有冠词宏的占位符不得擅自去冠词")
+	GLOB.i18n_identity_names["the ZxqvIdentity"] = TRUE
+	TEST_ASSERT_EQUAL(lang_template_apply("You cradle the ZxqvIdentity.", I18N_TEST_LOCALE), "你抱着the ZxqvIdentity。", "玩家身份名称中的冠词必须保留")
+	GLOB.i18n_identity_names -= "the ZxqvIdentity"
 	// 不完整匹配（缺后续字面段）不得替换。
 	TEST_ASSERT_EQUAL(lang_template_apply("You smack the wall.", I18N_TEST_LOCALE), "You smack the wall.", "字面段不全时不得误替换")
 	// 幂等：已替换的中文输出再过引擎不变。

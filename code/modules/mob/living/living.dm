@@ -2997,7 +2997,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
 	var/picked_name = tgui_input_text(admin, LANG("mob.947d33c14e193c9a", null), LANG("mob.a3ddb461da5ca0aa", null), max_length = MAX_NAME_LEN)
-	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
+	var/picked_color = tgui_color_picker(admin, LANG("mob.6b0e61fd4e0aa506", null), LANG("mob.a3ddb461da5ca0aa", null), COLOR_WHITE)
 	if(tgui_alert(admin, LANG("mob.4ef76d04def51a66", null), LANG("mob.a3ddb461da5ca0aa", null), list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)

@@ -153,7 +153,7 @@ GAME_VERB(/client, ooc, VERB_OOC, null)
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 ADMIN_VERB(set_ooc_color, R_FUN, "设置玩家 OOC 颜色", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
-	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
+	var/newColor = tgui_color_picker(user, LANG("datum.b8e7463ee05d29b5", null), LANG("datum.ba5effcc6d0a6158", null))
 	if(isnull(newColor))
 		return
 	var/new_color = sanitize_color(newColor)

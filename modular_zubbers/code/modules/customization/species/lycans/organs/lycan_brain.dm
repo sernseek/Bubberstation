@@ -30,7 +30,7 @@
 	owner.remove_status_effect(/datum/status_effect/beast_form)
 
 //GAME_VERB_PROC_DESC(/obj/item/organ/brain/lycan, toggle_beast_form, "Enter/Leave Lycan Form", "Succumb to the rage and turn into a lycan.", "Lycan", mob/user)
-GAME_VERB_PROC_DESC(/obj/item/organ/brain/lycan, toggle_beast_form, "Enter/Leave Lycan Form", "Succumb to the rage and turn into a lycan.", "Lycan")
+GAME_VERB_PROC_DESC(/obj/item/organ/brain/lycan, toggle_beast_form, "进入/退出狼人形态", "Succumb to the rage and turn into a lycan.", "Lycan")
 	VERB_ARG_TYPED(user, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!user)
 		return

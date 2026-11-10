@@ -126,7 +126,7 @@
 	volume = 100
 	extra_range = 25
 
-ADMIN_VERB(spawn_sunbeam, R_FUN, "Spawn Sunbeam", "Spawns an ICARUS sunbeam at your location and sends it towards a target.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(spawn_sunbeam, R_FUN, "生成日光束", "Spawns an ICARUS sunbeam at your location and sends it towards a target.", ADMIN_CATEGORY_FUN)
 	var/mob/living/target_mob = tgui_input_list(usr, LANG("datum.2bb1946836f7aab8", null), LANG("datum.070474a2712bc1e5", null), GLOB.mob_living_list)
 
 	if(!target_mob)

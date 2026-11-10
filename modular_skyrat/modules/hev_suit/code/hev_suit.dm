@@ -271,7 +271,7 @@
 		return
 	if(!current_user)
 		return
-	to_chat(current_user, LANG("obj.fa002d297d7581a5", list(suit_name, color, message)))
+	to_chat(current_user, LANG("obj.fa002d297d7581a5", list(suit_name, color, lang_localize_hev_notification(message)))) // ZH EDIT CHANGE - ORIGINAL: list(suit_name, color, message)
 
 /obj/item/clothing/suit/space/hev_suit/proc/send_hev_sound(sound_in, priority, volume = 50)
 	if(send_notifications != HEV_NOTIFICATION_TEXT_AND_VOICE && send_notifications != HEV_NOTIFICATION_VOICE)

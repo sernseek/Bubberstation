@@ -20,6 +20,7 @@
   libjpeg,
   byond,
   rust-g,
+  dreamluau,
 }:
 
 let
@@ -67,11 +68,13 @@ mkShell {
     # 加载失败而卡住。
     if [ -f flake.nix ] && [ -d code ]; then
       ln -sf ${rust-g}/lib/librust_g.so ./librust_g.so
+      ln -sf ${dreamluau}/lib/libdreamluau.so ./libdreamluau.so
     fi
     echo "NovaSector dev shell — DM/TGUI + i18n 工具链已就绪"
     echo "  DreamMaker : $(command -v DreamMaker || echo '未找到')"
     echo "  bun        : $(bun --version 2>/dev/null || echo '未找到')"
     echo "  cargo      : $(cargo --version 2>/dev/null || echo '未找到')"
     echo "  librust_g  : $(readlink -f librust_g.so 2>/dev/null || echo '未链接')"
+    echo "  dreamluau  : $(readlink -f libdreamluau.so 2>/dev/null || echo '未链接')"
   '';
 }

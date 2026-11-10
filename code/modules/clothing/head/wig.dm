@@ -52,7 +52,7 @@
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, LANG("obj.f24e1bc145540758", null), LANG("obj.ae48f8cf29eff916", null), SSaccessories.hairstyles_list - "Bald")
-	var/newcolor = adjustablecolor ? tgui_color_picker(usr,"","Choose Color",color) : null
+	var/newcolor = adjustablecolor ? tgui_color_picker(usr,"",LANG("obj.d472a9f2c270f157", null),color) : null
 	if(!user.can_perform_action(src))
 		return
 	if(new_style && new_style != hairstyle)

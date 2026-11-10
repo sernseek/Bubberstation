@@ -38,7 +38,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = reject_bad_name(stripped_input(human_user, "Who are we again?", "Name change", human_user.name, MAX_NAME_LEN))
+			var/newname = reject_bad_name(stripped_input(human_user, LANG("obj.3dc7eef85b4ea632", null), LANG("obj.b4bf4c54d223e79b", null), human_user.name, MAX_NAME_LEN))
 
 			if(!newname)
 				return
@@ -72,7 +72,7 @@
 			#define MIN_MCOLOR_VALUE 50
 
 			if(HAS_TRAIT(human_user, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(human_user, TRAIT_FIXED_MUTANT_COLORS))
-				var/new_mutantcolor = tgui_color_picker(user, "Choose your skin color:", "Race change", human_user.dna.features[FEATURE_MUTANT_COLOR])
+				var/new_mutantcolor = tgui_color_picker(user, LANG("obj.b941a145a501c60e", null), LANG("obj.838e24b8bdb41a12", null), human_user.dna.features[FEATURE_MUTANT_COLOR])
 				if(new_mutantcolor)
 					var/mutantcolor_hsv = rgb2hsv(new_mutantcolor)
 
@@ -114,19 +114,19 @@
 			if(hairchoice == "Style") // So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = tgui_color_picker(human_user, "Choose your hair color", "Hair Color", human_user.hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+				var/new_hair_color = tgui_color_picker(human_user, LANG("obj.23b6fedc5b1d7cc9", null), LANG("obj.d38099cce15c7d27", null), human_user.hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 				if(new_hair_color)
 					human_user.hair_color = sanitize_hexcolor(new_hair_color)
 					human_user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 				if(human_user.gender == "male")
-					var/new_face_color = tgui_color_picker(human_user, "Choose your facial hair color", "Hair Color", human_user.facial_hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+					var/new_face_color = tgui_color_picker(human_user, LANG("obj.97d9f714bf9306ec", null), LANG("obj.d38099cce15c7d27", null), human_user.facial_hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 					if(new_face_color)
 						human_user.facial_hair_color = sanitize_hexcolor(new_face_color)
 						human_user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
 				human_user.update_body_parts()
 
 		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = tgui_color_picker(human_user, "Choose your eye color", "Eye Color", human_user.eye_color_left) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			var/new_eye_color = tgui_color_picker(human_user, LANG("obj.e299ad256e8d34f9", null), LANG("obj.fa1a220869d61876", null), human_user.eye_color_left) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(new_eye_color)
@@ -154,7 +154,7 @@
 
 		switch(choice)
 			if("name")
-				var/newname = reject_bad_name(stripped_input(human_user, "Who are we again?", "Name change", human_user.name, MAX_NAME_LEN))
+				var/newname = reject_bad_name(stripped_input(human_user, LANG("obj.3dc7eef85b4ea632", null), LANG("obj.b4bf4c54d223e79b", null), human_user.name, MAX_NAME_LEN))
 
 				if(!newname)
 					return
@@ -195,19 +195,19 @@
 				if(hairchoice == "Style") // So you just want to use a mirror then?
 					..()
 				else
-					var/new_hair_color = tgui_color_picker(human_user, "Choose your hair color", "Hair Color", human_user.hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+					var/new_hair_color = tgui_color_picker(human_user, LANG("obj.23b6fedc5b1d7cc9", null), LANG("obj.d38099cce15c7d27", null), human_user.hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 					if(new_hair_color)
 						human_user.hair_color = sanitize_hexcolor(new_hair_color)
 						human_user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 					if(human_user.gender == "male")
-						var/new_face_color = tgui_color_picker(human_user, "Choose your facial hair color", "Hair Color", human_user.facial_hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+						var/new_face_color = tgui_color_picker(human_user, LANG("obj.97d9f714bf9306ec", null), LANG("obj.d38099cce15c7d27", null), human_user.facial_hair_color) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 						if(new_face_color)
 							human_user.facial_hair_color = sanitize_hexcolor(new_face_color)
 							human_user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
 					human_user.update_body_parts()
 
 			if(BODY_ZONE_PRECISE_EYES)
-				var/new_eye_color = tgui_color_picker(human_user, "Choose your eye color", "Eye Color", human_user.eye_color_left) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+				var/new_eye_color = tgui_color_picker(human_user, LANG("obj.e299ad256e8d34f9", null), LANG("obj.fa1a220869d61876", null), human_user.eye_color_left) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return TRUE
 				if(new_eye_color)

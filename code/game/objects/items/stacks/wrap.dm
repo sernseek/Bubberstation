@@ -54,8 +54,8 @@
 		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
 
 /obj/item/stack/wrapping_paper/click_alt(mob/user)
-	var/new_base = tgui_color_picker(user, "", "Select a base color", color)
-	var/new_ribbon = tgui_color_picker(user, "", "Select a ribbon color", color)
+	var/new_base = tgui_color_picker(user, "", LANG("obj.1f6da0ed449671d3", null), color)
+	var/new_ribbon = tgui_color_picker(user, "", LANG("obj.f7b797555ec75916", null), color)
 	if(!new_base || !new_ribbon)
 		return CLICK_ACTION_BLOCKING
 

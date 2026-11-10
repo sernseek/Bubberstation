@@ -391,7 +391,7 @@
 		whomst += "Job: [span_notice(M.mind.assigned_role.title)]."
 	if(length(M.mind?.get_special_roles()))
 		whomst += "Status: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(LANG("_root.ebfd8ce5c8e4a636", list(whomst)), check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
 	if(chosen_one)
 		to_chat(M, LANG("_root.5d33e7c4460ebb32", null))

@@ -173,8 +173,8 @@
 			var/group = params["color_index"]
 			var/new_color = tgui_color_picker(
 				usr,
-				"Choose color for greyscale color group [group]:",
-				"Greyscale Modification Menu",
+				LANG("datum.269bdb7394deb333", list(group)),
+				LANG("datum.c79b1ba0fde9cbe6", null),
 				split_colors[group]
 			)
 			if(new_color)

@@ -67,7 +67,7 @@
 			target.modify_filter(params["name"], params["new_data"])
 			. = TRUE
 		if("modify_color_value")
-			var/new_color = tgui_color_picker(usr, "Pick new filter color", "Filteriffic Colors!") // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			var/new_color = tgui_color_picker(usr, LANG("datum.2287c28168e5dc13", null), LANG("datum.40ef673e553d2280", null)) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(new_color)
 				target.transition_filter(params["name"], list("color" = new_color), 4)
 				. = TRUE

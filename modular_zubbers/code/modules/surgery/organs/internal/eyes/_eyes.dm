@@ -23,8 +23,8 @@
 	. = ..()
 	// Choose left and right eye color
 	to_chat(user, span_notice(LANG("obj.856089d0bfeefbc7", null)))
-	eye_color_left = tgui_color_picker(user, "Pick a new color", "Left Eye Color", eye_color_left)
-	eye_color_right = tgui_color_picker(user, "Pick a new color", "Right Eye Color", eye_color_right)
+	eye_color_left = tgui_color_picker(user, LANG("obj.d302d29716c6cd0a", null), LANG("obj.e946dcf7fc3e8732", null), eye_color_left)
+	eye_color_right = tgui_color_picker(user, LANG("obj.d302d29716c6cd0a", null), LANG("obj.17ecfbe8cd1a6caf", null), eye_color_right)
 
 /obj/item/organ/eyes/moth
 	eye_icon_state = "motheyes_white"

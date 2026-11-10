@@ -21,6 +21,8 @@ pub fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "say" | "manual_emote" => Some(&[0]),
         "alert" | "input" => Some(&[0, 1, 2]),
         "tgui_alert" | "tgui_input_list" | "tgui_input_text" | "tgui_input_number" => Some(&[1, 2]),
+        "stripped_input" | "stripped_multiline_input" | "tgui_color_picker" => Some(&[1, 2]),
+        "poll_ghosts_for_target" | "poll_ghosts_for_targets" => Some(&[0]),
         "priority_announce" | "minor_announce" | "print_command_report" => Some(&[0, 1]),
         "bank_card_talk" | "notify_ghosts" | "add_raw_text" | "speak" => Some(&[0]),
         "talk_into" => Some(&[1]),
@@ -88,9 +90,11 @@ pub fn sink_arg_name(sink: &str, idx: usize) -> Option<&'static str> {
         // 具名实参形态 `tgui_input_list(user, message = "Select an ability", title = "…", items = …)`：
         // 少了这张表，按位取参会落到 `items = …` 上、整条提示语一个字都抽不到，且 rewrite 同样
         // 跳过。比特跑者磁盘的「Select an ability」就是这么漏的。
-        "tgui_alert" | "tgui_input_list" | "tgui_input_text" | "tgui_input_number" => {
+        "tgui_alert" | "tgui_input_list" | "tgui_input_text" | "tgui_input_number"
+        | "stripped_input" | "stripped_multiline_input" | "tgui_color_picker" => {
             &[(1, "message"), (2, "title")]
         }
+        "poll_ghosts_for_target" | "poll_ghosts_for_targets" => &[(0, "question")],
         _ => return None,
     };
     names.iter().find(|(i, _)| *i == idx).map(|(_, name)| *name)
@@ -175,10 +179,21 @@ pub fn native_dialog_no_usr(name: &str, args: &[Expression]) -> bool {
     if !matches!(name, "alert" | "input") {
         return false;
     }
+    fn localized_text(expr: &Expression) -> bool {
+        match expr {
+            Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
+                Term::Expr(inner) => localized_text(inner),
+                Term::Call(name, _) => matches!(name.as_str(), "LANG" | "lang_format" | "lang_format_for"),
+                _ => false,
+            },
+            _ => false,
+        }
+    }
     args.first()
         .and_then(|arg| keyword_arg_value(arg).or(Some(arg)))
-        .and_then(build_template)
-        .is_some()
+        .is_some_and(|arg| {
+            build_template(arg).is_some() || localized_text(arg)
+        })
 }
 
 /// Whether a proc block declares DreamChecker's pure-proc setting.

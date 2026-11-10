@@ -33,7 +33,7 @@
 	popup.open()
 
 /datum/admins/proc/admin_create_team(mob/user)
-	var/team_name = stripped_input(user,"Team name ?")
+	var/team_name = stripped_input(user,LANG("datum.011ef590f374f0ee", null))
 	if(!team_name)
 		return
 	var/datum/team/T = new()
@@ -44,7 +44,7 @@
 
 /datum/team/proc/admin_rename(mob/user)
 	var/old_name = name
-	var/team_name = stripped_input(user,"new team name ?","Team rename",old_name)
+	var/team_name = stripped_input(user,LANG("datum.ebe87684dd6817ab", null),LANG("datum.a3f8bbf933548ead", null),old_name)
 	if(!team_name)
 		return
 	name = team_name
@@ -87,7 +87,7 @@
 		if(!team_antag)
 			team_antag = new /datum/antagonist/custom
 			if(!custom_antag_name)
-				custom_antag_name = stripped_input(user, "Custom team antagonist name:", "Custom antag", "Antagonist")
+				custom_antag_name = stripped_input(user, LANG("datum.29f11a60f1244c40", null), LANG("datum.d51dfc58e0b7e185", null), "Antagonist")
 				if(!custom_antag_name)
 					custom_antag_name = "Team Member"
 			team_antag.name = custom_antag_name

@@ -136,7 +136,7 @@
 		ghouldatum.traits += traits_to_add
 
 /datum/bloodsucker_clan/ventrue/favorite_ghoul_gain(datum/antagonist/bloodsucker/source, datum/antagonist/ghoul/ghouldatum)
-	to_chat(source.owner.current, span_announce("* Bloodsucker Tip: You can now upgrade your Favorite Ghoul by buckling them onto a persuasion rack!"))
+	to_chat(source.owner.current, span_announce(LANG("datum.ad3bf54339352c22", null)))
 	ghouldatum.BuyPower(/datum/action/cooldown/bloodsucker/distress)
 
 /datum/bloodsucker_clan/ventrue/is_valid_ghoul(datum/antagonist/ghoul/ghoul_type)

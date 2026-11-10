@@ -120,7 +120,7 @@
 			src.take_bodypart_damage(burn = 20)
 		if(2)
 			src.take_bodypart_damage(burn = 10)
-	to_chat(src, span_userdanger("*BZZZT*"))
+	to_chat(src, span_userdanger(LANG("mob.b75817ffdd1b041c", null)))
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)

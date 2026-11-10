@@ -407,11 +407,14 @@
 #include "~zh\multiz_navigation.dm"
 #include "~zh\newbie_guard_geoip.dm"
 #include "~zh\newbie_guard_refusal.dm"
+#include "~zh\personality_cleanup.dm"
 #include "~zh\runtime_stability.dm"
 #include "~zh\slime_naming.dm"
+#include "~zh\species_description_i18n.dm"
 #include "~zh\test_sharding.dm"
 #include "~zh\transit_area_cleanup.dm"
 #include "~zh\tts_controls.dm"
+#include "~zh\vore_default_i18n.dm"
 #include "~zh\wiki_page_url.dm"
 // ZH EDIT END
 // END_INCLUDE

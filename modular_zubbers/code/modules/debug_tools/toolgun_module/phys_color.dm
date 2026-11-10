@@ -7,7 +7,7 @@
 
 /datum/phystool_mode/color_mode/use_act(mob/user)
 	. = ..()
-	selected_color = tgui_color_picker(user, "Pick new effects color", "Physgun color") // BUBBERSTATION EDIT: TGUI COLOR PICKER
+	selected_color = tgui_color_picker(user, LANG("datum.237a34caf7dfdbf2", null), LANG("datum.b4739d45ac78eb49", null)) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 
 /datum/phystool_mode/color_mode/main_act(atom/target, mob/user)
 	. = ..()

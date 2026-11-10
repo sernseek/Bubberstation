@@ -97,10 +97,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
-	. += span_notice("It looks like the thermostat has a pair of buttons and a manual adjustment screw.") // BUBBER EDIT CHANGE - Original: "It looks like the thermostat has an adjustment screw."
+	. += span_notice(LANG("obj.a099a6da3a59e998", null)) // BUBBER EDIT CHANGE - Original: "It looks like the thermostat has an adjustment screw."
 	if(has_water_reclaimer)
 		. += span_notice(LANG("obj.6a25c0f25c1d92e4", null))
-	. += span_info("The current shower mode is [span_bold(GLOB.shower_mode_descriptions["[mode]"])].") // BUBBER EDIT CHANGE - Showers have infinite water - Original: "The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]]."
+	. += span_info(LANG("obj.b5cc3d63a866e6e1", list(span_bold(GLOB.shower_mode_descriptions["[mode]"])))) // BUBBER EDIT CHANGE - Showers have infinite water - Original: "The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]]."
 	. += span_notice(LANG("obj.31941555602f62b7", list(reagents.total_volume, reagents.maximum_volume)))
 
 /obj/machinery/shower/Destroy()

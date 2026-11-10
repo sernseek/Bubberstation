@@ -77,7 +77,7 @@
 	var/path = text2path(tgui_input_text(user, LANG("obj.9bed81f614de1205", null), LANG("obj.14b0d4d3b3867a8e", null)))
 	if(!path)
 		return
-	var/choice = tgui_alert(user, "Subtypes only?",, list("Yes", "No"))
+	var/choice = tgui_alert(user, LANG("obj.8fd665a9a54f0b07", null),, list("Yes", "No"))
 	if(!choice)
 		return
 	if(!user.client.holder)

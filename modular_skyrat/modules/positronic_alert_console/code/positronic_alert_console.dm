@@ -42,7 +42,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 		to_chat(user, span_notice(LANG("obj.3ba19649097fe817", list(src))))
 		return
 	mute_reason = null
-	mute_reason = stripped_input(user, "What would the reason for the mute be? (max characters is 20)", "Mute Reason", "", 20)
+	mute_reason = stripped_input(user, LANG("obj.69649b801c5a7042", null), LANG("obj.ab3e96b0b4c47e00", null), "", 20)
 	if(!mute_reason)
 		to_chat(user, span_warning(LANG("obj.7aca210e3407bd96", list(src))))
 		return

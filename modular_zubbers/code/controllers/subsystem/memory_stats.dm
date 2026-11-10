@@ -129,7 +129,7 @@ SUBSYSTEM_DEF(memory_stats)
 	if(CONFIG_GET(flag/enable_memory_stats))
 		. += LANG("mob.40c5fce6c8cda4d0", list(SSmemory_stats.get_status_line()))
 
-ADMIN_VERB(dump_memory_stats, R_DEBUG, "Dump Memory Stats", "Writes a memory stats sample to memory_stats.log right now.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(dump_memory_stats, R_DEBUG, "导出内存统计", "Writes a memory stats sample to memory_stats.log right now.", ADMIN_CATEGORY_DEBUG)
 	SSmemory_stats.log_memory_stats()
 	to_chat(user, span_notice(LANG("datum.33a707fd0456b7d7", list(SSmemory_stats.last_rss_mb, num2text(SSmemory_stats.last_rss_bytes, 12)))))
 

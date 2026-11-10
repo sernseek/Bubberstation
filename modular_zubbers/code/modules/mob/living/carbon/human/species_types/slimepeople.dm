@@ -184,8 +184,8 @@
 
 	var/new_mutant_colour = tgui_color_picker(
 		alterer,
-		"Choose your character's new [color_choice = "All" ? "" : LOWER_TEXT(color_choice)] color:",
-		"Form Alteration",
+		LANG("datum.118ff48c2b3ee4a4", list(color_choice = "All" ? "" : LOWER_TEXT(color_choice))),
+		LANG("datum.7aaef146e88b87c1", null),
 		alterer.dna.features[color_target]
 	)
 	if(!new_mutant_colour)
@@ -287,7 +287,7 @@
 			var/hair_area = tgui_alert(alterer, LANG("datum.a2fbdd01e8dc9980", null), LANG("datum.acfbf5c764cbadcc", null), list("Hairstyle", "Facial Hair", "Both"))
 			if(!hair_area)
 				return
-			var/new_hair_color = tgui_color_picker(alterer, "Select your new hair color", "Hair Color Alterations", alterer.dna.features[FEATURE_MUTANT_COLOR])
+			var/new_hair_color = tgui_color_picker(alterer, LANG("datum.6a38b3761a7ddfa8", null), LANG("datum.acfbf5c764cbadcc", null), alterer.dna.features[FEATURE_MUTANT_COLOR])
 			if(!new_hair_color)
 				return
 

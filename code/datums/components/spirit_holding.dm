@@ -66,7 +66,7 @@
 	attempting_awakening = TRUE
 	thing.balloon_alert(user, LANG("datum.7d95211bf75db538", null))
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
+		question = LANG("datum.ebfd8ce5c8e4a636", list(span_notice("Spirit of [span_danger("[user.real_name]'s")] blade"))),
 		check_jobban = ROLE_PAI,
 		poll_time = 20 SECONDS,
 		checked_target = thing,

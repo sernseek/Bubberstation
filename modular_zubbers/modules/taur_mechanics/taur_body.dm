@@ -205,7 +205,7 @@
 		TEXT_WEST = list(round(riding_offset_side_x * scaling_mult, 1), round((riding_offset_side_y + taur_specific_clothing_y_offsets?[TEXT_WEST]) * scaling_mult, 1)),
 	)
 
-GAME_VERB_PROC(/obj/item/organ/taur_body, toggle_laying, "Toggle Laying Down", "Taur")
+GAME_VERB_PROC(/obj/item/organ/taur_body, toggle_laying, "切换躺下", "Taur")
 	var/mob/living/carbon/human/owner = src
 	if(!istype(owner))
 		return
@@ -250,7 +250,7 @@ GAME_VERB_PROC(/obj/item/organ/taur_body, toggle_laying, "Toggle Laying Down", "
 
 #undef LAYDOWN_COOLDOWN
 
-GAME_VERB_PROC(/obj/item/organ/taur_body, toggle_cropping, "Override Taur Cropping Settings", "Taur")
+GAME_VERB_PROC(/obj/item/organ/taur_body, toggle_cropping, "覆盖陶尔裁剪设置", "Taur")
 	var/mob/living/carbon/human/owner = src
 	if(!istype(owner))
 		return

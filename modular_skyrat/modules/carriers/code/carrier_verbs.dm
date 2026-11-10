@@ -24,7 +24,7 @@
 	return ..()
 
 /// Prompts the parent mob to send a say message to the soulcatcher. Returns False if no soulcatcher or message could be found.
-GAME_VERB_PROC_DESC(/mob/living, carrier_say, "Carrier Say", "Send a Say message to your currently targeted carrier room.", "IC")
+GAME_VERB_PROC_DESC(/mob/living, carrier_say, "向载体说话", "Send a Say message to your currently targeted carrier room.", "IC")
 	var/datum/carrier_room/room_to_send_to = get_current_carrier_room()
 	if(!istype(room_to_send_to))
 		to_chat(src, span_warning(LANG("mob.83f6169a8eca358e", null)))
@@ -44,7 +44,7 @@ GAME_VERB_PROC_DESC(/mob/living, carrier_say, "Carrier Say", "Send a Say message
 	return TRUE
 
 /// Prompts the parent mob to send a emote to the soulcatcher. Returns False if no soulcatcher or emote could be found.
-GAME_VERB_PROC_DESC(/mob/living, carrier_emote, "Carrier Me", "Send a emote to your currently targeted carrier room.", "IC")
+GAME_VERB_PROC_DESC(/mob/living, carrier_emote, "向载体发送动作", "Send a emote to your currently targeted carrier room.", "IC")
 	var/datum/carrier_room/room_to_send_to = get_current_carrier_room()
 	if(!istype(room_to_send_to))
 		to_chat(src, span_warning(LANG("mob.e5b9babd88bbf2de", null)))

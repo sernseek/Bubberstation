@@ -171,6 +171,20 @@ pub(crate) fn find_first_quote(src: &str, start: usize, end: usize) -> Option<us
     let b = src.as_bytes();
     let mut i = start;
     while i < end {
+        if b[i] == b'/' && b.get(i + 1) == Some(&b'/') {
+            while i < end && b[i] != b'\n' {
+                i += 1;
+            }
+            continue;
+        }
+        if b[i] == b'/' && b.get(i + 1) == Some(&b'*') {
+            i += 2;
+            while i + 1 < end && !(b[i] == b'*' && b[i + 1] == b'/') {
+                i += 1;
+            }
+            i = (i + 2).min(end);
+            continue;
+        }
         if b[i] == b'"' {
             return Some(i);
         }

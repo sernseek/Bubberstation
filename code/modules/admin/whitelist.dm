@@ -20,7 +20,7 @@ GLOBAL_LIST(whitelist)
 		return FALSE
 	. = (ckey in GLOB.whitelist)
 
-ADMIN_VERB(whitelist_player, R_BAN, "Whitelist CKey", "Adds a ckey to the Whitelist file.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(whitelist_player, R_BAN, "将 ckey 加入白名单", "Adds a ckey to the Whitelist file.", ADMIN_CATEGORY_MAIN)
 	var/input_ckey = input(LANG("datum.9437c28d9b1c393f", null)) as null|text
 	// The ckey proc "santizies" it to be its "true" form
 	var/canon_ckey = ckey(input_ckey)

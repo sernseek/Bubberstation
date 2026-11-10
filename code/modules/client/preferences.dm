@@ -326,7 +326,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			// Yielding
 			var/new_color = tgui_color_picker(
 				usr,
-				"Select new color",
+				LANG("datum.f5c48c3f4295ed36", null),
 				null,
 				default_value || COLOR_WHITE,
 			)
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			// BUBBERSTATION EDIT START: TGUI COLOR PICKER
 			var/new_color = tgui_color_picker(
 				usr,
-				"Select new color",
+				LANG("datum.f5c48c3f4295ed36", null),
 				null,
 				default_value || COLOR_WHITE,
 			) // BUBBERSTATION EDIT END: TGUI COLOR PICKER

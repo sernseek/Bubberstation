@@ -550,7 +550,7 @@
 		to_chat(stoner, span_userdanger(LANG("_root.8a5d84ad19ef2844", null)))
 		to_chat(stoner, span_warning(LANG("_root.e3c10a493bf5b161", null)))
 		target = SSpolling.poll_ghosts_for_target(
-			"Do you want to play as [span_danger(newstruct.real_name)]?",
+			LANG("_root.ebfd8ce5c8e4a636", list(span_danger(newstruct.real_name))),
 			check_jobban = ROLE_CULTIST,
 			role = ROLE_CULTIST,
 			poll_time = 10 SECONDS,

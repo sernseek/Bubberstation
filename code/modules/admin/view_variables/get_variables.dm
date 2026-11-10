@@ -332,7 +332,7 @@
 			.["value"] = D
 
 		if(VV_COLOR)
-			.["value"] = tgui_color_picker(src, "Enter new color:", "Color", current_value) // BUBBERSTATION EDIT: TGUI COLOR PICKER
+			.["value"] = tgui_color_picker(src, LANG("client.aca4fc25aca3d360", null), LANG("client.0e20b7b5489dda80", null), current_value) // BUBBERSTATION EDIT: TGUI COLOR PICKER
 			if(.["value"] == null)
 				.["class"] = null
 				return

@@ -4,9 +4,21 @@
 //! 每个命名空间一个 JSON，内容为扁平的 {"key": "模板"}。BTreeMap 保证 key 有序，
 //! 便于 diff 与 Tolgee 同步。
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
+
+/// Translations of compiled-in verb names are tool-only and must not feed the global reverse map.
+pub fn load_verb_names(root: &Path, locale: &str) -> Result<BTreeMap<String, String>> {
+    let path = root.join("tools/i18n").join(format!("verb-names.{locale}.json"));
+    if !path.exists() {
+        return Ok(BTreeMap::new());
+    }
+    let content = std::fs::read_to_string(&path)
+        .with_context(|| format!("无法读取 verb 译文：{}", path.display()))?;
+    serde_json::from_str(&content)
+        .with_context(|| format!("verb 译文 JSON 无效：{}", path.display()))
+}
 
 #[derive(Clone)]
 struct CatalogOrigin {

@@ -119,7 +119,7 @@
 		return FALSE
 	if(check_locked(user))
 		return
-	var/new_color = sanitize_color(tgui_color_picker(user, "Set Sign Color", full_capitalize(name), current_color))
+	var/new_color = sanitize_color(tgui_color_picker(user, LANG("obj.1a9af88fea9f622a", null), full_capitalize(name), current_color))
 	if(new_color && is_color_dark_with_saturation(new_color, 25))
 		balloon_alert(user, LANG("obj.0fd0d32e41da9ec8", null))
 		return

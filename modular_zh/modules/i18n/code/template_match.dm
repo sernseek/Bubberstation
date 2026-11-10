@@ -27,11 +27,12 @@
 #define I18N_TPL_MAX_REPEAT 4
 #define I18N_TPL_MAX_CAPTURE 300
 
-// 模板记录字段下标（GLOB.i18n_tpl_records[locale] 的每条 = list(segs, order, zh, lit_len)）。
+// 模板记录字段下标（GLOB.i18n_tpl_records[locale] 的每条 = list(segs, order, zh, lit_len, article_slots)）。
 #define I18N_TPL_SEGS 1
 #define I18N_TPL_ORDER 2
 #define I18N_TPL_ZH 3
 #define I18N_TPL_LITLEN 4
+#define I18N_TPL_ARTICLES 5
 
 /// locale -> "ready" | "none"。
 GLOBAL_LIST_EMPTY(i18n_tpl_state)
@@ -124,7 +125,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 	return html_tag_raw.Replace(text, "")
 
 /// 把一条逆模板登记进 records/anchors（相邻占位符、锚长门槛、半翻译自匹配三道校验在此）。
-/proc/lang_tpl_register(list/records, list/anchors, list/segs, list/order, zh_runtime)
+/proc/lang_tpl_register(list/records, list/anchors, list/segs, list/order, zh_runtime, list/article_slots)
 	var/nsegs = length(segs)
 	var/lit_len = 0
 	var/anchor = ""
@@ -146,7 +147,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		return
 	if(findtext(zh_runtime, anchor)) // 半翻译（zh 仍含英文锚段，bad-MT 类）：替换无意义且会自匹配
 		return
-	records += list(list(segs, order, zh_runtime, lit_len))
+	records += list(list(segs, order, zh_runtime, lit_len, article_slots))
 	var/id = length(records)
 	lang_tpl_add_anchor(anchors, anchor, id)
 	// **第二锚**：AC 自动机只给不重叠的匹配，别的模板的锚只要压住这条唯一锚的一个字符，这条就永远
@@ -175,6 +176,21 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		var/zh_t = localized[key]
 		if(!zh_t || zh_t == en_t)
 			continue
+		// The normalized matcher removes DM article macros. Remember which capture follows one,
+		// so its generated English article can be removed even when the item name is unknown.
+		var/list/article_slots
+		if(findtext(en_t, "\\"))
+			var/list/raw_parsed = lang_tpl_parse(en_t)
+			var/list/raw_segs = raw_parsed[1]
+			var/list/raw_order = raw_parsed[2]
+			var/static/regex/article_at_end = regex(@"\\(the|The|an|An|a|A)\s*$")
+			for(var/i = 1, i <= length(raw_order), i++)
+				if(!article_at_end.Find(raw_segs[i]))
+					continue
+				if(!article_slots)
+					article_slots = list()
+					article_slots.len = length(raw_order)
+				article_slots[i] = TRUE
 		en_t = lang_tpl_normalize(en_t)
 		var/list/parsed = lang_tpl_parse(en_t)
 		var/list/segs = parsed[1]
@@ -184,7 +200,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		var/zh_runtime = zh_t
 		if(findtext(zh_runtime, "\\"))
 			zh_runtime = lang_process_text_escapes(zh_runtime)
-		lang_tpl_register(records, anchors, segs, order, zh_runtime)
+		lang_tpl_register(records, anchors, segs, order, zh_runtime, article_slots)
 		// **字面段里嵌着 HTML 标签的模板，在聊天路径上永远验证不过**：`lang_fallback_apply_html`
 		// 先按标签切块，送进来的是**纯文本块**，而模板要求逐段 findtext 命中带标签的字面段。
 		// 全仓 15906 条已译插值模板里有 859 条（5.4%）是这形状——高级健康扫描仪整页
@@ -199,7 +215,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 			var/list/stripped_segs = list()
 			for(var/seg in segs)
 				stripped_segs += lang_strip_html_tags_raw(seg)
-			lang_tpl_register(records, anchors, stripped_segs, order, lang_strip_html_tags_raw(zh_runtime))
+			lang_tpl_register(records, anchors, stripped_segs, order, lang_strip_html_tags_raw(zh_runtime), article_slots)
 
 /// Builds one locale's reverse-template index. Bootstrap calls return without recording state.
 /proc/lang_tpl_setup(locale)
@@ -307,7 +323,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		var/list/record = records[id]
 		var/guard = 0
 		while(guard++ < I18N_TPL_MAX_REPEAT)
-			var/list/m = lang_tpl_match(text, record[I18N_TPL_SEGS], record[I18N_TPL_ORDER], record[I18N_TPL_ZH], locale)
+			var/list/m = lang_tpl_match(text, record[I18N_TPL_SEGS], record[I18N_TPL_ORDER], record[I18N_TPL_ZH], locale, record[I18N_TPL_ARTICLES])
 			if(!m)
 				break
 			text = copytext(text, 1, m[1]) + m[3] + copytext(text, m[2])
@@ -317,7 +333,7 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 	return text
 
 /// 在 text 上验证一条逆模板。命中返回 list(起点, 终点(开区间), 替换文本)；否则 null。
-/proc/lang_tpl_match(text, list/segs, list/order, zh_template, locale)
+/proc/lang_tpl_match(text, list/segs, list/order, zh_template, locale, list/article_slots)
 	var/nsegs = length(segs)
 	var/leading_ph = (segs[1] == "")
 	var/trailing_ph = (segs[nsegs] == "")
@@ -385,6 +401,8 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		// 多半是玩家自己打的字。原样填回，绝不拿去反查（玩家说 "Yes" 不能变成「是」）。
 		var/capture_value = captures[i]
 		if(!lang_tpl_quoted_slot(segs, i))
+			if(article_slots?[i] && !GLOB.i18n_identity_names?[capture_value])
+				capture_value = lang_strip_article(capture_value) || capture_value
 			capture_value = lang_tpl_localize_arg(capture_value, locale)
 		result = replacetext(result, "{[order[i]]}", capture_value)
 	if(findtext(result, "\\"))
@@ -478,3 +496,4 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 #undef I18N_TPL_ORDER
 #undef I18N_TPL_ZH
 #undef I18N_TPL_LITLEN
+#undef I18N_TPL_ARTICLES

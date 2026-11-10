@@ -126,7 +126,7 @@
 
 /obj/item/canvas/drawingtablet/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/dtselectcolor))
-		currentcolor = tgui_color_picker(user, "", "Choose Color", currentcolor)
+		currentcolor = tgui_color_picker(user, "", LANG("obj.d472a9f2c270f157", null), currentcolor)
 	else if(istype(action, /datum/action/item_action/dtcolormenu))
 		var/list/selects = colors.Copy()
 		selects["Save"] = "Save"
@@ -641,7 +641,7 @@
 		new treat_path(src)
 
 /obj/item/clothing/neck/inferno_collar/attack_self(mob/user)
-	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Kiara", MAX_NAME_LEN)
+	tagname = stripped_input(user, LANG("obj.caff9b8cf4adcde9", null), LANG("obj.f428d0a3eb8ed8ce", null), "Kiara", MAX_NAME_LEN)
 	if(tagname)
 		name = "[lang_reverse_text(initial(name))] - [tagname]"  // i18n: initial(name) 会覆盖掉已反查的中文名
 

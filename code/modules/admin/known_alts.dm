@@ -76,7 +76,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			show_panel(usr.client)
 
 			if (!is_banned_from(ckey2, "Server"))
-				var/ban_choice = alert("[ckey2] is not banned from the server. Do you want to open up the ban panel as well?",,"Yes", "No")
+				var/ban_choice = alert(LANG("datum.e4a5868a82452fb8", list(ckey2)),,"Yes", "No")
 				if (ban_choice == "Yes")
 					holder.ban_panel(ckey2, role = "Server", duration = BAN_PANEL_PERMANENT)
 		if ("delete")

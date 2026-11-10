@@ -1,6 +1,12 @@
 // ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 #define SPIDER_WEB_TINT	"web_colour_tint"
 
+// ZH EDIT ADDITION START - SPIDER_WEB_INIT
+GLOBAL_LIST_INIT(spider_web_loc_connections, list(
+	COMSIG_ATOM_ENTERED = TYPE_PROC_REF(/obj/structure/spider/stickyweb, on_entered),
+))
+// ZH EDIT ADDITION END
+
 /obj/structure/spider
 	name = "web"
 	icon = 'icons/effects/web.dmi'
@@ -57,10 +63,8 @@
 		pixel_x = -9
 		pixel_y = -9
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	// ZH EDIT CHANGE - SPIDER_WEB_INIT - use the shared signal map above
+	AddElement(/datum/element/connect_loc, GLOB.spider_web_loc_connections)
 	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)

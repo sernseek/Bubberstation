@@ -41,7 +41,7 @@ GAME_VERB_DESC(/mob/living/carbon/human, remove_lewd_items, "移除不雅物品"
 	// literally just another way to safeword
 	safeword()
 
-GAME_VERB_DESC(/mob/living/carbon/human, safeword, "OOC Safe Word", "Removes any and all lewd items from you.", "OOC")
+GAME_VERB_DESC(/mob/living/carbon/human, safeword, "OOC 安全词", "Removes any and all lewd items from you.", "OOC")
 	SEND_SIGNAL(src, COMSIG_OOC_ESCAPE)
 	log_message("[key_name(src)] used the OOC Safe Word verb.", LOG_ATTACK)
 	for(var/obj/item/equipped_item in get_equipped_items())

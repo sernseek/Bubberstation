@@ -29,7 +29,7 @@
 /// This handles bolting down the structure.
 /obj/structure/bloodsucker/proc/bolt(mob/user)
 	to_chat(user, span_danger(LANG("obj.963a9d0fa8833f8b", list(src))))
-	to_chat(user, span_announce("* Bloodsucker Tip: Examine [src] to understand how it functions!"))
+	to_chat(user, span_announce(LANG("obj.e5495ae3c1de7898", list(src))))
 	owner = user
 
 /// This handles unbolting of the structure.
@@ -41,7 +41,7 @@
 	/// If a Bloodsucker tries to wrench it in place, yell at them.
 	if(item.tool_behaviour == TOOL_WRENCH && !anchored && IS_BLOODSUCKER(user))
 		user.playsound_local(null, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE, pressure_affected = FALSE)
-		to_chat(user, span_announce("* Bloodsucker Tip: Examine Bloodsucker structures to understand how they function!"))
+		to_chat(user, span_announce(LANG("obj.a43ac769ee54edf2", null)))
 		return
 	return ..()
 
@@ -165,7 +165,7 @@
 	if(!anchored && IS_BLOODSUCKER(user))
 		user.balloon_alert(user, LANG("obj.801f0be9a529882b", null))
 		to_chat(user, span_danger(LANG("obj.6f3d2b69ec0df1e3", null)))
-		to_chat(user, span_announce("* Bloodsucker Tip: Examine the Persuasion Rack to understand how it functions!"))
+		to_chat(user, span_announce(LANG("obj.b15c40612e7ba93d", null)))
 		return
 	// Default checks
 	if(!isliving(movable_atom) || !living_target.Adjacent(src) || living_target == user || !isliving(user) || has_buckled_mobs() || user.incapacitated || living_target.buckled)

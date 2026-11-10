@@ -404,6 +404,13 @@ GLOBAL_LIST_EMPTY(i18n_reverse_supplements)
 			if(domain == I18N_DOMAIN_GLOBAL_REVERSE)
 				supplement_sources[source] = TRUE
 	if(domain == I18N_DOMAIN_GLOBAL_REVERSE)
+		// These sources also occur as program identifiers. Their context-keyed translations remain
+		// available to LANG and type labels, but context-free reverse lookup must not mutate them.
+		if(locale == (GLOB.i18n_server_locale || DEFAULT_UI_LOCALE))
+			var/list/identifier_exclusions = lang_scoped_table("identifier_reverse_exclusions.json")
+			for(var/source in identifier_exclusions)
+				output -= source
+				supplement_sources -= source
 		GLOB.i18n_reverse_supplements[locale] = supplement_sources
 	by_locale[domain] = output
 	return output
@@ -851,6 +858,30 @@ GLOBAL_LIST_EMPTY(i18n_unreverse)
 		return name
 	var/list/table = lang_scoped_table("armor_classes.json")
 	return table[name] || name
+
+/// HEV notifications are display-only; preserve dynamic wearer names after the welcome prefix.
+/proc/lang_localize_hev_notification(message)
+	if(!istext(message))
+		return message
+	var/list/notifications = lang_scoped_table("hev_notifications.json")
+	var/translated = notifications[message]
+	if(translated)
+		return translated
+	var/static/welcome_prefix = "ALL SYSTEMS ONLINE, WELCOME "
+	if(notifications[welcome_prefix] && findtextEx(message, welcome_prefix) == 1)
+		return notifications[welcome_prefix] + copytext(message, length(welcome_prefix) + 1)
+	return message
+
+/// Only called for picked spy objective prose, never for the same words used as lookup keys.
+/proc/lang_localize_spy_replacement(value)
+	if(!istext(value))
+		return value
+	var/list/replacements = lang_scoped_table("spy_objective_words.json")
+	if(replacements[value])
+		return replacements[value]
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		return lang_localize_arg(value, "spy objective")
+	return value
 
 /// Explicit top-level scoped catalog loader. Bootstrap calls return an uncached empty table; all
 /// declared files are decoded and cached during INITIALIZING.
@@ -1670,7 +1701,7 @@ GLOBAL_VAR_INIT(i18n_area_index_dirty, TRUE)
 		var/typed_desc = lang_type_display_text(src, lang_type_desc_keys())
 		if(typed_desc)
 			return typed_desc
-	. = lang_reverse_text(display_desc)
+	. = lang_reverse_suffixed(display_desc)
 	if(GLOB.i18n_log_misses && . == display_desc)
 		lang_log_miss_value(display_desc, "desc", "[type]")
 
@@ -1703,6 +1734,11 @@ GLOBAL_VAR_INIT(i18n_area_index_dirty, TRUE)
 /// 故在**使用点**（如手术计算机）用 lang_reverse_suffixed 拆开 base + 后缀分别精确反查（避免 AC 蚕食）。
 GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 	"This procedure can only be performed once per organ.",
+	"Best to take one when travelling to a planet's surface.",
+	"These seem to have prescription lenses inserted in them.",
+	"The gun will come with a permit pin installed.",
+	"This one is painted in peacekeeper livery, and equipped with a mounting slot for cuffs and a baton. Unfortunately this makes it a tad bulkier.",
+	"Whatever use it possibly had in the past, its only use now is either as a museum piece, or being sold off to collectors via the Cargo shuttle.",
 	// 高优先级赏金说明：`update_global_bounty_list()` 在 description 后面追加。三条被上报的
 	// 高优先级赏金整条显英文就是它拖的——基础句本身早就译好了。
 	"</br>This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!",
@@ -1739,7 +1775,10 @@ GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 			if(copytext(needle, 1, 2) == " ")
 				needle = copytext(needle, 2)
 				separator = " "
-			return "[lang_reverse_text(base)][separator][lang_reverse_text(needle)]"
+			// Catalog keys may retain a leading space, and their translations may do so too.
+			// The join already supplies the separator, so strip only the translated suffix's edges.
+			var/translated_suffix = trim(lang_reverse_text(needle))
+			return "[lang_reverse_text(base)][separator][translated_suffix]"
 	return .
 
 /// 完整句聊天行反查：用于「先 `list += span_*("整句")` 累加、再 jointext 进一个 boxed_message

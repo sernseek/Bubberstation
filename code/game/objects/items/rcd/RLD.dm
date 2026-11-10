@@ -71,7 +71,7 @@
 			mode = GLOW_MODE
 			to_chat(user, span_notice(LANG("obj.bdef06f3c36fda82", null)))
 		if("Color Pick")
-			var/new_choice = tgui_color_picker(user, "", "Choose Color", color_choice)
+			var/new_choice = tgui_color_picker(user, "", LANG("obj.d472a9f2c270f157", null), color_choice)
 			if(new_choice == null)
 				return
 

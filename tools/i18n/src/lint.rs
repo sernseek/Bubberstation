@@ -307,6 +307,24 @@ fn is_catalog_candidate(value: &str) -> bool {
     is_sentence_shaped(value)
 }
 
+/// Preserve meaningful trailing whitespace without leaving whitespace at the end of a baseline line.
+/// Existing plain lines remain valid; the explicit prefix avoids changing their interpretation.
+fn decode_bare_baseline_line(line: &str) -> String {
+    if let Some(json) = line.strip_prefix("@json ") {
+        if let Ok(decoded) = serde_json::from_str::<String>(json) {
+            return decoded;
+        }
+    }
+    line.to_owned()
+}
+
+fn encode_bare_baseline_line(text: &str) -> String {
+    if text.ends_with([' ', '\t']) || text.starts_with("@json ") {
+        return format!("@json {}", serde_json::to_string(text).expect("string serialization"));
+    }
+    text.to_owned()
+}
+
 /// 手写的 locale-only 目录文件（无 en 对应是设计如此）：状态词表与人工 AC 兜底。
 /// 这些不参与「陈旧 key / 占位符 parity」检查（它们本就没有英文源串）。
 const MANUAL_ONLY_FILES: &[&str] = &["_state_words", "_fallback"];
@@ -1074,7 +1092,7 @@ fn lint_identifier_collisions(
             // have been informed."` 这种拼句片段），trim 掉就永远匹配不上、每次都报成新增。
             .map(|l| l.strip_suffix('\r').unwrap_or(l))
             .filter(|l| !l.trim().is_empty() && !l.trim_start().starts_with('#'))
-            .map(|l| l.to_string())
+            .map(decode_bare_baseline_line)
             .collect::<BTreeSet<String>>(),
         _ => BTreeSet::new(),
     };
@@ -1084,7 +1102,7 @@ fn lint_identifier_collisions(
                 "# nova-i18n「目录里有、源码里仍是裸字面量」基线（`nova-i18n lint --update-baseline` 生成）。\n                 # 每行一条已进 en 目录、但调用点没被 rewrite 改成 LANG 的句子。多数是有意留给反查\n                 # 路径的（speak 词池 / examine 累加器 / desc 变量）；CI 只对**不在此表**的新增失败 ——\n                 # 那通常意味着上游把消息挪进了 rewrite 不认识的 sink，译文会永远查不到调用点。\n",
             );
             for (text, _) in bare_hits.iter() {
-                content.push_str(&text.replace('\n', "\\n"));
+                content.push_str(&encode_bare_baseline_line(&text.replace('\n', "\\n")));
                 content.push('\n');
             }
             std::fs::write(p, content)
@@ -1101,12 +1119,15 @@ fn lint_identifier_collisions(
         .filter(|(text, _)| !bare_baseline_set.contains(text.replace('\n', "\\n").as_str()))
         .collect();
     if !new_bare.is_empty() {
-        for (text, loc) in new_bare.iter().take(20) {
+        // Keep routine output short, but allow a complete, source-attributed migration audit.
+        let report_all = std::env::var_os("I18N_LINT_ALL_BARE").is_some();
+        let limit = if report_all { new_bare.len() } else { 20 };
+        for (text, loc) in new_bare.iter().take(limit) {
             report.error(format!(
                 "{loc} 已进 en 目录的句子在源码里仍是裸字面量：{text:?}\n                 　　→ 译文躺在目录里但这个调用点永远查不到它（上游换了 sink、rewrite 认不出即此）。\n                 　　修法：① 让 rewrite 认得该 sink（tools/i18n/src/rewrite.rs 的 SINK_CALLS）后重跑 `nova-i18n rewrite`；\n                 　　② 确认该处本就该走反查路径（词池/累加器）→ `nova-i18n lint --update-baseline` 收进基线。"
             ));
         }
-        if new_bare.len() > 20 {
+        if !report_all && new_bare.len() > 20 {
             report.error(format!("…… 另有 {} 条同类新增裸英文", new_bare.len() - 20));
         }
     }
@@ -1376,7 +1397,8 @@ fn included_source_roots(dme: &Path) -> BTreeSet<String> {
     }
     if roots.is_empty() {
         roots.insert("code".to_owned());
-        roots.insert("modular_nova".to_owned());
+        roots.insert("modular_skyrat".to_owned());
+        roots.insert("modular_zubbers".to_owned());
         roots.insert("modular_zh".to_owned());
     }
     roots
@@ -1453,6 +1475,15 @@ pub fn run(
 #[cfg(test)]
 mod tests {
     #[test]
+    fn bare_baseline_preserves_trailing_space_and_existing_plain_lines() {
+        let value = " A sentence with meaningful trailing space. ";
+        let encoded = super::encode_bare_baseline_line(value);
+        assert!(!encoded.ends_with(' '));
+        assert_eq!(super::decode_bare_baseline_line(&encoded), value);
+        assert_eq!(super::decode_bare_baseline_line(" plain entry "), " plain entry ");
+    }
+
+    #[test]
     fn source_roots_come_from_the_dme_not_a_hardcoded_list() {
         let dir = std::env::temp_dir().join(format!("nova-i18n-roots-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
@@ -1478,7 +1509,9 @@ mod tests {
 
         // An unreadable .dme must not silently scan nothing.
         let missing = included_source_roots(&dir.join("absent.dme"));
-        assert!(missing.contains("code") && missing.contains("modular_nova") && missing.contains("modular_zh"));
+        assert!(missing.contains("code") && missing.contains("modular_skyrat") && missing.contains("modular_zubbers") && missing.contains("modular_zh"));
+        std::fs::write(&dme, "// no DM includes\n").unwrap();
+        assert_eq!(included_source_roots(&dme), missing);
         std::fs::remove_dir_all(&dir).ok();
     }
 
